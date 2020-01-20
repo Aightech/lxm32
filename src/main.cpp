@@ -12,22 +12,25 @@
 #include <linux/can.h>
 #include <linux/can/raw.h>
 
-#include "canopen_socket.h"
+#include "Lexium32A_canopen.h"
 
 
 
 int
 main(int argc, char** argv)
-{ 
+{
 
-  Canopen_socket can("can0",true);
+  LXM32 lxm32("can0", 4, true);
 
-  uint16_t t = 0x1234;
+  lxm32.start();
+  // Canopen_socket can("can0",true);
 
-  uint16_t index = (uint16_t)strtol(argv[1],NULL,16);
-  uint8_t  subindex = (uint8_t)strtol(argv[2],NULL,16);
+  // uint16_t t = 0x1234;
 
-  can.send_SDO(1, FRAME_SIZE, SDO_R, index, subindex);
+  // uint16_t index = (uint16_t)strtol(argv[1],NULL,16);
+  // uint8_t  subindex = (uint8_t)strtol(argv[2],NULL,16);
+
+  // can.send_SDO(1, FRAME_SIZE, SDO_R, index, subindex);
 
   
 

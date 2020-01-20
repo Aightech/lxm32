@@ -1,0 +1,9814 @@
+_AccessInfo Informations sur le canal d'accès
+Octet de poids inférieur : accès
+exclusif
+Valeur 0 : non
+Valeur 1 : oui -
+-
+-
+- UINT16
+R/-
+-
+- CANopen 3001:C h
+Modbus 280
+-
+-
+-
+- UINT16
+R/-
+-
+- CANopen 301C:4 h
+Modbus 7176
+Octet de poids fort : canal d'accès
+Valeur 0 : réservé
+Valeur 1 : E/S
+Valeur 2 : IHM
+Valeur 3 : Modbus RS485
+Valeur 4 : principal canal du bus de
+terrain
+Valeurs 5 ... 12 : Modbus TCP,
+CANopen deuxième SDO, ou
+maître Profibus classe 2
+Valeurs 13 ... 28 : canaux explicites
+Ethernet/IP
+_actionStatus
+Action Word
+État de signal:
+0 : non activé
+1 : Activé
+Affectation des bits :
+Bit 0 : classe d'erreur 0
+Bit 1 : classe d'erreur 1
+Bit 2 : classe d'erreur 2
+Bit 3 : classe d'erreur 3
+Bit 4 : classe d'erreur 4
+Bit 5 : réservé
+Bit 6 : moteur à l'arrêt (_n_act < 9 )
+Bit 7 : mouvement de moteur dans
+la direction positive
+Bit 8 : déplacement de moteur dans
+la direction négative
+Bit 9 : l'affectation peut être réglée
+via le paramètre DPL_intLim
+Bit 10 : l'affectation peut être réglée
+via le paramètre Ds402intLim
+Bit 11 : générateur de profil à l'arrêt
+(consigne de vitesse est 0)
+Bit 12 : générateur de profil
+décélère
+Bit 13 : générateur de profil
+accélère
+Bit 14 : générateur de profil à
+vitesse constante
+Bit 15 : réservé
+0198441113756 09/2017
+_AT_J Moment d'inertie du système entier
+Est déterminé automatiquement au
+cours de l'autoréglage.
+Par incréments de 0,1 kg cm 2 . kg cm 2
+0,1
+0,1
+6 553,5 UINT16
+R/-
+per.
+- CANopen
+302F:C h
+Modbus 12056
+_AT_M_friction Couple de frottement du système
+Est déterminé au cours de
+l'autoréglage.
+Par incréments de 0,01 A rms . A rms
+-
+-
+- UINT16
+R/-
+-
+- CANopen 302F:7 h
+Modbus 12046
+409Paramètre
+410
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+_AT_M_load Couple de charge constant
+Est déterminé au cours de
+l'autoréglage.
+Par incréments de 0,01 A rms . A rms
+-
+-
+- INT16
+R/-
+-
+- CANopen 302F:8 h
+Modbus 12048
+_AT_progress Progression de l' auto-réglage %
+0
+0
+100 UINT16
+R/-
+-
+- CANopen 302F:B h
+Modbus 12054
+_AT_state État de l'auto-réglage
+Affectation des bits :
+Bits 0 ... 10 : dernière phase
+d'usinage
+Bit 13 : auto_tune_process
+(autoréglage en cours)
+Bit 14: auto_tune_end (fin
+d'autoréglage)
+Bit 15: auto_tune_err (erreur durant
+l'autoréglage) -
+-
+-
+- UINT16
+R/-
+-
+- CANopen 302F:2 h
+Modbus 12036
+_CanDiag Mot de diagnostic CANopen
+0001h : pms read error for TxPdo
+0002h : pms write error for RxPdo1
+0004h : pms write error for RxPdo2
+0008h : pms write error for RxPdo3
+0010h : pms write error for RxPdo4
+0020h : heartbeat or lifeguard error
+(timer expired)
+0040h: heartbeat msg with
+incorrect state received
+0080h: CAN error counter >96
+0100h : CAN message lost
+0200h: CAN error counter = 256
+(bus-off)
+0400h : software queue rx/tx
+overrun
+0800h: error indication from last
+detected error -
+-
+-
+- UINT16
+R/-
+-
+- CANopen 3041:6 h
+Modbus 16652
+_Cap1CntFall Entrée Capture 1 compteur
+d'événements pour fronts
+descendants
+Compte les événements de capture
+pour les fronts descendants.
+Le compteur d'événements est
+réinitialisé au moment de
+l'activation de l'entrée Capture 1.
+Disponible avec version ≥V01.16
+du micrologiciel. -
+-
+-
+- UINT16
+R/-
+-
+- CANopen
+300A:2C h
+Modbus 2648
+_Cap1CntRise Entrée Capture 1 compteur
+d'événements pour fronts montants
+Compte les événements de capture
+pour les fronts montants.
+Le compteur d'événements est
+réinitialisé au moment de
+l'activation de l'entrée Capture 1.
+Disponible avec version ≥V01.16
+du micrologiciel. -
+-
+-
+- UINT16
+R/-
+-
+- CANopen
+300A:2B h
+Modbus 2646
+_Cap1Count Entrée Capture 1 : Compteur
+d'événements
+Compte les événements de
+capture.
+Le compteur d'événements est
+réinitialisé au moment de
+l'activation de l'entrée Capture 1. -
+-
+-
+- UINT16
+R/-
+-
+- CANopen 300A:8 h
+Modbus 2576
+0198441113756 09/2017Paramètre
+0198441113756 09/2017
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+_Cap1CountCons Entrée Capture 1 Compteur
+d'événements (cohérent)
+Compte les événements de
+capture.
+Le compteur d'événements est
+réinitialisé au moment de
+l'activation de l'entrée Capture 1.
+La lecture de ce paramètre
+actualise le paramètre
+"_Cap1PosCons" et le bloque à
+toute modification. Les deux
+valeurs de paramètre restent ainsi
+cohérentes.
+Disponible avec version ≥V01.12
+du micrologiciel. -
+-
+-
+- UINT16
+R/-
+-
+- CANopen
+300A:17 h
+Modbus 2606
+_Cap1Pos Entrée Capture 1 : Position
+capturée
+Position capturée au moment du
+"signal de capture".
+Après la "prise d'origine immédiate"
+ou après une "prise d'origine", la
+position détectée est recalculée. usr_p
+-
+-
+- INT32
+R/-
+-
+- CANopen 300A:6 h
+Modbus 2572
+_Cap1PosCons Entrée Capture 1 : Position
+capturée (cohérente)
+Position capturée au moment du
+"signal de capture".
+Après la "prise d'origine immédiate"
+ou après une "prise d'origine", la
+position détectée est recalculée.
+La lecture du paramètre
+"_Cap1CountCons" actualise ce
+paramètre et le bloque à toute
+modification. Les deux valeurs de
+paramètre restent ainsi cohérentes.
+Disponible avec version ≥V01.12
+du micrologiciel. usr_p
+-
+-
+- INT32
+R/-
+-
+- CANopen
+300A:18 h
+Modbus 2608
+_Cap1PosFallEdge Entrée Capture 1, position capturée
+en cas de front descendant
+Ce paramètre contient la position
+capturée lors de l'apparition du front
+descendant.
+Après la "prise d'origine immédiate"
+ou après une "prise d'origine", la
+position détectée est recalculée.
+Disponible avec version ≥V01.16
+du micrologiciel. usr_p
+-
+-
+- INT32
+R/-
+-
+- CANopen
+60BB:0 h
+Modbus 2636
+_Cap1PosRisEdge Entrée Capture 1, position capturée
+en cas de front montant
+Ce paramètre contient la position
+capturée lors de l'apparition du front
+montant.
+Après la "prise d'origine immédiate"
+ou après une "prise d'origine", la
+position détectée est recalculée.
+Disponible avec version ≥V01.16
+du micrologiciel. usr_p
+-
+-
+- INT32
+R/-
+-
+- CANopen
+60BA:0 h
+Modbus 2634
+411Paramètre
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+_Cap2CntFall Entrée Capture 2 compteur
+d'événements pour fronts
+descendants
+Compte les événements de capture
+pour les fronts descendants.
+Le compteur d'événements est
+réinitialisé au moment de
+l'activation de l'entrée Capture 2.
+Disponible avec version ≥V01.16
+du micrologiciel. -
+-
+-
+- UINT16
+R/-
+-
+- CANopen
+300A:2E h
+Modbus 2652
+_Cap2CntRise Entrée Capture 2 compteur
+d'événements pour fronts montants
+Compte les événements de capture
+pour les fronts montants.
+Le compteur d'événements est
+réinitialisé au moment de
+l'activation de l'entrée Capture 2.
+Disponible avec version ≥V01.16
+du micrologiciel. -
+-
+-
+- UINT16
+R/-
+-
+- CANopen
+300A:2D h
+Modbus 2650
+_Cap2Count Entrée Capture 2 : Compteur
+d'événements
+Compte les événements de
+capture.
+Le compteur d'événements est
+réinitialisé au moment de
+l'activation de l'entrée Capture 2. -
+-
+-
+- UINT16
+R/-
+-
+- CANopen 300A:9 h
+Modbus 2578
+-
+-
+-
+- UINT16
+R/-
+-
+- CANopen
+300A:19 h
+Modbus 2610
+usr_p
+-
+-
+- INT32
+R/-
+-
+- CANopen 300A:7 h
+Modbus 2574
+Disponible avec la version
+matérielle ≥RS03.
+_Cap2CountCons
+Entrée Capture 2 Compteur
+d'événements (cohérent)
+Compte les événements de
+capture.
+Le compteur d'événements est
+réinitialisé au moment de
+l'activation de l'entrée Capture 2.
+La lecture de ce paramètre
+actualise le paramètre
+"_Cap2PosCons" et le bloque à
+toute modification. Les deux
+valeurs de paramètre restent ainsi
+cohérentes.
+Disponible avec la version
+matérielle ≥RS03.
+Disponible avec version ≥V01.12
+du micrologiciel.
+_Cap2Pos
+Entrée Capture 2 : Position
+capturée
+Position capturée au moment du
+"signal de capture".
+Après la "prise d'origine immédiate"
+ou après une "prise d'origine", la
+position détectée est recalculée.
+Disponible avec la version
+matérielle ≥RS03.
+412
+0198441113756 09/2017Paramètre
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+_Cap2PosCons Entrée Capture 2 : Position
+capturée (cohérente)
+Position capturée au moment du
+"signal de capture".
+Après la "prise d'origine immédiate"
+ou après une "prise d'origine", la
+position détectée est recalculée.
+La lecture du paramètre
+"_Cap2CountCons" actualise ce
+paramètre et le bloque à toute
+modification. Les deux valeurs de
+paramètre restent ainsi cohérentes. usr_p
+-
+-
+- INT32
+R/-
+-
+- CANopen
+300A:1A h
+Modbus 2612
+Disponible avec la version
+matérielle ≥RS03.
+Disponible avec version ≥V01.12
+du micrologiciel.
+_Cap2PosFallEdge Entrée Capture 2, position capturée
+en cas de front descendant
+Ce paramètre contient la position
+capturée lors de l'apparition du front
+descendant.
+Après la "prise d'origine immédiate"
+ou après une "prise d'origine", la
+position détectée est recalculée.
+Disponible avec version ≥V01.16
+du micrologiciel. usr_p
+-
+-
+- INT32
+R/-
+-
+- CANopen
+60BD:0 h
+Modbus 2640
+_Cap2PosRisEdge Entrée Capture 2, position capturée
+en cas de front montant
+Ce paramètre contient la position
+capturée lors de l'apparition du front
+montant.
+Après la "prise d'origine immédiate"
+ou après une "prise d'origine", la
+position détectée est recalculée.
+Disponible avec version ≥V01.16
+du micrologiciel. usr_p
+-
+-
+- INT32
+R/-
+-
+- CANopen
+60BC:0 h
+Modbus 2638
+_CapEventCounters Entrées Capture 1 et 2, récapitulatif
+des compteurs d'événements
+Ce paramètre contient les
+événements de capture comptés. -
+-
+-
+- UINT16
+R/-
+-
+- CANopen
+300A:2F h
+Modbus 2654
+-
+-
+-
+- UINT16
+R/-
+-
+- CANopen 300A:1 h
+Modbus 2562
+Bits 0 ... 3 : _Cap1CntRise (les 4
+bits les plus faibles)
+Bits 4 ... 7 : _Cap1CntRise (les 4
+bits les plus faibles)
+Bits 8 ... 11 : _Cap2CntRise (les 4
+bits les plus faibles)
+Bits 12 ... 15 : _Cap2CntRise (les 4
+bits les plus faibles)
+Disponible avec version ≥V01.16
+du micrologiciel.
+_CapStatus
+0198441113756 09/2017
+État des entrées Capture
+Accès en lecture :
+Bit 0 : capture de position par
+entrée CAP1 effectuée
+Bit 1 : capture de position par
+entrée CAP2 effectuée
+413Paramètre
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+_Cond_State4 Conditions pour la transition vers
+l'état de fonctionnement Ready To
+Switch On
+État de signal:
+0 : Condition non remplie
+1 : Condition remplie -
+-
+-
+- UINT16
+R/-
+-
+- CANopen
+301C:26 h
+Modbus 7244
+-
+-
+-
+- UINT16
+R/-
+-
+- CANopen
+3011:17 h
+Modbus 4398
+Bit 0 : tension de bus DC ou tension
+réseau
+Bit 1 : Entrées pour fonction de
+sécurité
+Bit 2 : aucun téléchargement de
+configuration en cours
+Bit 3 : Vitesse supérieure aux
+valeurs limite
+Bit 4 : Position absolue a été réglée
+Bit 5 : frein de maintien non ouvert
+manuellement
+_CTRL_ActParSet
+Bloc de paramètres de boucle de
+régulation actif
+Valeur 1 : Bloc de paramètres de
+boucle de régulation 1 est actif
+Valeur 2 : Bloc de paramètres de
+boucle de régulation 2 est actif
+Un bloc de paramètres de boucle
+de régulation sera activé après la
+fin du temps défini dans le
+paramètre CTRL_ParChgTime.
+414
+_CTRL_KPid Régulateur de courant composante
+d, gain P
+La valeur est calculée à partir des
+paramètres du moteur.
+Par incrément de 0,1 V/A.
+Les nouvelles valeurs sont prises
+en compte immédiatement. V/A
+0,5
+-
+1 270,0 UINT16
+R/-
+per.
+- CANopen 3011:1 h
+Modbus 4354
+_CTRL_KPiq Régulateur de courant composante
+q, gain P
+La valeur est calculée à partir des
+paramètres du moteur.
+Par incrément de 0,1 V/A.
+Les nouvelles valeurs sont prises
+en compte immédiatement. V/A
+0,5
+-
+1 270,0 UINT16
+R/-
+per.
+- CANopen 3011:3 h
+Modbus 4358
+_CTRL_TNid Régulateur de courant composante
+d, temps d'action intégrale
+La valeur est calculée à partir des
+paramètres du moteur.
+Par incréments de 0,01 ms.
+Les nouvelles valeurs sont prises
+en compte immédiatement. ms
+0,13
+-
+327,67 UINT16
+R/-
+per.
+- CANopen 3011:2 h
+Modbus 4356
+_CTRL_TNiq Régulateur de courant composante
+q, temps d'action intégrale
+La valeur est calculée à partir des
+paramètres du moteur.
+Par incréments de 0,01 ms.
+Les nouvelles valeurs sont prises
+en compte immédiatement. ms
+0,13
+-
+327,67 UINT16
+R/-
+per.
+- CANopen 3011:4 h
+Modbus 4360
+0198441113756 09/2017Paramètre
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+_DataError Code d'erreur pour les erreurs
+synchrones détectées (bit DE)
+Profil d'entraînement Lexium :
+Code d'erreur spécifique
+fournisseur ayant entraîné la
+montée du bit DataError.
+En règle générale, cette erreur est
+détectée lorsqu'une valeur de
+donnée change dans le canal de
+données de processus. Le bit
+DataError se réfère aux paramètres
+indépendants de MT. -
+-
+-
+- UINT16
+R/-
+-
+- CANopen
+301B:1B h
+Modbus 6966
+_DataErrorInfo Information d'erreur
+supplémentaire sur le DataError
+détecté (bit DE)
+Profil d'entraînement Lexium :
+Affiche le paramètre de mappage
+qui a entraîné la définition du bit
+DE. Le bit DE est défini quand un
+paramètre indépendant de MT
+provoque une erreur en rapport
+avec une commande d'écriture lors
+du mappage actif. -
+-
+-
+- UINT16
+R/-
+-
+- CANopen
+301B:1D h
+Modbus 6970
+-
+-6
+-
+10 INT16*
+R/-
+-
+- CANopen 6061:0 h
+Modbus 6920
+Exemple :
+1 = premier paramètre mappé
+2 = deuxième paramètre mappé
+etc.
+_DCOMopmd_act
+0198441113756 09/2017
+Mode opératoire actif
+-6 / Manual Tuning / Autotuning :
+Réglage manuel / autoréglage
+-1 / Jog : Jog (déplacement
+manuel)
+0 / Reserved : réservé
+1 / Profile Position : Profile Position
+(point à point)
+3 / Profile Velocity : Profile Velocity
+(profil de vitesse)
+4 / Profile Torque : Profile Torque
+(profil de couple)
+6 / Homing : Homing (prise
+d'origine)
+7 / Interpolated Position :
+Interpolated Position
+8 / Cyclic Synchronous Position :
+Cyclic Synchronous Position
+9 / Cyclic Synchronous Velocity :
+Cyclic Synchronous Velocity
+10 / Cyclic Synchronous Torque :
+Cyclic Synchronous Torque
+* type de données pour CANopen :
+INT8
+415Paramètre
+416
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+_DCOMstatus Mot d'état DriveCom
+Affectation des bits :
+Bit 0 : état de fonctionnement
+Ready To Switch On
+Bit 1 : état de fonctionnement
+Switched On
+Bit 2 : état de fonctionnement
+Operation Enabled
+Bit 3 : état de fonctionnement Fault
+Bit 4 : Voltage Enabled
+Bit 5 : état de fonctionnement Quick
+Stop
+Bit 6 : état de fonctionnement
+Switch On Disabled
+Bit 7 : Erreur de classe d'erreur 0
+Bit 8 : requête HALT active
+Bit 9 : Remote
+Bit 10 : Target Reached
+Bit 11 : Internal Limit Active
+Bit 12 : spécifique au mode
+opératoire
+Bit 13 : x_err
+Bit 14 : x_end
+Bit 15 : ref_ok -
+-
+-
+- UINT16
+R/-
+-
+- CANopen 6041:0 h
+Modbus 6916
+_DEV_T_current
+Mon
+tdEV Température de l'appareil °C
+-
+-
+- INT16
+R/-
+-
+- CANopen
+301C:12 h
+Modbus 7204
+_DPL_BitShiftRefA16 Décalage de bit pour RefA16 pour
+le profil d'entraînement Drive Profile
+Lexium
+La mise à l'échelle de la vitesse
+peut conduire à des valeurs ne
+pouvant pas être représentées
+comme valeurs 16 bits. En cas
+d'utilisation de RefA16, ce
+paramètre indique le nombre de
+bits desquels la valeur doit être
+décalée afin de permettre un
+transfert. Le maître doit prendre
+cette valeur en compte avant le
+transfert et décaler les bits vers la
+droite en conséquence. Le nombre
+de bits est recalculé lors de chaque
+activation de l'étage de puissance.
+Les nouvelles valeurs sont prises
+en compte immédiatement. -
+0
+0
+12 UINT16
+R/-
+-
+- CANopen 301B:5 h
+Modbus 6922
+_DPL_driveInput Profil d'entraînement Drive Profile
+Lexium driveInput -
+-
+-
+- UINT16
+R/-
+-
+- CANopen
+301B:28 h
+Modbus 6992
+_DPL_driveStat Profil d'entraînement Drive Profile
+Lexium driveStat -
+-
+-
+- UINT16
+R/-
+-
+- CANopen
+301B:25 h
+Modbus 6986
+_DPL_mfStat Profil d'entraînement Drive Profile
+Lexium mfStat -
+-
+-
+- UINT16
+R/-
+-
+- CANopen
+301B:26 h
+Modbus 6988
+_DPL_motionStat Profil d'entraînement Drive Profile
+Lexium motionStat -
+-
+-
+- UINT16
+R/-
+-
+- CANopen
+301B:27 h
+Modbus 6990
+0198441113756 09/2017Paramètre
+0198441113756 09/2017
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+_ENC_AmplMax Valeur maximale de l'amplitude
+SinCos
+Cette valeur n'est disponible que si
+la surveillance de l'amplitude
+SinCos a été activée.
+Disponible avec version ≥V01.26
+du micrologiciel. mV
+-
+-
+- UINT16
+R/-
+-
+- CANopen
+303F:60 h
+Modbus 16320
+_ENC_AmplMean Valeur moyenne de l'amplitude
+SinCos
+Cette valeur n'est disponible que si
+la surveillance de l'amplitude
+SinCos a été activée.
+Disponible avec version ≥V01.26
+du micrologiciel. mV
+-
+-
+- UINT16
+R/-
+-
+- CANopen
+303F:5E h
+Modbus 16316
+_ENC_AmplMin Valeur minimale de l'amplitude
+SinCos
+Cette valeur n'est disponible que si
+la surveillance de l'amplitude
+SinCos a été activée.
+Disponible avec version ≥V01.26
+du micrologiciel. mV
+-
+-
+- UINT16
+R/-
+-
+- CANopen
+303F:5F h
+Modbus 16318
+_ENC_AmplVal Valeur de l'amplitude SinCos
+Cette valeur n'est disponible que si
+la surveillance de l'amplitude
+SinCos a été activée.
+Disponible avec version ≥V01.26
+du micrologiciel. mV
+-
+-
+- UINT16
+R/-
+-
+- CANopen
+303F:5D h
+Modbus 16314
+_ERR_class Classe d'erreur
+Valeur 0 : classe d'erreur 0
+Valeur 1 : classe d'erreur 1
+Valeur 2 : classe d'erreur 2
+Valeur 3 : classe d'erreur 3
+Valeur 4 : classe d'erreur 4 -
+0
+-
+4 UINT16
+R/-
+-
+- CANopen 303C:2 h
+Modbus 15364
+_ERR_DCbus Tension du bus DC au moment de
+la détection de l'erreur
+Par incrément de 0,1 V. V
+-
+-
+- UINT16
+R/-
+-
+- CANopen 303C:7 h
+Modbus 15374
+_ERR_enable_cycl Nombre de cycles d'activation de
+l'étage de puissance au moment de
+l'erreur
+Nombre de cycles d'activation de
+l'étage de puissance après
+application de l'alimentation en
+tension (tension de commande)
+jusqu'au moment où l'erreur a été
+détectée. -
+-
+-
+- UINT16
+R/-
+-
+- CANopen 303C:5 h
+Modbus 15370
+_ERR_enable_time Temps entre l'activation de l'étage
+de puissance et la détection de
+l'erreur s
+-
+-
+- UINT16
+R/-
+-
+- CANopen 303C:6 h
+Modbus 15372
+_ERR_motor_I Courant moteur au moment de la
+détection de l'erreur
+Par incréments de 0,01 A rms . A rms
+-
+-
+- UINT16
+R/-
+-
+- CANopen 303C:9 h
+Modbus 15378
+_ERR_motor_v Vitesse du moteur au moment de la usr_v
+détection de l'erreur
+-
+-
+- INT32
+R/-
+-
+- CANopen 303C:8 h
+Modbus 15376
+417Paramètre
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+_ERR_number Code d'erreur
+La lecture de ce paramètre
+transfère l'entrée complète de
+l'erreur détectée (classe d'erreur,
+moment détection de l'erreur, ...)
+vers une mémoire intermédiaire, à
+partir de laquelle, les éléments de
+l'erreur détectée peuvent être
+ultérieurement lus. -
+0
+-
+65 535 UINT16
+R/-
+-
+- CANopen 303C:1 h
+Modbus 15362
+En outre, le pointeur de lecture de
+la mémoire des erreurs passe
+automatiquement à l'entrée d'erreur
+suivante.
+_ERR_powerOn
+Mon
+PoWo Nombre de cycles d'activation -
+0
+-
+4 294 967 295 UINT32
+R/-
+-
+- CANopen 303B:2 h
+Modbus 15108
+_ERR_qual Informations supplémentaires sur
+l'erreur détectée
+Cette entrée contient des
+informations supplémentaires sur
+l'erreur détectée en fonction du
+code d'erreur.
+Exemple : une adresse de
+paramètre -
+0
+-
+65 535 UINT16
+R/-
+-
+- CANopen 303C:4 h
+Modbus 15368
+_ERR_temp_dev Température de l'appareil au
+moment de la détection de l'erreur °C
+-
+-
+- INT16
+R/-
+-
+- CANopen
+303C:B h
+Modbus 15382
+_ERR_temp_ps Température de l'étage de
+puissance au moment de la
+détection de l'erreur °C
+-
+-
+- INT16
+R/-
+-
+- CANopen
+303C:A h
+Modbus 15380
+_ERR_time Moment de détection de l'erreur
+Référence au compteur d'heures
+de service s
+0
+-
+536 870 911 UINT32
+R/-
+-
+- CANopen 303C:3 h
+Modbus 15366
+_ErrNumFbParSvc Dernier code d'erreur des services
+de paramètre du bus de terrain
+Certains types de bus de terrain
+fournissent uniquement des codes
+d'erreur généraux si la demande
+d'un service de paramètre échoue.
+Ce paramètre retourne le code
+d'erreur spécifique fournisseur du
+dernier service ayant échoué. -
+-
+-
+- UINT16
+R/-
+-
+- CANopen
+3040:43 h
+Modbus 16518
+_HMdisREFtoIDX Distance entre le point de
+commutation et l'impulsion
+d'indexation
+Elle permet de vérifier la distance
+entre l'impulsion d'indexation et le
+point de commutation et sert de
+critère pour déterminer si le course
+de référence avec impulsion
+d'indexation est reproductible. Tour
+-
+-
+- INT32
+R/-
+-
+- CANopen 3028:C h
+Modbus 10264
+La valeur peut être entrée en
+unités-utilisateur à l'aide du
+paramètre _HMdisREFtoIDX_usr.
+Par incréments de 0,0001 tour.
+418
+0198441113756 09/2017Paramètre
+0198441113756 09/2017
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+_HMdisREFtoIDX_usr Distance entre le point de
+commutation et l'impulsion
+d'indexation
+Elle permet de vérifier la distance
+entre l'impulsion d'indexation et le
+point de commutation et sert de
+critère pour déterminer si le course
+de référence avec impulsion
+d'indexation est reproductible.
+Disponible avec version ≥V01.05
+du micrologiciel. usr_p
+-2 147 483 648
+-
+2 147 483 647 INT32
+R/-
+-
+- CANopen 3028:F h
+Modbus 10270
+_hwVersCPU Version matérielle Control Board -
+-
+-
+- UINT16
+R/-
+-
+- CANopen
+3002:12 h
+Modbus 548
+_hwVersPS Version matérielle étage de
+puissance -
+-
+-
+- UINT16
+R/-
+-
+- CANopen
+3002:14 h
+Modbus 552
+_I_act
+Mon
+iAct Courant de moteur total
+Par incréments de 0,01 A rms . A rms
+-
+-
+- INT16
+R/-
+-
+- CANopen 301E:3 h
+Modbus 7686
+_Id_act_rms Courant de moteur instantané
+(composante d, défluxage)
+Par incréments de 0,01 A rms . A rms
+-
+-
+- INT16
+R/-
+-
+- CANopen 301E:2 h
+Modbus 7684
+_Id_ref_rms Consigne de courant de moteur
+(composante d, défluxage)
+Par incréments de 0,01 A rms . A rms
+-
+-
+- INT16
+R/-
+-
+- CANopen
+301E:11 h
+Modbus 7714
+_Imax_act Limitation de courant actuelle
+Valeur de la limitation de courant
+actuelle. C'est la valeur la plus
+petite parmi les valeurs suivantes :
+- CTRL_I_max (seulement durant
+l'opération normale)
+- LIM_I_maxQSTP (seulement en
+cas de Quick Stop)
+- LIM_I_maxHalt (seulement en cas
+d'arrêt)
+- limitation de courant via entrée
+logique
+- _M_I_max (seulement si moteur
+est raccordé)
+- _PS_I_max
+Les limitations résultant de la
+surveillance l2t sont également
+prises en compte.
+Par incréments de 0,01 A rms . A rms
+-
+-
+- UINT16
+R/-
+-
+- CANopen
+301C:28 h
+Modbus 7248
+_Imax_system Limitation de courant du système
+Ce paramètre indique le courant
+maximal du système. Il s'agit de la
+plus petite valeur du courant
+maximal du moteur ou du courant
+maximal de l'étage de puissance. Si
+aucun moteur n'est raccordé, seul
+le courant maximal de l'étage de
+puissance sera pris en compte pour
+ce paramètre.
+Par incréments de 0,01 A rms . A rms
+-
+-
+- UINT16
+R/-
+-
+- CANopen
+301C:27 h
+Modbus 7246
+419Paramètre
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+_InvalidParam
+ConF → FLt-
+inPA Adresse Modbus du paramètre
+avec la valeur non valide
+En cas de détection d'une erreur de
+configuration, l'adresse Modbus du
+paramètre est indiquée ici avec une
+valeur non valable. -
+-
+0
+- UINT16
+R/-
+-
+- CANopen 301C:6 h
+Modbus 7180
+_IO_act
+Mon
+ioAC État physique des entrées logique
+et sorties logiques
+Octet de poids faible :
+Bit 0 : DI0
+Bit 1 : DI1
+Bit 2 : DI2
+Bit 3 : DI3 -
+-
+-
+- UINT16
+R/-
+-
+- CANopen 3008:1 h
+Modbus 2050
+Octet de poids fort :
+Bit 8 : DQ0
+Bit 9 : DQ1
+_IO_DI_act
+Mon
+diMo État des entrées logiques
+Affectation des bits :
+Bit 0 : DI0
+Bit 1 : DI1
+Bit 2 : DI2
+Bit 3 : DI3 -
+-
+-
+- UINT16
+R/-
+-
+- CANopen 3008:F h
+Modbus 2078
+_IO_DQ_act
+Mon
+doMo État des sorties logiques
+Affectation des bits :
+Bit 0 : DQ0
+Bit 1 : DQ1 -
+-
+-
+- UINT16
+R/-
+-
+- CANopen
+3008:10 h
+Modbus 2080
+_IO_STO_act
+Mon
+Sto État des entrées pour la fonction de
+sécurité STO
+Codage des différents signaux :
+Bit 0 : STO_A
+Bit 1 : STO_B -
+-
+-
+- UINT16
+R/-
+-
+- CANopen
+3008:26 h
+Modbus 2124
+_Iq_act_rms
+Mon
+qAct Courant de moteur instantané
+(composante q, générant de
+couple)
+Par incréments de 0,01 A rms . A rms
+-
+-
+- INT16
+R/-
+-
+- CANopen 301E:1 h
+Modbus 7682
+_Iq_ref_rms
+Mon
+qrEF Consigne de courant de moteur
+(composante q, générant de
+couple)
+Par incréments de 0,01 A rms . A rms
+-
+-
+- INT16
+R/-
+-
+- CANopen
+301E:10 h
+Modbus 7712
+_LastError
+Mon
+LFLt Erreur déclenchant un Stop (classe
+d'erreur 1 à 4)
+Code d'erreur de l'erreur détectée
+en dernier. D'autres erreurs
+détectées n'écrasent pas ce code
+d'erreur. -
+-
+-
+- UINT16
+R/-
+-
+- CANopen 603F:0 h
+Modbus 7178
+Exemple : si la réaction à une
+erreur de fin de course détectée
+déclenche une erreur de
+surtension, ce paramètre contient
+le code d'erreur de l'erreur de fin de
+course détectée.
+Exception : les erreurs de classe 4
+détectées écrasent les entrées
+existantes.
+420
+0198441113756 09/2017Paramètre
+0198441113756 09/2017
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+_LastError_Qual Informations supplémentaires sur
+la dernière erreur détectée
+Ce paramètre contient des
+informations supplémentaires sur la
+dernière erreur détectée en
+fonction du code d'erreur.
+Exemple : une adresse de
+paramètre -
+-
+0
+- UINT16
+R/-
+-
+- CANopen
+301C:1F h
+Modbus 7230
+_LastWarning
+Mon
+LWrn Code d'erreur de la dernière erreur
+détectée de la classe d'erreur 0
+Si l'erreur détectée n'est plus
+active, le code d'erreur est
+enregistré jusqu'au Fault Reset
+suivant.
+Valeur 0 : pas d'erreur de la classe
+d'erreur 0 -
+-
+-
+- UINT16
+R/-
+-
+- CANopen 301C:9 h
+Modbus 7186
+_M_BRK_T_apply Temps de serrage du frein de
+maintien ms
+-
+-
+- UINT16
+R/-
+-
+- CANopen
+300D:21 h
+Modbus 3394
+_M_BRK_T_release Temps de desserrage (desserrer le ms
+frein de maintien)
+-
+-
+- UINT16
+R/-
+-
+- CANopen
+300D:22 h
+Modbus 3396
+_M_Enc_Cosine Tension du signal Cosinus du
+codeur
+Par incrément de 0,001 V.
+Disponible avec version ≥V01.26
+du micrologiciel. V
+-
+-
+- INT16
+R/-
+-
+- CANopen
+301C:2B h
+Modbus 7254
+_M_Enc_Sine Tension du signal Sinus du codeur
+Par incrément de 0,001 V.
+Disponible avec version ≥V01.26
+du micrologiciel. V
+-
+-
+- INT16
+R/-
+-
+- CANopen
+301C:2C h
+Modbus 7256
+_M_Encoder
+ConF → inF-
+SEnS Type du codeur moteur
+1 / SinCos With HiFa / SWhi:
+SinCos avec Hiperface
+2 / SinCos Without HiFa / SWoh:
+SinCos sans Hiperface
+3 / SinCos With Hall / SWhA:
+SinCos avec Hall
+4 / SinCos With EnDat / SWEn:
+SinCos avec EnDat
+5 / EnDat Without SinCos /
+EndA: Endat sans SinCos
+6 / Resolver / rESo: Resolver
+7 / Hall / hALL: Hall (pas encore
+pris en charge)
+8 / BISS / biSS: BISS
+Octet de poids fort :
+Valeur 0 : codeur rotatif
+Valeur 1 : codeur linéaire -
+-
+-
+- UINT16
+R/-
+-
+- CANopen 300D:3 h
+Modbus 3334
+_M_HoldingBrake Identification frein de maintien
+Valeur 0 : moteur sans frein de
+maintien
+Valeur 1 : moteur avec frein de
+maintien -
+-
+-
+- UINT16
+R/-
+-
+- CANopen
+300D:20 h
+Modbus 3392
+_M_I_0 Courant continu à l’arrêt, moteur
+Par incréments de 0,01 A rms . A rms
+-
+-
+- UINT16
+R/-
+-
+- CANopen
+300D:13 h
+Modbus 3366
+421Paramètre
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+_M_I_max
+ConF → inF-
+MiMA Courant de moteur maximal
+Par incréments de 0,01 A rms . A rms
+-
+-
+- UINT16
+R/-
+-
+- CANopen 300D:6 h
+Modbus 3340
+_M_I_nom
+ConF → inF-
+Mino Courant nominal du moteur
+Par incréments de 0,01 A rms . A rms
+-
+-
+- UINT16
+R/-
+-
+- CANopen 300D:7 h
+Modbus 3342
+_M_I2t Temps maximum admissible pour
+le courant maximum de moteur ms
+-
+-
+- UINT16
+R/-
+-
+- CANopen
+300D:11 h
+Modbus 3362
+_M_Jrot Moment d'inertie de moteur
+Unités :
+Moteurs rotatifs : kgcm 2
+Moteurs linéaires : kg
+Par incrément de 0,001 motor_f. motor_f
+-
+-
+- UINT32
+R/-
+-
+- CANopen
+300D:C h
+Modbus 3352
+_M_kE Constante de tension du moteur kE motor_u
+-
+Constante de tension Vrms à
+-
+1000 1/min
+-
+Unités :
+Moteurs rotatifs : Vrms/(1/min)
+Moteurs linéaires : Vrms/(m/s)
+Par incréments de 0,1 motor_u. UINT32
+R/-
+-
+- CANopen
+300D:B h
+Modbus 3350
+_M_L_d Inductance du moteur
+composante d
+Par incrément de 0,01 mH. mH
+-
+-
+- UINT16
+R/-
+-
+- CANopen
+300D:F h
+Modbus 3358
+_M_L_q Inductance du moteur
+composante q
+Par incrément de 0,01 mH. mH
+-
+-
+- UINT16
+R/-
+-
+- CANopen
+300D:E h
+Modbus 3356
+_M_load
+Mon
+LdFM Charge du moteur %
+-
+-
+- INT16
+R/-
+-
+- CANopen
+301C:1A h
+Modbus 7220
+_M_M_0 Couple continu à l’arrêt, moteur
+La valeur 100 % en mode
+opératoire Profile Torque
+correspond à ce paramètre. motor_m
+-
+-
+- UINT16
+R/-
+-
+- CANopen
+300D:16 h
+Modbus 3372
+Unités :
+Moteurs rotatifs : Ncm
+Moteurs linéaires : N
+422
+_M_M_max Couple maximal du moteur
+Par incrément de 0,1 Nm. Nm
+-
+-
+- UINT16
+R/-
+-
+- CANopen 300D:9 h
+Modbus 3346
+_M_M_nom Couple nominal/force nominale du
+moteur
+Unités :
+Moteurs rotatifs : Ncm
+Moteurs linéaires : N motor_m
+-
+-
+- UINT16
+R/-
+-
+- CANopen 300D:8 h
+Modbus 3344
+_M_maxoverload Valeur de pointe de la surcharge du
+moteur
+Surcharge maximale du moteur qui
+s'est produite dans les 10 dernières
+secondes. %
+-
+-
+- INT16
+R/-
+-
+- CANopen
+301C:1B h
+Modbus 7222
+0198441113756 09/2017Paramètre
+0198441113756 09/2017
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+_M_n_max
+ConF → inF-
+MnMA Vitesse de rotation maximale
+admissible/vitesse du moteur
+Unités :
+Moteurs rotatifs : 1/min
+Moteurs linéaires : mm/s motor_v
+-
+-
+- UINT16
+R/-
+-
+- CANopen 300D:4 h
+Modbus 3336
+_M_n_nom Vitesse de rotation
+nominale/vitesse nominale du
+moteur
+Unités :
+Moteurs rotatifs : 1/min
+Moteurs linéaires : mm/s motor_v
+-
+-
+- UINT16
+R/-
+-
+- CANopen 300D:5 h
+Modbus 3338
+_M_overload
+Mon
+Mi2t Surcharge du moteur (I2t) %
+-
+-
+- INT16
+R/-
+-
+- CANopen
+301C:19 h
+Modbus 7218
+_M_Polepair Nombre de paires de pôles moteur -
+-
+-
+- UINT16
+R/-
+-
+- CANopen
+300D:14 h
+Modbus 3368
+_M_PolePairPitch Largeur de la paire des pôles du
+moteur
+Par incrément de 0,01 mm.
+Disponible avec version ≥V01.03
+du micrologiciel. mm
+-
+-
+- UINT16
+R/-
+-
+- CANopen
+300D:23 h
+Modbus 3398
+_M_R_UV Résistance d'enroulement du
+moteur
+Par incréments de 0,01 Ω. Ω
+-
+-
+- UINT16
+R/-
+-
+- CANopen
+300D:D h
+Modbus 3354
+_M_T_current
+Mon
+tMot Température du moteur °C
+-
+-
+- INT16
+R/-
+-
+- CANopen
+301C:11 h
+Modbus 7202
+_M_T_max Température maximale du moteur °C
+-
+-
+- INT16
+R/-
+-
+- CANopen
+300D:10 h
+Modbus 3360
+_M_Type
+ConF → inF-
+MtyP Type de moteur
+Valeur 0 : pas de moteur choisi
+Valeur >0 : type de moteur
+raccordé -
+-
+-
+- UINT32
+R/-
+-
+- CANopen 300D:2 h
+Modbus 3332
+_M_U_max Tension maximale du moteur
+Par incrément de 0,1 V. V
+-
+-
+- UINT16
+R/-
+-
+- CANopen
+300D:19 h
+Modbus 3378
+_M_U_nom Tension nominale du moteur
+Par incrément de 0,1 V. V
+-
+-
+- UINT16
+R/-
+-
+- CANopen
+300D:A h
+Modbus 3348
+_ManuSdoAbort CANopen SDO Abort Code
+spécifique au fabricant
+Fournit des informations
+concernant un SDO Abort Code
+général (0800 0000). -
+-
+-
+- UINT16
+R/-
+-
+- CANopen 3041:A h
+Modbus 16660
+423Paramètre
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+_ModeError Code d'erreur pour les erreurs
+détectées de manière synchrone
+(bit ME)
+Profil d'entraînement Lexium :
+Code d'erreur spécifique
+fournisseur ayant entraîné la
+définition du bit ModeError.
+En règle générale, il s'agit d'une
+erreur qui a été détectée en relation
+avec le lancement d'un mode
+opératoire. Le bit ModeError se
+rapporte aux paramètres
+dépendants de MT. -
+-
+-
+- UINT16
+R/-
+-
+- CANopen
+301B:19 h
+Modbus 6962
+_ModeErrorInfo Informations d'erreur
+supplémentaires sur le ModeError
+détecté (bit ME)
+Profil d'entraînement Lexium :
+Affiche le paramètre de mappage
+qui a entraîné la mise à un du bit
+ME. Le bit ME est mis à un lorsque
+des paramètres dépendants de MT
+provoquent une erreur lors la
+commande d'écriture pour le
+mappage actif. -
+-
+-
+- UINT16
+R/-
+-
+- CANopen
+301B:1C h
+Modbus 6968
+Exemple :
+1 = premier paramètre mappé
+2 = deuxième paramètre mappé
+etc.
+424
+_n_act
+Mon
+nAct Vitesse de rotation réelle 1/min
+-
+-
+- INT16
+R/-
+-
+- CANopen 301E:8 h
+Modbus 7696
+_n_act_ENC1 Vitesse de rotation instantanée
+codeur 1
+Disponible avec version ≥V01.03
+du micrologiciel. 1/min
+-
+-
+- INT16
+R/-
+-
+- CANopen
+301E:28 h
+Modbus 7760
+_n_ref
+Mon
+nrEF Consigne de vitesse 1/min
+-
+-
+- INT16
+R/-
+-
+- CANopen 301E:7 h
+Modbus 7694
+_OpHours
+Mon
+oPh Compteur d'heures de
+fonctionnement s
+-
+-
+- UINT32
+R/-
+-
+- CANopen
+301C:A h
+Modbus 7188
+_p_absENC
+Mon
+PAMu Position absolue rapportée à la
+plage de travail du codeur
+Cette valeur correspond à la
+position du module de la plage du
+codeur absolu.
+La valeur n'est pas valable si le
+rapport de réduction entre le codeur
+machine et le codeur moteur est
+modifié. Dans ce cas, un
+redémarrage est nécessaire. usr_p
+-
+-
+- UINT32
+R/-
+-
+- CANopen 301E:F h
+Modbus 7710
+_p_absmodulo Position absolue rapportée à la
+résolution interne en unités internes
+Cette valeur est basée sur la
+position brute du codeur rapportée
+à la résolution interne (131072 inc). INC
+-
+-
+- UINT32
+R/-
+-
+- CANopen
+301E:E h
+Modbus 7708
+0198441113756 09/2017Paramètre
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+_p_act
+Mon
+PACu Position actuelle usr_p
+-
+-
+- INT32
+R/-
+-
+- CANopen 6064:0 h
+Modbus 7706
+_p_act_ENC1 Position instantanée codeur 1
+Disponible avec version ≥V01.03
+du micrologiciel. usr_p
+-
+-
+- INT32
+R/-
+-
+- CANopen
+301E:27 h
+Modbus 7758
+_p_act_ENC1_int Position instantanée codeur 1 en
+unités internes
+Disponible avec version ≥V01.03
+du micrologiciel. INC
+-
+-
+- INT32
+R/-
+-
+- CANopen
+301E:26 h
+Modbus 7756
+_p_act_int Position instantanée en unités
+internes INC
+-
+-
+- INT32
+R/-
+-
+- CANopen 6063:0 h
+Modbus 7700
+_p_dif
+Mon
+PdiF Déviation de position, déviation de
+position dynamique incluse
+La déviation de position est la
+différence entre la consigne de
+position et la position instantanée.
+La déviation de position se
+compose de la déviation de position
+résultant de la charge et de la
+déviation de position dynamique. Tour
+-214 748,3648
+-
+214 748,3647 INT32
+R/-
+-
+- CANopen 60F4:0 h
+Modbus 7716
+Tour
+-214 748,3648
+-
+214 748,3647 INT32
+R/-
+-
+- CANopen
+301E:1C h
+Modbus 7736
+Tour
+0,0000
+-
+429 496,7295 UINT32
+R/W
+-
+- CANopen
+301E:1B h
+Modbus 7734
+La valeur peut être entrée en
+unités-utilisateur à l'aide du
+paramètre _p_dif_usr.
+Par incréments de 0,0001 tour.
+_p_dif_load
+Déviation de position résultant de la
+charge entre la consigne de
+position et la position instantanée
+La déviation de position
+dépendante de la charge
+correspond à la différence entre la
+consigne de position et la position
+instantanée causée par la charge.
+Cette valeur sert à la surveillance
+de l'erreur de poursuite.
+La valeur peut être entrée en
+unités-utilisateur à l'aide du
+paramètre _p_dif_load_usr.
+Par incréments de 0,0001 tour.
+_p_dif_load_peak
+Valeur maximale de la déviation de
+position résultant de la charge
+Ce paramètre contient la déviation
+maximale de position résultant de
+la charge survenue jusqu'à présent.
+Un accès en écriture réinitialise la
+valeur.
+La valeur peut être entrée en
+unités-utilisateur à l'aide du
+paramètre _p_dif_load_peak_usr.
+Par incréments de 0,0001 tour.
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+0198441113756 09/2017
+425Paramètre
+Nom du paramètre
+Menu IMH
+Dénomination IHM
+Description
+_p_dif_load_peak_usr Valeur maximale de la déviation de
+position résultant de la charge
+Ce paramètre contient la déviation
+maximale de position résultant de
+la charge survenue jusqu'à présent.
+Un accès en écriture réinitialise la
+valeur.
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+Disponible avec version ≥V01.05
+du micrologiciel.
+426
+Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+usr_p
+0
+-
+2 147 483 647 INT32
+R/W
+-
+- CANopen
+301E:15 h
+Modbus 7722
+_p_dif_load_usr Déviation de position résultant de la
+charge entre la consigne de
+position et la position instantanée
+La déviation de position
+dépendante de la charge
+correspond à la différence entre la
+consigne de position et la position
+instantanée causée par la charge.
+Cette valeur sert à la surveillance
+de l'erreur de poursuite.
+Disponible avec version ≥V01.05
+du micrologiciel. usr_p
+-2 147 483 648
+-
+2 147 483 647 INT32
+R/-
+-
+- CANopen
+301E:16 h
+Modbus 7724
+_p_dif_usr
+Mon
+PdiF Déviation de position, déviation de
+position dynamique incluse
+La déviation de position est la
+différence entre la consigne de
+position et la position instantanée.
+La déviation de position se
+compose de la déviation de position
+résultant de la charge et de la
+déviation de position dynamique.
+Disponible avec version ≥V01.05
+du micrologiciel. usr_p
+-2 147 483 648
+-
+2 147 483 647 INT32
+R/-
+-
+- CANopen
+301E:14 h
+Modbus 7720
+_p_ref Consigne de position
+La valeur correspond à la consigne
+de position du régulateur de
+position. usr_p
+-
+-
+- INT32
+R/-
+-
+- CANopen
+301E:C h
+Modbus 7704
+_p_ref_int Consigne de position dans unités
+internes
+La valeur correspond à la consigne
+de position du régulateur de
+position. INC
+-
+-
+- INT32
+R/-
+-
+- CANopen 301E:9 h
+Modbus 7698
+_PAR_ScalingError Informations supplémentaires en
+cas d'erreur détectée lors du
+nouveau calcul
+Codage :
+Bits 0 ... 15 : adresse du paramètre
+à l'origine de l'erreur
+Bits 16 à 31 : réservés
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+Disponible avec version ≥V01.05
+du micrologiciel. -
+-
+-
+- UINT32
+R/-
+-
+- CANopen
+3004:16 h
+Modbus 1068
+0198441113756 09/2017Paramètre
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+_PAR_ScalingState État du nouveau calcul des
+paramètres avec unités-utilisateur
+0 / Recalculation Active: nouveau
+calcul en cours
+1 / Reserved (1): réservé
+2 / Recalculation Finished - No
+Error: nouveau calcul terminé sans
+erreur
+3 / Error During Recalculation:
+erreur lors du nouveau calcul
+4 / Initialization Successful:
+initialisation réussie
+5 / Reserved (5): réservé
+6 / Reserved (6): réservé
+7 / Reserved (7): réservé
+État du nouveau calcul des
+paramètres avec unités-utilisateur
+recalculées avec un facteur de
+mise à l'échelle modifié
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+Disponible avec version ≥V01.05
+du micrologiciel. -
+0
+2
+7 UINT16
+R/-
+-
+- CANopen
+3004:15 h
+Modbus 1066
+_PosRegStatus États des canaux du registre de
+position
+État de signal:
+0 : critère de comparaison non
+rempli
+1 : critère de comparaison rempli -
+-
+-
+- UINT16
+R/-
+-
+- CANopen 300B:1 h
+Modbus 2818
+Affectation des bits :
+Bit 0 : canal 1 du registre de
+position
+Bit 1 : canal 2 du registre de
+position
+Bit 2 : canal 3 du registre de
+position
+Bit 3 : canal 4 du registre de
+position
+_Power_act Puissance de sortie W
+-
+-
+- INT32
+R/-
+-
+- CANopen
+301C:D h
+Modbus 7194
+_Power_mean
+Mon
+PoWM Puissance de sortie moyenne W
+-
+-
+- UINT16
+R/-
+-
+- CANopen
+301C:E h
+Modbus 7196
+_pref_acc Accélération de la valeur de
+consigne pour l'anticipation de
+l'accélération
+Signe correspondant à la
+modification de la vitesse : usr_a
+-
+-
+- INT32
+R/-
+-
+- CANopen 301F:9 h
+Modbus 7954
+usr_v
+-
+-
+- INT32
+R/-
+-
+- CANopen 301F:7 h
+Modbus 7950
+Augmentation de la vitesse : signe
+positif
+Réduction de la vitesse : signe
+négatif
+_pref_v
+0198441113756 09/2017
+Vitesse de la valeur de consigne
+pour l'anticipation de la vitesse
+427Paramètre
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+_prgNoDEV
+ConF → inF-
+Prn Numéro micrologiciel de l'appareil
+Exemple : PR0912.00
+La valeur est renvoyée sous forme
+décimale : 91200 -
+-
+-
+- UINT32
+R/-
+-
+- CANopen 3001:1 h
+Modbus 258
+_prgRevDEV
+ConF → inF-
+Prr Révision micrologiciel de l'appareil
+Le format de la version est
+XX.YY.ZZ.
+La partie XX.YY figure dans le
+paramètre _prgVerDEV.
+La partie ZZ sert à l'évaluation de la
+qualité et se trouve dans ce
+paramètre. -
+-
+-
+- UINT16
+R/-
+-
+- CANopen 3001:4 h
+Modbus 264
+-
+-
+-
+- UINT16
+R/-
+-
+- CANopen 3001:2 h
+Modbus 260
+Exemple : V01.23.45
+La valeur est renvoyée sous forme
+décimale : 45
+_prgVerDEV
+ConF → inF-
+PrV
+Version du micrologiciel de
+l'appareil
+Le format de la version est
+XX.YY.ZZ.
+La partie XX.YY se trouve dans ce
+paramètre.
+La partie ZZ figure dans le
+paramètre _prgRevDEV.
+Exemple : V01.23.45
+La valeur est renvoyée sous forme
+décimale : 123
+428
+_PS_I_max
+ConF → inF-
+PiMA Courant maximal de l'étage de
+puissance
+Par incréments de 0,01 A rms . A rms
+-
+-
+- UINT16
+R/-
+per.
+- CANopen 3010:2 h
+Modbus 4100
+_PS_I_nom
+ConF → inF-
+Pino Courant nominal de l'étage de
+puissance
+Par incréments de 0,01 A rms . A rms
+-
+-
+- UINT16
+R/-
+per.
+- CANopen 3010:1 h
+Modbus 4098
+_PS_load
+Mon
+LdFP Charge de l'étage de puissance %
+-
+-
+- INT16
+R/-
+-
+- CANopen
+301C:17 h
+Modbus 7214
+_PS_maxoverload Valeur de pointe de la surcharge de
+l'étage de puissance
+Surcharge maximale de l'étage de
+puissance qui s'est produite dans
+les 10 dernières secondes. %
+-
+-
+- INT16
+R/-
+-
+- CANopen
+301C:18 h
+Modbus 7216
+_PS_overload
+Mon
+oVLP Surcharge de l'étage de puissance %
+-
+-
+- INT16
+R/-
+-
+- CANopen
+301C:24 h
+Modbus 7240
+_PS_overload_cte
+Mon
+otCP Surcharge de l'étage de puissance
+(température de la puce) %
+-
+-
+- INT16
+R/-
+-
+- CANopen
+301C:22 h
+Modbus 7236
+_PS_overload_I2t Surcharge de l'étage de puissance
+(I2t) %
+-
+-
+- INT16
+R/-
+-
+- CANopen
+301C:16 h
+Modbus 7212
+_PS_overload_psq
+Mon
+Po2P Surcharge de l'étage de puissance
+(puissance au carré) %
+-
+-
+- INT16
+R/-
+-
+- CANopen
+301C:23 h
+Modbus 7238
+0198441113756 09/2017Paramètre
+0198441113756 09/2017
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+_PS_T_current
+Mon
+tPS Température de l'étage de
+puissance °C
+-
+-
+- INT16
+R/-
+-
+- CANopen
+301C:10 h
+Modbus 7200
+_PS_T_max Température maximale de l'étage
+de puissance °C
+-
+-
+- INT16
+R/-
+per.
+- CANopen 3010:7 h
+Modbus 4110
+_PS_T_warn Température maximale de l'étage
+de puissance (classe d'erreur 0) °C
+-
+-
+- INT16
+R/-
+per.
+- CANopen 3010:6 h
+Modbus 4108
+_PS_U_maxDC Tension de bus DC maximale
+admissible
+Par incrément de 0,1 V. V
+-
+-
+- UINT16
+R/-
+per.
+- CANopen 3010:3 h
+Modbus 4102
+_PS_U_minDC Tension de bus DC minimale
+admissible
+Par incrément de 0,1 V. V
+-
+-
+- UINT16
+R/-
+per.
+- CANopen 3010:4 h
+Modbus 4104
+_PS_U_minStopDC Seuil de sous-tension du bus DC
+pour un Quick Stop
+À ce seuil, l'entraînement
+déclenche un Quick Stop.
+Par incrément de 0,1 V. V
+-
+-
+- UINT16
+R/-
+per.
+- CANopen 3010:A h
+Modbus 4116
+_PT_max_val Valeur maximale pour le mode
+opératoire Profile Torque
+100,0 % correspond au couple
+continu à l’arrêt _M_M_0.
+Par incréments de 0,1 %. %
+-
+-
+- INT16
+R/-
+-
+- CANopen
+301C:1E h
+Modbus 7228
+_RAMP_p_act Position instantanée du générateur usr_p
+de profil
+-
+-
+- INT32
+R/-
+-
+- CANopen 301F:2 h
+Modbus 7940
+_RAMP_p_target Position cible du générateur de
+profil
+Position absolue du générateur de
+profil calculée à partir des valeurs
+de positions relative et absolue
+indiquées. usr_p
+-
+-
+- INT32
+R/-
+-
+- CANopen 301F:1 h
+Modbus 7938
+_RAMP_v_act Vitesse instantanée du générateur
+de profil usr_v
+-
+-
+- INT32
+R/-
+-
+- CANopen 606B:0 h
+Modbus 7948
+_RAMP_v_target Vitesse cible du générateur de
+profil usr_v
+-
+-
+- INT32
+R/-
+-
+- CANopen 301F:5 h
+Modbus 7946
+_RES_load
+Mon
+LdFb Charge de la résistance de freinage
+La résistance de freinage
+configurée via le paramètre
+RESint_ext est surveillée. %
+-
+-
+- INT16
+R/-
+-
+- CANopen
+301C:14 h
+Modbus 7208
+_RES_maxoverload Valeur de pointe de la surcharge de
+la résistance de freinage
+Surcharge maximale de la
+résistance de freinage qui s'est
+produite dans les 10 dernières
+secondes.
+La résistance de freinage
+configurée via le paramètre
+RESint_ext est surveillée. %
+-
+-
+- INT16
+R/-
+-
+- CANopen
+301C:15 h
+Modbus 7210
+429Paramètre
+430
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+_RES_overload Surcharge de la résistance de
+freinage (I2t)
+La résistance de freinage
+configurée via le paramètre
+RESint_ext est surveillée. %
+-
+-
+- INT16
+R/-
+-
+- CANopen
+301C:13 h
+Modbus 7206
+_RESint_P Puissance nominale résistance
+interne de freinage W
+-
+-
+- UINT16
+R/-
+per.
+- CANopen 3010:9 h
+Modbus 4114
+_RESint_R Valeur de résistance de la
+résistance de freinage interne
+Par incréments de 0,01 Ω. Ω
+-
+-
+- UINT16
+R/-
+per.
+- CANopen 3010:8 h
+Modbus 4112
+_RMAC_DetailStatus État détaillé déplacement relatif
+après Capture (RMAC)
+0 / Not Activated: non activé
+1 / Waiting: attente d'un signal de
+capture
+2 / Moving: déplacement relatif
+après Capture en cours
+3 / Interrupted: déplacement relatif
+après Capture a été interrompu
+4 / Finished: déplacement relatif
+après Capture s'est terminé
+Disponible avec version ≥V01.16
+du micrologiciel. -
+-
+-
+- UINT16
+R/-
+-
+- CANopen
+3023:12 h
+Modbus 8996
+_RMAC_Status État du déplacement relatif après
+Capture
+0 / Not Active: non actif
+1 / Active Or Finished: déplacement
+relatif après Capture actif ou
+terminé
+Disponible avec version ≥V01.10
+du micrologiciel. -
+0
+-
+1 UINT16
+R/-
+-
+- CANopen
+3023:11 h
+Modbus 8994
+_ScalePOSmax Valeur utilisateur maximale pour les
+positions
+Cette valeur dépend de
+ScalePOSdenom et
+ScalePOSnum. usr_p
+-
+-
+- INT32
+R/-
+-
+- CANopen 301F:A h
+Modbus 7956
+_ScaleRAMPmax Valeur utilisateur maximale pour les
+accélérations et les décélérations
+Cette valeur dépend de
+ScaleRAMPdenom et
+ScaleRAMPnum. usr_a
+-
+-
+- INT32
+R/-
+-
+- CANopen
+301F:C h
+Modbus 7960
+_ScaleVELmax Valeur utilisateur maximale pour
+vitesse
+Cette valeur dépend de
+ScaleVELdenom et ScaleVELnum. usr_v
+-
+-
+- INT32
+R/-
+-
+- CANopen 301F:B h
+Modbus 7958
+_SigActive État des signaux de surveillance
+Signification, voir _SigLatched -
+-
+-
+- UINT32
+R/-
+-
+- CANopen 301C:7 h
+Modbus 7182
+0198441113756 09/2017Paramètre
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+_SigLatched
+Mon
+SiGS État mémorisé des signaux de
+surveillance -
+-
+-
+- UINT32
+R/-
+-
+- CANopen 301C:8 h
+Modbus 7184
+-
+-
+-
+- UINT32
+R/-
+-
+- CANopen 6502:0 h
+Modbus 6952
+Affectation des bits :
+Bit 0 : erreur générale
+Bit 1 : fin de course matérielle
+(LIMP/LIMN/REF)
+Bit 2 : plage dépassée (fin de
+course logicielle, réglage)
+Bit 3 : Quick Stop par bus de terrain
+Bit 4 : erreur dans mode opératoire
+actif
+Bit 5 : interface mise en service
+(RS485)
+Bit 6 : bus de terrain intégré
+Bit 7 : réservé
+Bit 8 : erreur de poursuite
+Bit 9 : réservé
+Bit 10 : les entrées STO sont
+réglées sur 0
+Bit 11 : entrées STO différentes
+Bit 12 : réservé
+Bit 13 : tension du bus DC basse
+Bit 14 : tension du bus DC haute
+Bit 15 : phase réseau manquante
+Bit 16 : interface codeur intégrée
+Bit 17 : surtempérature moteur
+Bit 18 : surtempérature étage de
+puissance
+Bit 19 : réservé
+Bit 20 : carte mémoire
+Bit 21: Module de communication
+Bit 22 : module codeur
+Bit 23 : module de sécurité eSM ou
+module IOM1
+Bit 24 : réservé
+Bit 25 : réservé
+Bit 26 : raccordement moteur
+Bit 27 : surintensité/court-circuit
+moteur
+Bit 28 : fréquence de signal de
+référence trop élevée
+Bit 29 : erreur EEPROM détecté
+Bit 30 : démarrage du système
+(matériel ou paramètre)
+Bit 31 : erreur du système détecté
+(par exemple Watchdog, interface
+matérielle interne)
+Les fonctions de surveillance
+dépendent du produit.
+_SuppDriveModes
+0198441113756 09/2017
+Modes opératoires pris en charge
+selon DSP402
+Bit 0 : Profile Position
+Bit 2 : Profile Velocity
+Bit 3 : Profile Torque (profil de
+couple)
+Bit 5 : Homing
+Bit 6: Interpolated Position
+Bit 7 : Cyclic Synchronous Position
+Bit 8: Cyclic Synchronous Velocity
+Bit 9: Cyclic Synchronous Torque
+Bit 16 : Jog
+Bit 21 : Manual Tuning
+431Paramètre
+432
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+_TouchProbeStat Touch Probe Status
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+Disponible avec version ≥V01.16
+du micrologiciel. -
+-
+-
+- UINT16
+R/-
+-
+- CANopen 60B9:0 h
+Modbus 7030
+_tq_act Couple instantané
+Valeur positive : couple instantané
+dans la direction de déplacement
+positive
+Valeur négative : couple instantané
+dans la direction de déplacement
+négative
+100,0 % correspond au couple
+continu à l’arrêt _M_M_0.
+Par incréments de 0,1 %. %
+-
+-
+- INT16
+R/-
+-
+- CANopen 6077:0 h
+Modbus 7752
+_Ud_ref Consigne de tension moteur,
+composante d
+Par incrément de 0,1 V. V
+-
+-
+- INT16
+R/-
+-
+- CANopen 301E:5 h
+Modbus 7690
+_UDC_act
+Mon
+udcA Tension du bus DC
+Par incrément de 0,1 V. V
+-
+-
+- UINT16
+R/-
+-
+- CANopen
+301C:F h
+Modbus 7198
+_Udq_ref Tension moteur totale (somme
+vectorielle des composantes d et q)
+Racine carrée de ( _Uq_ref 2 +
+_Ud_ref 2 )
+Par incrément de 0,1 V. V
+-
+-
+- INT16
+R/-
+-
+- CANopen 301E:6 h
+Modbus 7692
+_Uq_ref Consigne de tension moteur,
+composante q
+Par incrément de 0,1 V. V
+-
+-
+- INT16
+R/-
+-
+- CANopen 301E:4 h
+Modbus 7688
+_v_act
+Mon
+VAct Vitesse instantanée usr_v
+-
+-
+- INT32
+R/-
+-
+- CANopen 606C:0 h
+Modbus 7744
+_v_act_ENC1 Vitesse instantanée codeur 1
+Disponible avec version ≥V01.03
+du micrologiciel. usr_v
+-
+-
+- INT32
+R/-
+-
+- CANopen
+301E:29 h
+Modbus 7762
+_v_dif_usr Déviation de vitesse actuelle
+résultant de la charge
+La déviation de vitesse dépendante
+de la charge correspond à la
+différence entre la vitesse de
+consigne et la vitesse instantanée.
+Disponible avec version ≥V01.26
+du micrologiciel. usr_v
+-2 147 483 648
+-
+2 147 483 647 INT32
+R/-
+-
+- CANopen
+301E:2C h
+Modbus 7768
+_v_ref
+Mon
+VrEF Consigne de vitesse usr_v
+-
+-
+- INT32
+R/-
+-
+- CANopen
+301E:1F h
+Modbus 7742
+_Vmax_act Limitation de la vitesse actuelle
+Valeur de la limitation de la vitesse
+actuelle. C'est la valeur la plus
+petite parmi les valeurs suivantes :
+- CTRL_v_max
+- M_n_max (seulement si un moteur
+est raccordé)
+- limitation de la vitesse via entrée
+logique usr_v
+-
+-
+- UINT32
+R/-
+-
+- CANopen
+301C:29 h
+Modbus 7250
+0198441113756 09/2017Paramètre
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+_VoltUtil
+Mon
+udcr Taux d'utilisation de la tension bus
+DC
+A 100 %, l'entraînement se trouve
+en limite de tension. %
+-
+-
+- INT16
+R/-
+-
+- CANopen
+301E:13 h
+Modbus 7718
+_WarnActive Erreurs présentes de la classe
+d'erreur 0, codées en bit
+Voir le paramètre _WarnLatched
+pour des détails sur les bits. -
+-
+-
+- UINT32
+R/-
+-
+- CANopen
+301C:B h
+Modbus 7190
+_WarnLatched
+Mon
+WrnS Erreurs enregistrés de la classe
+d'erreur 0, codées en bits
+En cas de Fault Reset, les bits sont
+posés sur 0.
+Les bits 10 et 13 sont
+automatiquement posés sur 0. -
+-
+-
+- UINT32
+R/-
+-
+- CANopen
+301C:C h
+Modbus 7192
+Affectation des bits :
+Bit 0 : généralités
+Bit 1 : réservé
+Bit 2 : plage dépassée (fin de
+course logicielle, réglage)
+Bit 3 : réservé
+Bit 4 : mode opératoire actif
+Bit 5 : interface mise en service
+(RS485)
+Bit 6 : bus de terrain intégré
+Bit 7 : réservé
+Bit 8 : erreur de poursuite
+Bit 9 : réservé
+Bit 10 : entrées STO_A et/ou
+STO_B
+Bits 11 ... 12 : réservés
+Bit 13 : tension bus DC basse ou
+phase réseau manquante
+Bits 14 ... 15 : réservés
+Bit 16 : interface codeur intégrée
+Bit 17 : température du moteur
+élevée
+Bit 18 : température de l'étage de
+puissance élevée
+Bit 19 : réservé
+Bit 20 : carte mémoire
+Bit 21: Module de communication
+Bit 22 : module codeur
+Bit 23 : module de sécurité eSM ou
+module IOM1
+Bits 24 ... 27 : réservé
+Bit 28 : transistor surcharge
+résistance de freinage (I 2 t)
+Bit 29 : surcharge résistance de
+freinage (I 2 t)
+Bit 30 : surcharge étage de
+puissance (I 2 t)
+Bit 31 : surcharge moteur (I 2 t)
+Les fonctions de surveillance
+dépendent du produit.
+0198441113756 09/2017
+433Paramètre
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+AbsHomeRequest Positionnement absolu uniquement
+après prise d'origine
+0 / No: non
+1 / Yes: oui
+Ce paramètre n'a aucune fonction
+si le paramètre
+'PP_ModeRangeLim' est réglé sur
+'1', ce qui permet un dépassement
+de la plage de déplacement (ref_ok
+est réglé sur 0 si la plage de
+déplacement est dépassée).
+Les nouvelles valeurs sont prises
+en compte immédiatement. -
+0
+1
+1 UINT16
+R/W
+per.
+- CANopen
+3006:16 h
+Modbus 1580
+AccessLock Verrouillage d'autres canaux
+d'accès
+Valeur 0 : permet la commande via
+autres canaux d'accès
+1 : verrouille la commande via
+autres canaux d'accès -
+0
+0
+1 UINT16
+R/W
+-
+- CANopen 3001:E h
+Modbus 284
+-
+1
+1
+6 UINT16
+R/W
+-
+- CANopen 302F:4 h
+Modbus 12040
+Exemple :
+Le canal d'accès est utilisé par le
+bus de terrain.
+Dans ce cas, il n'est pas possible
+de commander le variateur via le
+logiciel de mise en service ou via
+l'IHM.
+Le canal d'accès ne peut être
+verrouillé qu'après que le mode
+opératoire est terminé.
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+AT_dir
+oP → tun-
+StiM
+434
+Direction du déplacement pour
+l'autoréglage
+1 / Positive Negative Home / Pnh:
+tout d'abord direction positive, puis
+direction négative avec retour sur la
+position initiale
+2 / Negative Positive Home / nPh:
+tout d'abord direction négative, puis
+direction positive avec retour sur la
+position initiale
+3 / Positive Home / P-h:
+uniquement direction positive avec
+retour sur la position initiale
+4 / Positive / P--: uniquement
+direction positive sans retour sur la
+position initiale
+5 / Negative Home / n-h:
+uniquement direction négative avec
+retour sur la position initiale
+6 / Negative / n--: uniquement
+direction négative sans retour sur la
+position initiale
+Les nouvelles valeurs seront prises
+en compte au prochain mouvement
+de moteur.
+0198441113756 09/2017Paramètre
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+AT_dis
+oP → tun-
+diSt Plage de déplacement pour auto-
+réglage
+Plage de déplacement dans
+laquelle l'opération d'optimisation
+automatique des paramètres de
+boucle de régulation est exécutée.
+La zone est entrée par rapport à la
+position instantanée.
+En cas de "Déplacement
+uniquement dans une direction"
+(paramètre AT_dir), la plage de
+déplacement indiquée est utilisée
+pour chacune des étapes
+d'optimisation. Le déplacement
+correspond typiquement à 20 fois la
+valeur, mais il n'est pas limité. Tour
+1,0
+2,0
+999,9 UINT32
+R/W
+-
+- CANopen 302F:3 h
+Modbus 12038
+usr_p
+1
+32 768
+2 147 483 647 INT32
+R/W
+-
+- CANopen
+302F:12 h
+Modbus 12068
+La valeur peut être entrée en
+unités-utilisateur à l'aide du
+paramètre AT_dis_usr.
+Par incréments de 0,1 tour.
+Les nouvelles valeurs seront prises
+en compte au prochain mouvement
+de moteur.
+AT_dis_usr
+oP → tun-
+diSu
+Plage de déplacement pour auto-
+réglage
+Plage de déplacement dans
+laquelle l'opération d'optimisation
+automatique des paramètres de
+boucle de régulation est exécutée.
+La zone est entrée par rapport à la
+position instantanée.
+En cas de "Déplacement
+uniquement dans une direction"
+(paramètre AT_dir), la plage de
+déplacement indiquée est utilisée
+pour chacune des étapes
+d'optimisation. Le déplacement
+correspond typiquement à 20 fois la
+valeur, mais il n'est pas limité.
+La valeur minimale, le réglage
+d'usine et la valeur maximale
+dépendent du facteur de mise à
+l'échelle.
+Les nouvelles valeurs seront prises
+en compte au prochain mouvement
+de moteur.
+Disponible avec version ≥V01.05
+du micrologiciel.
+0198441113756 09/2017
+AT_mechanical
+oP → tun-
+MECh Type de couplage du système
+1 / Direct Coupling: couplage direct
+2 / Belt Axis: axe à courroie crantée
+3 / Spindle Axis: axe à vis à bille
+Les nouvelles valeurs seront prises
+en compte au prochain mouvement
+de moteur. -
+1
+2
+3 UINT16
+R/W
+-
+- CANopen 302F:E h
+Modbus 12060
+AT_n_ref
+oP → tun-
+nJMP Saut de vitesse pour autoréglage
+La valeur peut être entrée en
+unités-utilisateur à l'aide du
+paramètre AT_v_ref.
+Les nouvelles valeurs seront prises
+en compte au prochain mouvement
+de moteur. 1/min
+10
+100
+1 000 UINT32
+R/W
+-
+- CANopen 302F:6 h
+Modbus 12044
+435Paramètre
+436
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+AT_start Démarrage de l'auto-réglage
+Valeur 0 : Terminer
+Valeur 1 : Activer EasyTuning
+Valeur 2 : Activer ComfortTuning
+Les nouvelles valeurs sont prises
+en compte immédiatement. -
+0
+-
+2 UINT16
+R/W
+-
+- CANopen 302F:1 h
+Modbus 12034
+AT_v_ref
+oP → tun-
+nJMu Saut de vitesse pour autoréglage
+La valeur minimale, le réglage
+d'usine et la valeur maximale
+dépendent du facteur de mise à
+l'échelle.
+Les nouvelles valeurs seront prises
+en compte au prochain mouvement
+de moteur.
+Disponible avec version ≥V01.05
+du micrologiciel. usr_v
+1
+100
+2 147 483 647 INT32
+R/W
+-
+- CANopen
+302F:13 h
+Modbus 12070
+AT_wait
+oP → tun-
+WAit Temps d'attente entre les pas de
+l'autoréglage
+Les nouvelles valeurs seront prises
+en compte au prochain mouvement
+de moteur. ms
+300
+500
+10 000 UINT16
+R/W
+-
+- CANopen 302F:9 h
+Modbus 12050
+BLSH_Mode Type d'utilisation pour
+compensation du jeu
+0 / Off: la compensation de jeu est
+désactivée
+1 / OnAfterPositiveMovement: la
+compensation de jeu est activée, le
+dernier déplacement s'est
+effectuée dans la direction positive
+2 / OnAfterNegativeMovement: la
+compensation de jeu est activée, le
+dernier déplacement s'est
+effectuée dans la direction négative
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+Disponible avec version ≥V01.14
+du micrologiciel. -
+0
+0
+2 UINT16
+R/W
+per.
+- CANopen
+3006:41 h
+Modbus 1666
+BLSH_Position Valeur de position pour
+compensation du jeu
+Une modification de ce réglage
+n'est possible que lorsque l'étage
+de puissance est désactivé.
+Les nouvelles valeurs seront prises
+en compte après la prochaine
+activation de l'étage de puissance.
+Disponible avec version ≥V01.14
+du micrologiciel. usr_p
+0
+0
+2 147 483 647 INT32
+R/W
+per.
+- CANopen
+3006:42 h
+Modbus 1668
+BLSH_Time Temps de traitement pour
+compensation du jeu
+Valeur 0 : compensation immédiate
+du jeu
+Valeur >0 : temps de traitement
+pour compensation du jeu
+Une modification de ce réglage
+n'est possible que lorsque l'étage
+de puissance est désactivé.
+Les nouvelles valeurs seront prises
+en compte après la prochaine
+activation de l'étage de puissance.
+Disponible avec version ≥V01.14
+du micrologiciel. ms
+0
+0
+16 383 UINT16
+R/W
+per.
+- CANopen
+3006:44 h
+Modbus 1672
+0198441113756 09/2017Paramètre
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+BRK_AddT_apply
+ConF → ACG-
+btCL Temporisation supplémentaire au
+serrage du frein de maintien
+La temporisation totale au serrage
+du frein de maintien correspond à la
+temporisation indiquée sur la
+plaque signalétique électronique du
+moteur plus la temporisation
+supplémentaire de ce paramètre.
+Une modification de ce réglage
+n'est possible que lorsque l'étage
+de puissance est désactivé.
+Les nouvelles valeurs seront prises
+en compte après la prochaine
+activation de l'étage de puissance. ms
+0
+0
+1 000 INT16
+R/W
+per.
+- CANopen 3005:8 h
+Modbus 1296
+BRK_AddT_release
+ConF → ACG-
+btrE Temporisation supplémentaire au
+desserrage du frein de maintien
+La temporisation totale lors de
+l'ouverture du frein de maintien
+correspond à la temporisation
+indiquée sur la plaque signalétique
+électronique du moteur plus la
+temporisation supplémentaire de
+ce paramètre.
+Une modification de ce réglage
+n'est possible que lorsque l'étage
+de puissance est désactivé.
+Les nouvelles valeurs seront prises
+en compte après la prochaine
+activation de l'étage de puissance. ms
+0
+0
+400 INT16
+R/W
+per.
+- CANopen 3005:7 h
+Modbus 1294
+BRK_release Mode manuel du frein de maintien
+0 / Automatic: traitement
+automatique
+1 / Manual Release : ouverture
+manuelle du frein de maintien
+2 / Manual Application : fermeture
+manuelle du frein de maintien
+Le frein de maintien peut être
+ouvert ou fermé manuellement. -
+0
+0
+2 UINT16
+R/W
+-
+- CANopen 3008:A h
+Modbus 2068
+-
+1
+-
+127 UINT16
+R/W
+per.
+- CANopen 3041:2 h
+Modbus 16644
+Le frein de maintien ne peut être
+ouvert ou fermé manuellement que
+dans les modes opératoires "Switch
+On Disabled", "Ready To Switch
+On" ou "Fault".
+Si vous avez fermé le frein de
+maintien manuellement et que vous
+souhaitez l'ouvrir manuellement,
+vous devez d'aébord régler ce
+paramètre sur "Automatic", puis le
+régler sur "Manual Release".
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+Disponible avec version ≥V01.12
+du micrologiciel.
+CANaddress
+ConF → CoM-
+ConF → FSu-
+CoAd
+0198441113756 09/2017
+Adresse CANopen (adresse de
+nœud)
+Les nouvelles valeurs sont prises
+en compte après redémarrage du
+produit.
+437Paramètre
+438
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+CANbaud
+ConF → CoM-
+ConF → FSu-
+Cobd Vitesse de transmission CANopen
+50 kBaud / 50: 50 kBauds
+125 kBaud / 125: 125 kBauds
+250 kBaud / 250: 250 kBauds
+500 kBaud / 500: 500 kBauds
+1 MBaud / 1000: 1 MBaud
+Les nouvelles valeurs sont prises
+en compte après redémarrage du
+produit. -
+50
+250
+1 000 UINT16
+R/W
+per.
+- CANopen 3041:3 h
+Modbus 16646
+CANpdo1Event PDO 1 Masque Event
+Lancer les modifications de valeurs
+dans l'objet Event arrêt :
+Bit 0 : premier objet PDO
+Bit 1 : deuxième objet PDO
+Bit 2 : troisième objet PDO
+Bit 3 : quatrième objet PDO
+Les nouvelles valeurs sont prises
+en compte immédiatement. -
+0
+1
+15 UINT16
+R/W
+-
+- CANopen 3041:B h
+Modbus 16662
+CANpdo2Event PDO 2 Masque Event
+Lancer les modifications de valeurs
+dans l'objet Event arrêt :
+Bit 0 : premier objet PDO
+Bit 1 : deuxième objet PDO
+Bit 2 : troisième objet PDO
+Bit 3 : quatrième objet PDO
+Les nouvelles valeurs sont prises
+en compte immédiatement. -
+0
+1
+15 UINT16
+R/W
+-
+- CANopen 3041:C h
+Modbus 16664
+CANpdo3Event PDO 3 Masque Event
+Lancer les modifications de valeurs
+dans l'objet Event arrêt :
+Bit 0 : premier objet PDO
+Bit 1 : deuxième objet PDO
+Bit 2 : troisième objet PDO
+Bit 3 : quatrième objet PDO
+Les nouvelles valeurs sont prises
+en compte immédiatement. -
+0
+1
+15 UINT16
+R/W
+-
+- CANopen 3041:D h
+Modbus 16666
+CANpdo4Event PDO 4 Masque Event
+Lancer les modifications de valeurs
+dans l'objet Event arrêt :
+Bit 0 : premier objet PDO
+Bit 1 : deuxième objet PDO
+Bit 2 : troisième objet PDO
+Bit 3 : quatrième objet PDO
+Les nouvelles valeurs sont prises
+en compte immédiatement. -
+0
+15
+15 UINT16
+R/W
+-
+- CANopen 3041:E h
+Modbus 16668
+Cap1Activate Entrée Capture 1 Start/Stop
+0 / Capture Stop: annuler la
+fonction capture
+1 / Capture Once: démarrer la
+capture une seule fois
+2 / Capture Continuous: démarrer
+la capture en continu
+3 / Reserved: réservé
+4 / Reserved: réservé
+Avec la fonction Capture une seule
+fois, la fonction est arrêtée à la
+première valeur capturée.
+Avec la fonction Capture en
+continu, la capture se poursuit sans
+fin.
+Les nouvelles valeurs sont prises
+en compte immédiatement. -
+0
+-
+4 UINT16
+R/W
+-
+- CANopen 300A:4 h
+Modbus 2568
+0198441113756 09/2017Paramètre
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+Cap1Config Configuration de l'entrée capture 1
+0 / Falling Edge: capture de position
+par front descendant
+1 / Rising Edge: capture de position
+par front montant
+2 / Both Edges: capture de position
+avec les deux fronts
+Les nouvelles valeurs sont prises
+en compte immédiatement. -
+0
+0
+2 UINT16
+R/W
+-
+- CANopen 300A:2 h
+Modbus 2564
+Cap1Source Entrée Capture 1, source codeur
+0 / Pact Encoder 1: la source de
+l'entrée Capture 1 est Pact du
+codeur 1
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+Disponible avec version ≥V01.03
+du micrologiciel. -
+0
+0
+0 UINT16
+R/W
+-
+- CANopen
+300A:A h
+Modbus 2580
+Cap2Activate Entrée Capture 2 Start/Stop
+0 / Capture Stop: annuler la
+fonction capture
+1 / Capture Once: démarrer la
+capture une seule fois
+2 / Capture Continuous: démarrer
+la capture en continu
+3 / Reserved: réservé
+4 / Reserved: réservé
+Avec la fonction Capture une seule
+fois, la fonction est arrêtée à la
+première valeur capturée.
+Avec la fonction Capture en
+continu, la capture se poursuit sans
+fin. -
+0
+-
+4 UINT16
+R/W
+-
+- CANopen 300A:5 h
+Modbus 2570
+Disponible avec la version
+matérielle ≥RS03.
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+0198441113756 09/2017
+Cap2Config Configuration de l'entrée capture 2
+0 / Falling Edge: capture de position
+par front descendant
+1 / Rising Edge: capture de position
+par front montant
+Disponible avec la version
+matérielle ≥RS03.
+Les nouvelles valeurs sont prises
+en compte immédiatement. -
+0
+0
+1 UINT16
+R/W
+-
+- CANopen 300A:3 h
+Modbus 2566
+Cap2Source Entrée Capture 2, source codeur
+0 / Pact Encoder 1: la source de
+l'entrée Capture 2 est Pact du
+codeur 1
+Les nouvelles valeurs sont prises
+en compte immédiatement. -
+0
+0
+0 UINT16
+R/W
+-
+- CANopen
+300A:B h
+Modbus 2582
+439Paramètre
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+CLSET_p_DiffWin Déviation de position pour la
+commutation du bloc de
+paramètres de boucle de régulation
+Si la déviation de position du
+régulateur de position est plus
+petite que la valeur de ce
+paramètre, le bloc de paramètres
+de boucle de régulation 2 sera
+utilisé. Dans le cas contraire, c'est
+le bloc de paramètres de boucle de
+régulation 1 qui est utilisé. Tour
+0,0000
+0,0100
+2,0000 UINT16
+R/W
+per.
+- CANopen
+3011:1C h
+Modbus 4408
+usr_p
+0
+164
+2 147 483 647 INT32
+R/W
+per.
+- CANopen
+3011:25 h
+Modbus 4426
+La valeur peut être entrée en
+unités-utilisateur à l'aide du
+paramètre CLSET_p_DiffWin_usr.
+Par incréments de 0,0001 tour.
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+CLSET_p_DiffWin_usr
+Déviation de position pour la
+commutation du bloc de
+paramètres de boucle de régulation
+Si la déviation de position du
+régulateur de position est plus
+petite que la valeur de ce
+paramètre, le bloc de paramètres
+de boucle de régulation 2 sera
+utilisé. Dans le cas contraire, c'est
+le bloc de paramètres de boucle de
+régulation 1 qui est utilisé.
+La valeur minimale, le réglage
+d'usine et la valeur maximale
+dépendent du facteur de mise à
+l'échelle.
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+Disponible avec version ≥V01.05
+du micrologiciel.
+440
+0198441113756 09/2017Paramètre
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+CLSET_ParSwiCond Conditions pour changement de
+bloc de paramètres
+0 / None Or Digital Input: pas de
+fonction ou fonction sélectionnée
+pour entrée logique
+1 / Inside Position Deviation: dans
+la déviation de position (valeur
+indiquée dans le paramètre
+CLSET_p_DiffWin)
+2 / Below Reference Velocity: en
+dessous de la consigne de vitesse
+(valeur indiquée dans le paramètre
+CLSET__v_Threshol)
+3 / Below Actual Velocity: en
+dessous de la vitesse instantanée
+(valeur indiquée dans le paramètre
+CLSET__v_Threshol)
+4 / Reserved: réservé
+En cas d'un changement de bloc de
+paramètres, les valeurs des
+paramètres suivants sont changés
+graduellement :
+- CTRL_KPn
+- CTRL_TNn
+- CTRL_KPp
+- CTRL_TAUnref
+- CTRL_TAUiref
+- CTRL_KFPp -
+0
+0
+4 UINT16
+R/W
+per.
+- CANopen
+3011:1A h
+Modbus 4404
+usr_v
+0
+50
+2 147 483 647 UINT32
+R/W
+per.
+- CANopen
+3011:1D h
+Modbus 4410
+Les valeurs des paramètres
+suivants sont changées après
+l'écoulement du temps d'attente
+pour le changement de bloc de
+paramètres (CTRL_ParChgTime) :
+- CTRL_Nf1damp
+- CTRL_Nf1freq
+- CTRL_Nf1bandw
+- CTRL_Nf2damp
+- CTRL_Nf2freq
+- CTRL_Nf2bandw
+- CTRL_Osupdamp
+- CTRL_Osupdelay
+- CTRL_Kfric
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+CLSET_v_Threshol
+0198441113756 09/2017
+Seuil de vitesse pour la
+commutation du bloc de
+paramètres de boucle de régulation
+Si la vitesse instantanée ou la
+consigne de vitesse est plus petite
+que la valeur de ce paramètre, c'est
+le bloc de paramètres de boucle de
+régulation 2 qui sera utilisé. Dans le
+cas contraire, c'est le bloc de
+paramètres de boucle de régulation
+1 qui est utilisé.
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+441Paramètre
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+CLSET_winTime Fenêtre de temps pour le
+changement de bloc de paramètres
+Valeur 0 : surveillance de la fenêtre
+de temps inactive
+Valeur >0 : fenêtre de temps pour
+les paramètres CLSET_v_Threshol
+et CLSET_p_DiffWin.
+Les nouvelles valeurs sont prises
+en compte immédiatement. ms
+0
+0
+1 000 UINT16
+R/W
+per.
+- CANopen
+3011:1B h
+Modbus 4406
+CTRL_GlobGain
+oP → tun-
+GAin Facteur gain global (agit sur le bloc
+de paramètres de boucle de
+régulation 1)
+Le facteur gain global agit sur les
+paramètres suivants du bloc de
+paramètres de boucle de régulation
+1:
+- CTRL_KPn
+- CTRL_TNn
+- CTRL_KPp
+- CTRL_TAUnref %
+5,0
+100,0
+1 000,0 UINT16
+R/W
+per.
+- CANopen
+3011:15 h
+Modbus 4394
+Le facteur gain global est réglé sur
+100 % :
+- si les paramètres de boucle de
+régulation sont réglés sur les
+valeurs par défaut
+- à la fin de l'autoréglage
+- si le bloc de paramètres de boucle
+de régulation 2 est copié avec le
+paramètre CTRL_ParSetCopy vers
+le bloc de paramètres de boucle de
+régulation 1.
+Quand on transfère l'ensemble
+d'une configuration par bus de
+terrain, il faut transférer la valeur de
+CTRL_GlobGain avant les valeurs
+des paramètres de boucle de
+régulation CTRL_KPn, CTRL_TNn,
+CTRL_KPp et CTRL_TAUnr. Si
+CTRL_GlobGain se modifie
+pendant le transfert d'une
+configuration, CTRL_KPn,
+CTRL_TNn, CTRL_KPp et
+CTRL_TAUnref doivent également
+faire partie de la configuration.
+Par incréments de 0,1 %.
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+442
+0198441113756 09/2017Paramètre
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+CTRL_I_max
+ConF → drC-
+iMAX Limitation de courant
+En cours de fonctionnement, la
+limitation de courant est la plus
+petite des valeurs suivantes :
+- CTRL_I_max
+- _M_I_max
+- _PS_I_max
+- limitation de courant via entrée
+logique
+Les limitations résultant de la
+surveillance l2t sont également
+prises en compte. A rms
+0,00
+-
+463,00 UINT16
+R/W
+per.
+- CANopen 3011:C h
+Modbus 4376
+A rms
+0,00
+0,00
+300,00 UINT16
+R/W
+per.
+expert CANopen 3011:F h
+Modbus 4382
+%
+0,0
+0,0
+3 000,0 UINT16
+R/W
+per.
+expert CANopen 3011:A h
+Modbus 4372
+Par défaut : _PS_I_max à une
+fréquence MLI de 8 kHz et une
+tension réseau de 230/480 V
+Par incréments de 0,01 A rms .
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+CTRL_I_max_fw
+Courant maximal pour
+l'affaiblissement de champ
+(composante d)
+Cette valeur est limitée uniquement
+par les valeurs minimale et
+maximale de la plage du paramètre
+(pas de limitation de la valeur par le
+moteur/étage de puissance)
+Le courant de défluxage réel est la
+valeur minimale de
+CTRL_I_max_fw et de la moitié de
+la plus petite valeur parmi le
+courant nominal de l'étage de
+puissance et le courant nominal du
+moteur.
+Par incréments de 0,01 A rms .
+Une modification de ce réglage
+n'est possible que lorsque l'étage
+de puissance est désactivé.
+Les nouvelles valeurs seront prises
+en compte après la prochaine
+activation de l'étage de puissance.
+CTRL_KFAcc
+0198441113756 09/2017
+Anticipation de l'accélération
+Par incréments de 0,1 %.
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+443Paramètre
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+CTRL_ParChgTime Période de commutation du bloc de
+paramètres de boucle de régulation
+Lors de la commutation du bloc de
+paramètres de boucle de
+régulation, les valeurs des
+paramètres suivants sont changés
+graduellement :
+- CTRL_KPn
+- CTRL_TNn
+- CTRL_KPp
+- CTRL_TAUnref
+- CTRL_TAUiref
+- CTRL_KFPp ms
+0
+0
+2 000 UINT16
+R/W
+per.
+- CANopen
+3011:14 h
+Modbus 4392
+-
+0,0
+-
+0,2 UINT16
+R/W
+-
+- CANopen
+3011:16 h
+Modbus 4396
+-
+0
+1
+2 UINT16
+R/W
+per.
+- CANopen
+3011:18 h
+Modbus 4400
+Une commutation peut être
+déclenchée par un des événements
+suivants :
+- changement du bloc actif de
+paramètres de boucle de régulation
+- changement du gain global
+- changement d'un des paramètres
+précédents
+- désactivation de l'action intégrale
+du régulateur de vitesse
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+CTRL_ParSetCopy
+Copie du bloc de paramètres de
+boucle de régulation
+Valeur 1 : copier le bloc de
+paramètres de boucle de régulation
+1 sur le bloc de paramètres de
+boucle de régulation 2
+Valeur 2 : copier le bloc de
+paramètres de boucle de régulation
+2 sur le bloc de paramètres de
+boucle de régulation 1
+Si le bloc de paramètres de boucle
+de régulation 2 est copié sur le bloc
+de paramètres de boucle de
+régulation 1, le paramètre
+CTRL_GlobGain est réglé sur
+100 %.
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+CTRL_PwrUpParSet
+444
+Sélection du bloc de paramètres de
+boucle de régulation lors de la mise
+en marche
+0 / Switching Condition : la
+condition de commutation est
+utilisée pour la commutation du
+bloc de paramètres de boucle de
+régulation
+1 / Parameter Set 1 : le bloc de
+paramètres de boucle de régulation
+1 est utilisé
+2 / Parameter Set 2 : le bloc de
+paramètres de boucle de régulation
+2 est utilisé
+La valeur sélectionnée est aussi
+écrite dans le paramètre
+CTRL_SelParSet (non-persistant).
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+0198441113756 09/2017Paramètre
+0198441113756 09/2017
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+CTRL_SelParSet Sélection du bloc de paramètres de
+boucle de régulation (non
+persistant)
+Voir CTRL_PwrUpParSet pour le
+codage.
+Les nouvelles valeurs sont prises
+en compte immédiatement. -
+0
+1
+2 UINT16
+R/W
+-
+- CANopen
+3011:19 h
+Modbus 4402
+CTRL_SmoothCurr Facteur de lissage pour régulateur
+de courant
+Ce paramètre réduit la dynamique
+de la boucle de régulation de
+courant.
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+Disponible avec version ≥V01.26
+du micrologiciel. %
+50
+100
+100 UINT16
+R/W
+per.
+- CANopen
+3011:26 h
+Modbus 4428
+CTRL_SpdFric Vitesse de rotation jusqu'à laquelle
+la compensation du frottement est
+linéaire
+Les nouvelles valeurs sont prises
+en compte immédiatement. 1/min
+0
+5
+20 UINT32
+R/W
+per.
+expert CANopen 3011:9 h
+Modbus 4370
+CTRL_TAUnact Constante de temps du filtre pour le
+lissage de la vitesse du moteur
+La valeur par défaut est calculée à
+partir des données du moteur.
+Par incréments de 0,01 ms.
+Les nouvelles valeurs sont prises
+en compte immédiatement. ms
+0,00
+-
+30,00 UINT16
+R/W
+per.
+expert CANopen 3011:8 h
+Modbus 4368
+CTRL_v_max
+ConF → drC-
+nMAX Limitation de la vitesse
+En cours de fonctionnement, la
+limitation de la vitesse réelle est la
+plus petite des valeurs suivantes :
+- CTRL_v_max
+- M_n_max
+- limitation de la vitesse via entrée
+logique
+Les nouvelles valeurs sont prises
+en compte immédiatement. usr_v
+1
+13 200
+2 147 483 647 UINT32
+R/W
+per.
+- CANopen
+3011:10 h
+Modbus 4384
+CTRL_VelObsActiv Activation de Velocity Observer
+0 / Velocity Observer Off: Velocity
+Observer désactivé
+1 / Velocity Observer Passive:
+Velocity Observer est activé mais
+n'est pas utilisé pour la régulation
+du moteur
+2 / Velocity Observer Active:
+Velocity Observer est activé et
+utilisé pour la régulation du moteur
+Velocity Observer permet de
+réduire l'ondulation de la vitesse et
+d'augmenter la largeur de bande du
+régulateur.
+Avant toute activation, régler les
+valeurs correctes pour Dynamique
+et Inertie.
+Une modification de ce réglage
+n'est possible que lorsque l'étage
+de puissance est désactivé.
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+Disponible avec version ≥V01.03
+du micrologiciel. -
+0
+0
+2 UINT16
+R/W
+per.
+expert CANopen
+3011:22 h
+Modbus 4420
+445Paramètre
+446
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+CTRL_VelObsDyn Dynamique Velocity Observer
+La valeur dans ce paramètre doit
+être inférieure (par exemple entre 5
+% et 20 %) que le temps
+compensation du régulateur de
+vitesse (Paramètres CTRL1_TNn
+et CTRL2_TNn).
+Par incréments de 0,01 ms.
+Une modification de ce réglage
+n'est possible que lorsque l'étage
+de puissance est désactivé.
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+Disponible avec version ≥V01.03
+du micrologiciel. ms
+0,03
+0,25
+200,00 UINT16
+R/W
+per.
+expert CANopen
+3011:23 h
+Modbus 4422
+CTRL_VelObsInert Inertie pour Velocity Observer
+Inertie du système devant être
+utilisée pour les calculs de Velocity
+Observer.
+La valeur par défaut correspond à
+l'inertie du moteur monté.
+Pour l'autoréglage, la valeur de ce
+paramètre doit être égale à la
+valeur de _AT_J.
+Une modification de ce réglage
+n'est possible que lorsque l'étage
+de puissance est désactivé.
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+Disponible avec version ≥V01.03
+du micrologiciel. g cm 2
+1
+-
+2 147 483 648 UINT32
+R/W
+per.
+expert CANopen
+3011:24 h
+Modbus 4424
+CTRL_vPIDDPart
+ConF → drC-
+Pdn Régulateur de vitesse PID : gain D
+Par incréments de 0,1 %.
+Les nouvelles valeurs sont prises
+en compte immédiatement. %
+0,0
+0,0
+400,0 UINT16
+R/W
+per.
+expert CANopen 3011:6 h
+Modbus 4364
+CTRL_vPIDDTime
+ConF → drC-
+tdn Régulateur de vitesse PID :
+constante de temps du filtre de
+lissage pour l'action D
+Par incréments de 0,01 ms.
+Les nouvelles valeurs sont prises
+en compte immédiatement. ms
+0,01
+0,25
+10,00 UINT16
+R/W
+per.
+expert CANopen 3011:5 h
+Modbus 4362
+CTRL1_KFPp
+ConF → drC-
+FPP1 Anticipation de la vitesse
+En cas de changement entre les
+deux blocs de paramètres de
+boucle de régulation, l'adaptation
+des valeurs s'effectue de manière
+linéaire par l'intermédiaire du temps
+réglé dans le paramètre
+CTRL_ParChgTime.
+Par incréments de 0,1 %.
+Les nouvelles valeurs sont prises
+en compte immédiatement. %
+0,0
+0,0
+200,0 UINT16
+R/W
+per.
+- CANopen 3012:6 h
+Modbus 4620
+CTRL1_Kfric Compensation de frottement : gain
+Par incréments de 0,01 A rms .
+Les nouvelles valeurs sont prises
+en compte immédiatement. A rms
+0,00
+0,00
+10,00 UINT16
+R/W
+per.
+expert CANopen
+3012:10 h
+Modbus 4640
+0198441113756 09/2017Paramètre
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+CTRL1_KPn
+ConF → drC-
+Pn1 Régulateur de vitesse : gain P
+La valeur par défaut est calculée à
+partir des paramètres moteur A(1/min)
+0,0001
+-
+2,5400 UINT16
+R/W
+per.
+- CANopen 3012:1 h
+Modbus 4610
+1/s
+2,0
+-
+900,0 UINT16
+R/W
+per.
+- CANopen 3012:3 h
+Modbus 4614
+En cas de changement entre les
+deux blocs de paramètres de
+boucle de régulation, l'adaptation
+des valeurs s'effectue de manière
+linéaire par l'intermédiaire du temps
+réglé dans le paramètre
+CTRL_ParChgTime.
+Par incréments de 0,0001
+A/(1/min).
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+0198441113756 09/2017
+CTRL1_KPp
+ConF → drC-
+PP1 Gain P régulateur de position
+La valeur par défaut est calculée. CTRL1_Nf1bandw Filtre coupe-bande 1 : bande
+passante
+La bande passante est définie
+comme suit : 1 - Fb/F0
+Par incréments de 0,1 %.
+Les nouvelles valeurs sont prises
+en compte immédiatement. %
+1,0
+70,0
+90,0 UINT16
+R/W
+per.
+expert CANopen 3012:A h
+Modbus 4628
+CTRL1_Nf1damp Filtre coupe-bande 1 :
+amortissement
+Par incréments de 0,1 %.
+Les nouvelles valeurs sont prises
+en compte immédiatement. %
+55,0
+90,0
+99,0 UINT16
+R/W
+per.
+expert CANopen 3012:8 h
+Modbus 4624
+CTRL1_Nf1freq Filtre coupe-bande 1: fréquence
+Avec la valeur 15000, le filtre est
+désactivé.
+Par incréments de 0,1 Hz.
+Les nouvelles valeurs sont prises
+en compte immédiatement. Hz
+50,0
+1 500,0
+1 500,0 UINT16
+R/W
+per.
+expert CANopen 3012:9 h
+Modbus 4626
+CTRL1_Nf2bandw Filtre coupe-bande 2 : bande
+passante
+La bande passante est définie
+comme suit : 1 - Fb/F0
+Par incréments de 0,1 %.
+Les nouvelles valeurs sont prises
+en compte immédiatement. %
+1,0
+70,0
+90,0 UINT16
+R/W
+per.
+expert CANopen 3012:D h
+Modbus 4634
+CTRL1_Nf2damp Filtre coupe-bande 2 :
+amortissement
+Par incréments de 0,1 %.
+Les nouvelles valeurs sont prises
+en compte immédiatement. %
+55,0
+90,0
+99,0 UINT16
+R/W
+per.
+expert CANopen 3012:B h
+Modbus 4630
+En cas de changement entre les
+deux blocs de paramètres de
+boucle de régulation, l'adaptation
+des valeurs s'effectue de manière
+linéaire par l'intermédiaire du temps
+réglé dans le paramètre
+CTRL_ParChgTime.
+Par incrément de 0,1 1/s.
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+447Paramètre
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+CTRL1_Nf2freq Filtre coupe-bande 2: fréquence
+Avec la valeur 15000, le filtre est
+désactivé.
+Par incréments de 0,1 Hz.
+Les nouvelles valeurs sont prises
+en compte immédiatement. Hz
+50,0
+1 500,0
+1 500,0 UINT16
+R/W
+per.
+expert CANopen 3012:C h
+Modbus 4632
+CTRL1_Osupdamp Filtre de suppression de
+dépassement : amortissement
+Avec la valeur 0, le filtre est
+désactivé.
+Par incréments de 0,1 %.
+Les nouvelles valeurs sont prises
+en compte immédiatement. %
+0,0
+0,0
+50,0 UINT16
+R/W
+per.
+expert CANopen 3012:E h
+Modbus 4636
+CTRL1_Osupdelay Filtre de suppression de
+dépassement : temporisation
+Avec la valeur 0, le filtre est
+désactivé.
+Par incréments de 0,01 ms.
+Les nouvelles valeurs sont prises
+en compte immédiatement. ms
+0,00
+0,00
+75,00 UINT16
+R/W
+per.
+expert CANopen 3012:F h
+Modbus 4638
+CTRL1_TAUiref Constante de temps du filtre de la
+consigne de courant
+En cas de changement entre les
+deux blocs de paramètres de
+boucle de régulation, l'adaptation
+des valeurs s'effectue de manière
+linéaire par l'intermédiaire du temps
+réglé dans le paramètre
+CTRL_ParChgTime.
+Par incréments de 0,01 ms.
+Les nouvelles valeurs sont prises
+en compte immédiatement. ms
+0,00
+0,50
+4,00 UINT16
+R/W
+per.
+- CANopen 3012:5 h
+Modbus 4618
+CTRL1_TAUnref
+ConF → drC-
+tAu1 Constante de temps du filtre de la
+consigne de vitesse
+En cas de changement entre les
+deux blocs de paramètres de
+boucle de régulation, l'adaptation
+des valeurs s'effectue de manière
+linéaire par l'intermédiaire du temps
+réglé dans le paramètre
+CTRL_ParChgTime.
+Par incréments de 0,01 ms.
+Les nouvelles valeurs sont prises
+en compte immédiatement. ms
+0,00
+9,00
+327,67 UINT16
+R/W
+per.
+- CANopen 3012:4 h
+Modbus 4616
+CTRL1_TNn
+ConF → drC-
+tin1 Régulateur de vitesse : temps
+d'action intégrale
+La valeur par défaut est calculée. ms
+0,00
+-
+327,67 UINT16
+R/W
+per.
+- CANopen 3012:2 h
+Modbus 4612
+En cas de changement entre les
+deux blocs de paramètres de
+boucle de régulation, l'adaptation
+des valeurs s'effectue de manière
+linéaire par l'intermédiaire du temps
+réglé dans le paramètre
+CTRL_ParChgTime.
+Par incréments de 0,01 ms.
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+448
+0198441113756 09/2017Paramètre
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+CTRL2_KFPp
+ConF → drC-
+FPP2 Anticipation de la vitesse
+En cas de changement entre les
+deux blocs de paramètres de
+boucle de régulation, l'adaptation
+des valeurs s'effectue de manière
+linéaire par l'intermédiaire du temps
+réglé dans le paramètre
+CTRL_ParChgTime.
+Par incréments de 0,1 %.
+Les nouvelles valeurs sont prises
+en compte immédiatement. %
+0,0
+0,0
+200,0 UINT16
+R/W
+per.
+- CANopen 3013:6 h
+Modbus 4876
+CTRL2_Kfric Compensation de frottement : gain
+Par incréments de 0,01 A rms .
+Les nouvelles valeurs sont prises
+en compte immédiatement. A rms
+0,00
+0,00
+10,00 UINT16
+R/W
+per.
+expert CANopen
+3013:10 h
+Modbus 4896
+CTRL2_KPn
+ConF → drC-
+Pn2 Régulateur de vitesse : gain P
+La valeur par défaut est calculée à
+partir des paramètres moteur A(1/min)
+0,0001
+-
+2,5400 UINT16
+R/W
+per.
+- CANopen 3013:1 h
+Modbus 4866
+1/s
+2,0
+-
+900,0 UINT16
+R/W
+per.
+- CANopen 3013:3 h
+Modbus 4870
+En cas de changement entre les
+deux blocs de paramètres de
+boucle de régulation, l'adaptation
+des valeurs s'effectue de manière
+linéaire par l'intermédiaire du temps
+réglé dans le paramètre
+CTRL_ParChgTime.
+Par incréments de 0,0001
+A/(1/min).
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+0198441113756 09/2017
+CTRL2_KPp
+ConF → drC-
+PP2 Gain P régulateur de position
+La valeur par défaut est calculée. CTRL2_Nf1bandw Filtre coupe-bande 1 : bande
+passante
+La bande passante est définie
+comme suit : 1 - Fb/F0
+Par incréments de 0,1 %.
+Les nouvelles valeurs sont prises
+en compte immédiatement. %
+1,0
+70,0
+90,0 UINT16
+R/W
+per.
+expert CANopen 3013:A h
+Modbus 4884
+CTRL2_Nf1damp Filtre coupe-bande 1 :
+amortissement
+Par incréments de 0,1 %.
+Les nouvelles valeurs sont prises
+en compte immédiatement. %
+55,0
+90,0
+99,0 UINT16
+R/W
+per.
+expert CANopen 3013:8 h
+Modbus 4880
+CTRL2_Nf1freq Filtre coupe-bande 1: fréquence
+Avec la valeur 15000, le filtre est
+désactivé.
+Par incréments de 0,1 Hz.
+Les nouvelles valeurs sont prises
+en compte immédiatement. Hz
+50,0
+1 500,0
+1 500,0 UINT16
+R/W
+per.
+expert CANopen 3013:9 h
+Modbus 4882
+En cas de changement entre les
+deux blocs de paramètres de
+boucle de régulation, l'adaptation
+des valeurs s'effectue de manière
+linéaire par l'intermédiaire du temps
+réglé dans le paramètre
+CTRL_ParChgTime.
+Par incrément de 0,1 1/s.
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+449Paramètre
+450
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+CTRL2_Nf2bandw Filtre coupe-bande 2 : bande
+passante
+La bande passante est définie
+comme suit : 1 - Fb/F0
+Par incréments de 0,1 %.
+Les nouvelles valeurs sont prises
+en compte immédiatement. %
+1,0
+70,0
+90,0 UINT16
+R/W
+per.
+expert CANopen 3013:D h
+Modbus 4890
+CTRL2_Nf2damp Filtre coupe-bande 2 :
+amortissement
+Par incréments de 0,1 %.
+Les nouvelles valeurs sont prises
+en compte immédiatement. %
+55,0
+90,0
+99,0 UINT16
+R/W
+per.
+expert CANopen 3013:B h
+Modbus 4886
+CTRL2_Nf2freq Filtre coupe-bande 2: fréquence
+Avec la valeur 15000, le filtre est
+désactivé.
+Par incréments de 0,1 Hz.
+Les nouvelles valeurs sont prises
+en compte immédiatement. Hz
+50,0
+1 500,0
+1 500,0 UINT16
+R/W
+per.
+expert CANopen 3013:C h
+Modbus 4888
+CTRL2_Osupdamp Filtre de suppression de
+dépassement : amortissement
+Avec la valeur 0, le filtre est
+désactivé.
+Par incréments de 0,1 %.
+Les nouvelles valeurs sont prises
+en compte immédiatement. %
+0,0
+0,0
+50,0 UINT16
+R/W
+per.
+expert CANopen 3013:E h
+Modbus 4892
+CTRL2_Osupdelay Filtre de suppression de
+dépassement : temporisation
+Avec la valeur 0, le filtre est
+désactivé.
+Par incréments de 0,01 ms.
+Les nouvelles valeurs sont prises
+en compte immédiatement. ms
+0,00
+0,00
+75,00 UINT16
+R/W
+per.
+expert CANopen 3013:F h
+Modbus 4894
+CTRL2_TAUiref Constante de temps du filtre de la
+consigne de courant
+En cas de changement entre les
+deux blocs de paramètres de
+boucle de régulation, l'adaptation
+des valeurs s'effectue de manière
+linéaire par l'intermédiaire du temps
+réglé dans le paramètre
+CTRL_ParChgTime.
+Par incréments de 0,01 ms.
+Les nouvelles valeurs sont prises
+en compte immédiatement. ms
+0,00
+0,50
+4,00 UINT16
+R/W
+per.
+- CANopen 3013:5 h
+Modbus 4874
+CTRL2_TAUnref
+ConF → drC-
+tAu2 Constante de temps du filtre de la
+consigne de vitesse
+En cas de changement entre les
+deux blocs de paramètres de
+boucle de régulation, l'adaptation
+des valeurs s'effectue de manière
+linéaire par l'intermédiaire du temps
+réglé dans le paramètre
+CTRL_ParChgTime.
+Par incréments de 0,01 ms.
+Les nouvelles valeurs sont prises
+en compte immédiatement. ms
+0,00
+9,00
+327,67 UINT16
+R/W
+per.
+- CANopen 3013:4 h
+Modbus 4872
+0198441113756 09/2017Paramètre
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+CTRL2_TNn
+ConF → drC-
+tin2 Régulateur de vitesse : temps
+d'action intégrale
+La valeur par défaut est calculée. ms
+0,00
+-
+327,67 UINT16
+R/W
+per.
+- CANopen 3013:2 h
+Modbus 4868
+En cas de changement entre les
+deux blocs de paramètres de
+boucle de régulation, l'adaptation
+des valeurs s'effectue de manière
+linéaire par l'intermédiaire du temps
+réglé dans le paramètre
+CTRL_ParChgTime.
+Par incréments de 0,01 ms.
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+0198441113756 09/2017
+DCbus_compat Compatibilité bus DC LXM32 et
+ATV32
+0 / No DC bus or LXM32 only: bus
+DC non utilisé ou uniquement
+LXM32 raccordé via le bus DC
+1 / DC bus with LXM32 and ATV32:
+LXM32 et ATV32 raccordés via le
+bus DC
+Une modification de ce réglage
+n'est possible que lorsque l'étage
+de puissance est désactivé.
+Les nouvelles valeurs sont prises
+en compte après redémarrage du
+produit.
+Disponible avec version ≥V01.05
+du micrologiciel. -
+0
+0
+1 UINT16
+R/W
+per.
+- CANopen
+3005:26 h
+Modbus 1356
+DCOMcontrol Mot de commande DriveCom
+Pour le codage des bits, voir
+chapitre Opération, états de
+fonctionnements.
+Bit 0 : état de fonctionnement
+Switch On
+Bit 1 : Enable Voltage
+Bit 2 : état de fonctionnement Quick
+Stop
+Bit 3 : Enable Operation
+Bits 4 ... 6 : spécifique au mode
+opératoire
+Bit 7: Fault Reset
+Bit 8 : Halt
+Bit 9 : spécifique au mode
+opératoire
+Bits 10 ... 15: réservé (doivent être
+0
+Les nouvelles valeurs sont prises
+en compte immédiatement. -
+-
+-
+- UINT16
+R/W
+-
+- CANopen 6040:0 h
+Modbus 6914
+451Paramètre
+452
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+DCOMopmode Mode opératoire
+-6 / Manual Tuning / Autotuning:
+réglage manuel ou autoréglage
+-1 / Jog: Jog (déplacement manuel)
+0 / Reserved: réservé
+1 / Profile Position- Profile Position
+(point à point)
+3 / Profile Velocity: Profile Velocity
+(profil de vitesse)
+4 / Profile Torque: Profile Torque
+(profil de couple)
+6 / Homing: Homing (prise
+d'origine)
+7 / Interpolated Position:
+Interpolated Position
+8 / Cyclic Synchronous Position:
+Cyclic Synchronous Position
+9 / Cyclic Synchronous Velocity:
+Cyclic Synchronous Velocity
+10 / Cyclic Synchronous Torque:
+Cyclic Synchronous Torque
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+* type de données pour CANopen :
+INT8 -
+-6
+-
+7 INT16*
+R/W
+-
+- CANopen 6060:0 h
+Modbus 6918
+DI_0_Debounce
+ConF → i-o-
+tdi0 Temps d'anti-rebond DI0
+0 / No : aucun anti-rebond par
+logiciel
+1 / 0.25 ms : 0,25 ms
+2 / 0.50 ms : 0,50 ms
+3 / 0.75 ms : 0,75 ms
+4 / 1.00 ms : 1,00 ms
+5 / 1.25 ms : 1,25 ms
+6 / 1.50 ms : 1,50 ms
+Une modification de ce réglage
+n'est possible que lorsque l'étage
+de puissance est désactivé.
+Les nouvelles valeurs sont prises
+en compte immédiatement. -
+0
+6
+6 UINT16
+R/W
+per.
+- CANopen
+3008:20 h
+Modbus 2112
+DI_1_Debounce
+ConF → i-o-
+tdi1 Temps d'anti-rebond DI1
+0 / No : aucun anti-rebond par
+logiciel
+1 / 0.25 ms : 0,25 ms
+2 / 0.50 ms : 0,50 ms
+3 / 0.75 ms : 0,75 ms
+4 / 1.00 ms : 1,00 ms
+5 / 1.25 ms : 1,25 ms
+6 / 1.50 ms : 1,50 ms
+Une modification de ce réglage
+n'est possible que lorsque l'étage
+de puissance est désactivé.
+Les nouvelles valeurs sont prises
+en compte immédiatement. -
+0
+6
+6 UINT16
+R/W
+per.
+- CANopen
+3008:21 h
+Modbus 2114
+0198441113756 09/2017Paramètre
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+DI_2_Debounce
+ConF → i-o-
+tdi2 Temps d'anti-rebond DI2
+0 / No : aucun anti-rebond par
+logiciel
+1 / 0.25 ms : 0,25 ms
+2 / 0.50 ms : 0,50 ms
+3 / 0.75 ms : 0,75 ms
+4 / 1.00 ms : 1,00 ms
+5 / 1.25 ms : 1,25 ms
+6 / 1.50 ms : 1,50 ms
+Une modification de ce réglage
+n'est possible que lorsque l'étage
+de puissance est désactivé.
+Les nouvelles valeurs sont prises
+en compte immédiatement. -
+0
+6
+6 UINT16
+R/W
+per.
+- CANopen
+3008:22 h
+Modbus 2116
+DI_3_Debounce
+ConF → i-o-
+tdi3 Temps d'anti-rebond DI3
+0 / No : aucun anti-rebond par
+logiciel
+1 / 0.25 ms : 0,25 ms
+2 / 0.50 ms : 0,50 ms
+3 / 0.75 ms : 0,75 ms
+4 / 1.00 ms : 1,00 ms
+5 / 1.25 ms : 1,25 ms
+6 / 1.50 ms : 1,50 ms
+Une modification de ce réglage
+n'est possible que lorsque l'étage
+de puissance est désactivé.
+Les nouvelles valeurs sont prises
+en compte immédiatement. -
+0
+6
+6 UINT16
+R/W
+per.
+- CANopen
+3008:23 h
+Modbus 2118
+DPL_Activate Activation du profil d'entraînement
+Drive Profile Lexium
+Valeur 0 : désactiver le profil
+d'entraînement Drive Profile
+Lexium
+Valeur 1 : activer le profil
+d'entraînement Drive Profile
+Lexium -
+0
+0
+1 UINT16
+R/W
+-
+- CANopen 301B:8 h
+Modbus 6928
+-
+-
+-
+- UINT16
+R/W
+-
+- CANopen
+301B:1F h
+Modbus 6974
+Le canal d'accès via lequel le profil
+d'entraînement a été activé est le
+seul canal d'accès pouvant utiliser
+le profil d'entraînement.
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+DPL_dmControl
+0198441113756 09/2017
+Profil d'entraînement Drive Profile
+Lexium dmControl
+453Paramètre
+454
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+DPL_intLim Réglage pour le bit 9 de
+_DPL_motionStat et _actionStatus
+0 / None : non utilisé (réservé)
+1 / Current Below Threshold :
+valeur de seuil de courant
+2 / Velocity Below Threshold :
+valeur de seuil de vitesse
+3 / In Position Deviation Window :
+fenêtre de déviation de position
+4 / In Velocity Deviation Window :
+fenêtre de déviation de vitesse
+5 / Position Register Channel 1 :
+canal 1 du registre de position
+6 / Position Register Channel 2 :
+canal 2 du registre de position
+7 / Position Register Channel 3 :
+canal 3 du registre de position
+8 / Position Register Channel 4 :
+canal 4 du registre de position
+9 / Hardware Limit Switch : fin de
+course matérielle
+10 / RMAC active or finished :
+déplacement relatif après Capture
+actif ou terminé
+11 / Position Window : fenêtre de
+position
+Réglage pour :
+Bit 9 du paramètre _actionStatus
+Bit 9 du paramètre
+_DPL_motionStat
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+Disponible avec version ≥V01.08
+du micrologiciel. -
+0
+11
+11 UINT16
+R/W
+per.
+- CANopen
+301B:35 h
+Modbus 7018
+DPL_RefA16 Profil d'entraînement Drive Profile
+Lexium RefA16 -
+-
+-
+- INT16
+R/W
+-
+- CANopen
+301B:22 h
+Modbus 6980
+DPL_RefB32 Profil d'entraînement Drive Profile
+Lexium RefB32 -
+-
+-
+- INT32
+R/W
+-
+- CANopen
+301B:21 h
+Modbus 6978
+DS402compatib Machine à états DS402 : transition
+d'état de 3 à 4
+0 / Automatic : automatique (la
+transition d'état est réalisée
+automatiquement)
+1 / DS402-compliant : conforme
+DS402 (la transition d'état doit être
+commandée par le bus de terrain)
+Détermine la transition d'état entre
+les états de fonctionnement
+SwitchOnDisabled (3) et
+ReadyToSwitchOn (4).
+Une modification de ce réglage
+n'est possible que lorsque l'étage
+de puissance est désactivé.
+Les nouvelles valeurs sont prises
+en compte immédiatement. -
+0
+0
+1 UINT16
+R/W
+per.
+- CANopen
+301B:13 h
+Modbus 6950
+0198441113756 09/2017Paramètre
+0198441113756 09/2017
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+DS402intLim Mot d'état DS402 : réglage pour le
+bit 11 (limite interne)
+0 / None : non utilisé (réservé)
+1 / Current Below Threshold :
+valeur de seuil de courant
+2 / Velocity Below Threshold :
+valeur de seuil de vitesse
+3 / In Position Deviation Window :
+fenêtre de déviation de position
+4 / In Velocity Deviation Window :
+fenêtre de déviation de vitesse
+5 / Position Register Channel 1 :
+canal 1 du registre de position
+6 / Position Register Channel 2 :
+canal 2 du registre de position
+7 / Position Register Channel 3 :
+canal 3 du registre de position
+8 / Position Register Channel 4 :
+canal 4 du registre de position
+9 / Hardware Limit Switch : fin de
+course matérielle
+10 / RMAC active or finished :
+déplacement relatif après Capture
+actif ou terminé
+11 / Position Window : fenêtre de
+position
+Réglage pour :
+Bit 11 du paramètre _DCOMstatus
+Bit 10 du paramètre _actionStatus
+Bit 10 du paramètre
+_DPL_motionStat
+Les nouvelles valeurs sont prises
+en compte immédiatement. -
+0
+0
+11 UINT16
+R/W
+per.
+- CANopen
+301B:1E h
+Modbus 6972
+DSM_ShutDownOption
+ConF → ACG-
+Sdty Comportement lors de la
+désactivation de l'étage de
+puissance pendant un déplacement
+0 / Disable Immediately / diSi :
+désactiver immédiatement l'étage
+de puissance
+1 / Disable After Halt / diSh :
+désactiver l'étage de puissance
+après la décélération jusqu'à l'arrêt
+complet
+Ce paramètre définit comment le
+variateur réagit à une demande de
+désactivation de l'étage de
+puissance.
+Pour la décélération jusqu'à l'arrêt
+complet, Halt est utilisé.
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+Disponible avec version ≥V01.26
+du micrologiciel. -
+0
+0
+1 INT16
+R/W
+per.
+- CANopen 605B:0 h
+Modbus 1684
+455Paramètre
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+ENC1_adjustment Ajustement de la position absolue
+du codeur 1
+La plage de valeurs dépend du type
+de codeur. usr_p
+-
+-
+- INT32
+R/W
+-
+- CANopen
+3005:16 h
+Modbus 1324
+Codeur monotour :
+0 ... x-1
+Codeur multitour :
+0 ... (4096*x)-1
+Codeur monotour (décalé avec le
+paramètre ShiftEncWorkRang) :
+-(x/2) ... (x/2)-1
+Codeur multitour (décalé avec le
+paramètre ShiftEncWorkRang) :
+-(2048*x) ... (2048*x)-1
+Définition de 'x' : position maximale
+pour une rotation du codeur en
+unités-utilisateur. Avec la mise à
+l'échelle par défaut, cette valeur est
+de 16384.
+Si le traitement doit se faire avec
+inversion de la direction, celle-ci
+doit être paramétrée avant de
+définir la position du codeur.
+Après l'accès en écriture, patienter
+au moins 1 seconde avant que le
+variateur ne puisse être mis hors
+tension.
+Les nouvelles valeurs sont prises
+en compte après redémarrage du
+produit.
+456
+ERR_clear -
+Vider la mémoire des erreurs
+Valeur 1 : supprimer les entrées de 0
+-
+la mémoire des erreurs
+1
+L'opération de suppression est
+terminée lorsqu'à la lecture du
+paramètre, un 0 est émis.
+Les nouvelles valeurs sont prises
+en compte immédiatement. UINT16
+R/W
+-
+- CANopen 303B:4 h
+Modbus 15112
+ERR_reset Réinitialisation du pointeur de
+lecture de la mémoire des erreurs
+Valeur 1 : placer le pointeur de
+lecture sur l'entrée d'erreur la plus
+ancienne dans la mémoire des
+erreurs.
+Les nouvelles valeurs sont prises
+en compte immédiatement. -
+0
+-
+1 UINT16
+R/W
+-
+- CANopen 303B:5 h
+Modbus 15114
+0198441113756 09/2017Paramètre
+0198441113756 09/2017
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+ErrorResp_bit_DE Réaction à l'erreur de données
+détectée (bit DE)
+-1 / No Error Response : aucune
+réaction à l'erreur
+0 / Error Class 0 : Classe d'erreur 0
+1 / Error Class 1 : Classe d'erreur 1
+2 / Error Class 2 : Classe d'erreur 2
+3 / Error Class 3 : Classe d'erreur 3
+Il est possible de paramétrer la
+réaction à l'erreur de données (bit
+DE) détectée pour le profil
+d'entraînement Drive Profile
+Lexium.
+Lors de la gestion d'erreurs avec
+EtherCAT RxPDO, ce paramètre
+est également utilisé pour la
+classification de la réaction à
+l'erreur. -
+-1
+-1
+3 INT16
+R/W
+per.
+- CANopen 301B:6 h
+Modbus 6924
+ErrorResp_bit_ME Réaction à l'erreur de mode
+opératoire détectée (bit ME)
+-1 / No Error Response : aucune
+réaction à l'erreur
+0 / Error Class 0 : Classe d'erreur 0
+1 / Error Class 1 : Classe d'erreur 1
+2 / Error Class 2 : Classe d'erreur 2
+3 / Error Class 3 : Classe d'erreur 3
+Il est possible de paramétrer la
+réaction à une erreur de mode
+opératoire (bit ME) détectée pour le
+profil d'entraînement Lexium. -
+-1
+-1
+3 INT16
+R/W
+per.
+- CANopen 301B:7 h
+Modbus 6926
+ErrorResp_Flt_AC Réaction à l'erreur en cas d'erreurs
+d'une phase réseau
+0 / Error Class 0 : Classe d'erreur 0
+1 / Error Class 1 : Classe d'erreur 1
+2 / Error Class 2 : Classe d'erreur 2
+3 / Error Class 3 : Classe d'erreur 3
+Une modification de ce réglage
+n'est possible que lorsque l'étage
+de puissance est désactivé.
+Les nouvelles valeurs seront prises
+en compte après la prochaine
+activation de l'étage de puissance. -
+0
+2
+3 UINT16
+R/W
+per.
+- CANopen 3005:A h
+Modbus 1300
+ErrorResp_I2tRES Réaction à l'erreur en cas de
+résistance de freinage l2t de 100%
+0 / Error Class 0 : Classe d'erreur 0
+1 / Error Class 1 : Classe d'erreur 1
+2 / Error Class 2 : Classe d'erreur 2
+Une modification de ce réglage
+n'est possible que lorsque l'étage
+de puissance est désactivé.
+Les nouvelles valeurs seront prises
+en compte après la prochaine
+activation de l'étage de puissance. -
+0
+0
+2 UINT16
+R/W
+per.
+- CANopen
+3005:22 h
+Modbus 1348
+457Paramètre
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+ErrorResp_p_dif Réaction à l'erreur déviation de
+position trop élevée résultant de la
+charge
+1 / Error Class 1 : Classe d'erreur 1
+2 / Error Class 2 : Classe d'erreur 2
+3 / Error Class 3 : Classe d'erreur 3
+Une modification de ce réglage
+n'est possible que lorsque l'étage
+de puissance est désactivé.
+Les nouvelles valeurs seront prises
+en compte après la prochaine
+activation de l'étage de puissance. -
+1
+3
+3 UINT16
+R/W
+per.
+- CANopen 3005:B h
+Modbus 1302
+ErrorResp_QuasiAbs Réaction à l'erreur détectée lors de
+la position quasi absolue
+3 / Error Class 3 : Classe d'erreur 3
+4 / Error Class 4 : Classe d'erreur 4
+Une modification de ce réglage
+n'est possible que lorsque l'étage
+de puissance est désactivé.
+Les nouvelles valeurs seront prises
+en compte après la prochaine
+activation de l'étage de puissance.
+Disponible avec version ≥V01.26
+du micrologiciel. -
+3
+3
+4 UINT16
+R/W
+per.
+- CANopen
+3005:3A h
+Modbus 1396
+ErrorResp_v_dif Réaction à l'erreur déviation de
+vitesse trop élevée résultant de la
+charge
+1 / Error Class 1 : Classe d'erreur 1
+2 / Error Class 2 : Classe d'erreur 2
+3 / Error Class 3 : Classe d'erreur 3
+Une modification de ce réglage
+n'est possible que lorsque l'étage
+de puissance est désactivé.
+Les nouvelles valeurs seront prises
+en compte après la prochaine
+activation de l'étage de puissance.
+Disponible avec version ≥V01.26
+du micrologiciel. -
+1
+3
+3 UINT16
+R/W
+per.
+- CANopen
+3005:3C h
+Modbus 1400
+HMdis Distance entre du point de
+commutation
+La distance au point de
+commutation est définie comme
+point de consigne. usr_p
+1
+200
+2 147 483 647 INT32
+R/W
+per.
+- CANopen 3028:7 h
+Modbus 10254
+-
+0
+0
+2 UINT16
+R/W
+per.
+- CANopen 303A:2 h
+Modbus 14852
+Le paramètre n'agit que dans le cas
+d' une course de référence sans
+impulsion d'indexation.
+Les nouvelles valeurs seront prises
+en compte au prochain mouvement
+de moteur.
+HMIDispPara
+Mon
+SuPV
+458
+Affichage de l'IHM en cas de
+mouvement du moteur
+0 / OperatingState / StAt : état
+de fonctionnement
+1 / v_act / VAct : vitesse
+instantanée du moteur
+2 / I_act / iAct : courant effectif
+du moteur
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+0198441113756 09/2017Paramètre
+0198441113756 09/2017
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+HMIlocked Verrouiller l'IHM.
+0 / Not Locked / nLoc : IHM non
+verrouillée
+1 / Locked / Loc : IHM verrouillée
+Lorsque l'IHM est verrouillée, les
+actions suivantes ne sont plus
+possibles :
+- Modification des paramètres
+- Jog (déplacement manuel)
+- Autoréglage
+- Fault Reset
+Les nouvelles valeurs sont prises
+en compte immédiatement. -
+0
+0
+1 UINT16
+R/W
+per.
+- CANopen 303A:1 h
+Modbus 14850
+459Paramètre
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+HMmethod Méthode pour Homing (prise
+d'origine)
+1 : LIMN avec impulsion
+d'indexation
+2 : LIMP avec impulsion
+d'indexation
+7 : REF+ avec impulsion
+d'indexation, inv., dehors
+8 : REF+ avec impulsion
+d'indexation, inv., dedans
+9 : REF+ avec impulsion
+d'indexation, non inv., dedans
+10 : REF+ avec impulsion
+d'indexation, non inv., dehors
+11 : REF- avec impulsion
+d'indexation, inv., dehors
+12 : REF- avec impulsion
+d'indexation, inv., dedans
+13 : REF- avec impulsion
+d'indexation, non inv., dedans
+14 : REF- avec impulsion
+d'indexation, non inv., dehors
+17 : LIMN
+18 : LIMP
+23 : REF+, inv., dehors
+24 : REF+, inv., dedans
+25 : REF+, non inv., dedans
+26 : REF+, non inv., dehors
+27 : REF-, inv., dehors
+28 : REF-, inv., dedans
+29 : REF-, non inv., dedans
+30 : REF-, non inv., dehors
+33 : impulsion d'indexation
+direction nég.
+34 : impulsion d'indexation
+direction pos.
+35 : prise d'origine immédiate -
+1
+18
+35 INT16*
+R/W
+-
+- CANopen 6098:0 h
+Modbus 6936
+Abréviations :
+REF+ : déplacement de recherche
+dans la direction pos.
+REF- : déplacement de recherche
+dans la direction nég.
+inv. : inverser la direction dans le
+commutateur
+non inv. : ne pas inverser la
+direction dans le commutateur
+dehors : impulsion
+d'indexation/distance en-dehors du
+capteur
+dedans : impulsion
+d'indexation/distance dans le
+capteur
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+* type de données pour CANopen :
+INT8
+460
+0198441113756 09/2017Paramètre
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+HMoutdis Distance maximale pour la
+recherche du point de commutation
+0 : surveillance de la distance de
+recherche inactive
+>0: distance maximale usr_p
+0
+0
+2 147 483 647 INT32
+R/W
+per.
+- CANopen 3028:6 h
+Modbus 10252
+Après la détection du capteur, le
+variateur commence à rechercher
+le point de commutation. Si le point
+de commutation défini n'est pas
+trouvé après la distance indiquée
+ici, une erreur est détectée et la la
+course de référence est annulée.
+Les nouvelles valeurs seront prises
+en compte au prochain mouvement
+de moteur.
+HMp_home Position sur le point de référence
+Après une course de référence
+réussie, cette valeur de position est
+définie automatiquement comme
+point de référence.
+Les nouvelles valeurs seront prises
+en compte au prochain mouvement
+de moteur. usr_p
+-2 147 483 648
+0
+2 147 483 647 INT32
+R/W
+per.
+- CANopen 3028:B h
+Modbus 10262
+HMp_setP Position pour la prise d'origine
+immédiate
+Position pour le mode opératoire
+Homing, méthode 35.
+Les nouvelles valeurs sont prises
+en compte immédiatement. usr_p
+-
+0
+- INT32
+R/W
+-
+- CANopen
+301B:16 h
+Modbus 6956
+HMprefmethod
+oP → hoM-
+MEth Méthode privilégiée pour Homing
+(prise d'origine)
+Les nouvelles valeurs sont prises
+en compte immédiatement. -
+1
+18
+35 INT16
+R/W
+per.
+- CANopen 3028:A h
+Modbus 10260
+HMsrchdis Distance de recherche maximale
+après le dépassement du capteur
+0 : surveillance de la distance de
+recherche inactive
+>0: distance de recherche usr_p
+0
+0
+2 147 483 647 INT32
+R/W
+per.
+- CANopen 3028:D h
+Modbus 10266
+A l'intérieur de cette distance de
+recherche, le capteur doit être de
+nouveau activé, faute de quoi la
+course de référence est annulée.
+Les nouvelles valeurs seront prises
+en compte au prochain mouvement
+de moteur.
+0198441113756 09/2017
+HMv
+oP → hoM-
+hMn Vitesse cible pour la recherche du
+commutateur
+La valeur est limitée en interne au
+réglage du paramètre
+RAMP_v_max.
+Les nouvelles valeurs seront prises
+en compte au prochain mouvement
+de moteur. usr_v
+1
+60
+2 147 483 647 UINT32
+R/W
+per.
+- CANopen 6099:1 h
+Modbus 10248
+HMv_out Vitesse cible pour quitter le
+commutateur
+La valeur est limitée en interne au
+réglage du paramètre
+RAMP_v_max.
+Les nouvelles valeurs seront prises
+en compte au prochain mouvement
+de moteur. usr_v
+1
+6
+2 147 483 647 UINT32
+R/W
+per.
+- CANopen 6099:2 h
+Modbus 10250
+461Paramètre
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+InvertDirOfMove
+ConF → ACG-
+inMo Inversion de la direction du
+déplacement
+0 / Inversion Off / oFF : inversion
+de la direction du déplacement
+inactive
+1 / Inversion On / on : inversion
+de la direction du déplacement
+active
+La fin de course atteinte lors d'un
+déplacement dans la direction
+positive doit être raccordée à
+l'entrée de la fin de course positive
+et vice versa.
+Une modification de ce réglage
+n'est possible que lorsque l'étage
+de puissance est désactivé.
+Les nouvelles valeurs sont prises
+en compte après redémarrage du
+produit. -
+0
+0
+1 UINT16
+R/W
+per.
+- CANopen 3006:C h
+Modbus 1560
+IO_AutoEnable
+ConF → ACG-
+ioAE Activation de l'étage de puissance
+au démarrage
+0 / RisingEdge / riSE : un front
+montant lors de la fonction d'entrée
+de signaux "Enable" active l'étage
+de puissance
+1 / HighLevel / LEVL : une entrée
+de signal active lors de la fonction
+d'entrée de signaux "Enable" active
+l'étage de puissance
+2 / AutoOn / Auto : l'étage de
+puissance est automatiquement
+activé
+Les nouvelles valeurs seront prises
+en compte après la prochaine
+activation de l'étage de puissance. -
+0
+0
+2 UINT16
+R/W
+per.
+- CANopen 3005:6 h
+Modbus 1292
+IO_AutoEnaConfig
+ConF → ACG-
+ioEM Activation de l'étage de puissance
+comme défini via IO_AutoEnable,
+également après une erreur
+détectée
+0 / Off / _oFF : le réglage dans le
+paramètre IO_AutoEnable n'est
+utilisé qu'après le démarrage
+1 / On / on : le réglage dans le
+paramètre IO_AutoEnable est
+utilisé après le démarrage et après
+une erreur détectée
+Les nouvelles valeurs seront prises
+en compte après la prochaine
+activation de l'étage de puissance. -
+0
+0
+1 UINT16
+R/W
+per.
+- CANopen 3005:4 h
+Modbus 1288
+IO_DQ_set Modification directes des sorties
+logiques
+Les sorties logiques ne peuvent
+être posées directement que si la
+fonction de sortie de signal a été
+réglée sur "Available as required". -
+-
+-
+- UINT16
+R/W
+-
+- CANopen
+3008:11 h
+Modbus 2082
+Affectation des bits :
+Bit 0 : DQ0
+Bit 1 : DQ1
+462
+0198441113756 09/2017Paramètre
+0198441113756 09/2017
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+IO_FaultResOnEnaInp
+ConF → ACG-
+iEFr 'Fault Reset' supplémentaire pour
+la fonction d'entrée de signaux
+'Enable'
+0 / Off / oFF : Pas de 'Fault
+Reset' supplémentaire
+1 / OnFallingEdge / FALL : 'Fault
+Reset' supplémentaire avec front
+descendant
+2 / OnRisingEdge / riSE : 'Fault
+Reset' supplémentaire avec front
+montant
+Les nouvelles valeurs seront prises
+en compte après la prochaine
+activation de l'étage de puissance.
+Disponible avec version ≥V01.12
+du micrologiciel. -
+0
+0
+2 UINT16
+R/W
+per.
+- CANopen
+3005:34 h
+Modbus 1384
+IO_I_limit
+ConF → i-o-
+iLiM Limitation de courant via entrée
+Il est possible d'activer une
+limitation de courant via une entrée
+logique.
+Par incréments de 0,01 A rms .
+Les nouvelles valeurs sont prises
+en compte immédiatement. A rms
+0,00
+0,20
+300,00 UINT16
+R/W
+per.
+- CANopen
+3006:27 h
+Modbus 1614
+IO_v_limit
+ConF → i-o-
+nLiM Limitation de la vitesse via entrée
+Il est possible d'activer une
+limitation de vitesse via une entrée
+logique.
+En mode opératoire Profile Torque,
+la vitesse minimale est limitée en
+interne à 100 min-1.
+Les nouvelles valeurs sont prises
+en compte immédiatement. usr_v
+0
+10
+2 147 483 647 UINT32
+R/W
+per.
+- CANopen
+3006:1E h
+Modbus 1596
+463Paramètre
+464
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+IOfunct_DI0
+ConF → i-o-
+di0 Fonction de l'entrée DI0
+1 / Freely Available / nonE : à
+libre disposition
+2 / Fault Reset / FrES :
+Réinitialisation après erreur
+3 / Enable / EnAb : active l'étage
+de puissance
+4 / Halt / hALt : Halt
+5 / Start Profile Positioning /
+SPtP : demande de démarrage
+pour le déplacement
+6 / Current Limitation / iLiM :
+limitation du courant à la valeur du
+paramètre
+7 / Zero Clamp / CLMP : Zero
+Clamp
+8 / Velocity Limitation / VLiM :
+limitation de la vitesse à la valeur du
+paramètre
+21 / Reference Switch (REF) /
+rEF : commutateur de référence
+22 / Positive Limit Switch (LIMP) /
+LiMP : fin de course positive
+23 / Negative Limit Switch (LIMN) /
+LiMn : fin de course négative
+24 / Switch Controller Parameter
+Set / CPAr : changement des
+blocs de paramètres de boucle de
+régulation
+28 / Velocity Controller Integral Off
+/ tnoF : désactivation de l'action
+intégrale du régulateur de vitesse
+30 / Start Signal Of RMAC /
+SrMc : signal-départ du
+déplacement relatif après Capture
+(RMAC)
+31 / Activate RMAC / ArMc :
+active le déplacement relatif après
+Capture (RMAC)
+40 / Release Holding Brake /
+rEhb : Desserre le frein de
+maintien
+Une modification de ce réglage
+n'est possible que lorsque l'étage
+de puissance est désactivé.
+Les nouvelles valeurs sont prises
+en compte après redémarrage du
+produit. -
+-
+-
+- UINT16
+R/W
+per.
+- CANopen 3007:1 h
+Modbus 1794
+0198441113756 09/2017Paramètre
+0198441113756 09/2017
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+IOfunct_DI1
+ConF → i-o-
+di1 Fonction de l'entrée DI1
+1 / Freely Available / nonE : à
+libre disposition
+2 / Fault Reset / FrES :
+Réinitialisation après erreur
+3 / Enable / EnAb : active l'étage
+de puissance
+4 / Halt / hALt : Halt
+5 / Start Profile Positioning /
+SPtP : demande de démarrage
+pour le déplacement
+6 / Current Limitation / iLiM :
+limitation du courant à la valeur du
+paramètre
+7 / Zero Clamp / CLMP : Zero
+Clamp
+8 / Velocity Limitation / VLiM :
+limitation de la vitesse à la valeur du
+paramètre
+21 / Reference Switch (REF) /
+rEF : commutateur de référence
+22 / Positive Limit Switch (LIMP) /
+LiMP : fin de course positive
+23 / Negative Limit Switch (LIMN) /
+LiMn : fin de course négative
+24 / Switch Controller Parameter
+Set / CPAr : changement des
+blocs de paramètres de boucle de
+régulation
+28 / Velocity Controller Integral Off
+/ tnoF : désactivation de l'action
+intégrale du régulateur de vitesse
+30 / Start Signal Of RMAC /
+SrMc : signal-départ du
+déplacement relatif après Capture
+(RMAC)
+31 / Activate RMAC / ArMc :
+active le déplacement relatif après
+Capture (RMAC)
+40 / Release Holding Brake /
+rEhb : Desserre le frein de
+maintien
+Une modification de ce réglage
+n'est possible que lorsque l'étage
+de puissance est désactivé.
+Les nouvelles valeurs sont prises
+en compte après redémarrage du
+produit. -
+-
+-
+- UINT16
+R/W
+per.
+- CANopen 3007:2 h
+Modbus 1796
+465Paramètre
+466
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+IOfunct_DI2
+ConF → i-o-
+di2 Fonction de l'entrée DI2
+1 / Freely Available / nonE : à
+libre disposition
+2 / Fault Reset / FrES :
+Réinitialisation après erreur
+3 / Enable / EnAb : active l'étage
+de puissance
+4 / Halt / hALt : Halt
+5 / Start Profile Positioning /
+SPtP : demande de démarrage
+pour le déplacement
+6 / Current Limitation / iLiM :
+limitation du courant à la valeur du
+paramètre
+7 / Zero Clamp / CLMP : Zero
+Clamp
+8 / Velocity Limitation / VLiM :
+limitation de la vitesse à la valeur du
+paramètre
+21 / Reference Switch (REF) /
+rEF : commutateur de référence
+22 / Positive Limit Switch (LIMP) /
+LiMP : fin de course positive
+23 / Negative Limit Switch (LIMN) /
+LiMn : fin de course négative
+24 / Switch Controller Parameter
+Set / CPAr : changement des
+blocs de paramètres de boucle de
+régulation
+28 / Velocity Controller Integral Off
+/ tnoF : désactivation de l'action
+intégrale du régulateur de vitesse
+30 / Start Signal Of RMAC /
+SrMc : signal-départ du
+déplacement relatif après Capture
+(RMAC)
+31 / Activate RMAC / ArMc :
+active le déplacement relatif après
+Capture (RMAC)
+40 / Release Holding Brake /
+rEhb : Desserre le frein de
+maintien
+Une modification de ce réglage
+n'est possible que lorsque l'étage
+de puissance est désactivé.
+Les nouvelles valeurs sont prises
+en compte après redémarrage du
+produit. -
+-
+-
+- UINT16
+R/W
+per.
+- CANopen 3007:3 h
+Modbus 1798
+0198441113756 09/2017Paramètre
+0198441113756 09/2017
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+IOfunct_DI3
+ConF → i-o-
+di3 Fonction de l'entrée DI3
+1 / Freely Available / nonE : à
+libre disposition
+2 / Fault Reset / FrES :
+Réinitialisation après erreur
+3 / Enable / EnAb : active l'étage
+de puissance
+4 / Halt / hALt : Halt
+5 / Start Profile Positioning /
+SPtP : demande de démarrage
+pour le déplacement
+6 / Current Limitation / iLiM :
+limitation du courant à la valeur du
+paramètre
+7 / Zero Clamp / CLMP : Zero
+Clamp
+8 / Velocity Limitation / VLiM :
+limitation de la vitesse à la valeur du
+paramètre
+21 / Reference Switch (REF) /
+rEF : commutateur de référence
+22 / Positive Limit Switch (LIMP) /
+LiMP : fin de course positive
+23 / Negative Limit Switch (LIMN) /
+LiMn : fin de course négative
+24 / Switch Controller Parameter
+Set / CPAr : changement des
+blocs de paramètres de boucle de
+régulation
+28 / Velocity Controller Integral Off
+/ tnoF : désactivation de l'action
+intégrale du régulateur de vitesse
+30 / Start Signal Of RMAC /
+SrMc : signal-départ du
+déplacement relatif après Capture
+(RMAC)
+31 / Activate RMAC / ArMc :
+active le déplacement relatif après
+Capture (RMAC)
+40 / Release Holding Brake /
+rEhb : Desserre le frein de
+maintien
+Une modification de ce réglage
+n'est possible que lorsque l'étage
+de puissance est désactivé.
+Les nouvelles valeurs sont prises
+en compte après redémarrage du
+produit. -
+-
+-
+- UINT16
+R/W
+per.
+- CANopen 3007:4 h
+Modbus 1800
+467Paramètre
+468
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+IOfunct_DQ0
+ConF → i-o-
+do0 Fonction de la sortie DQ0
+1 / Freely Available / nonE : à
+libre disposition
+2 / No Fault / nFLt : signale les
+états de fonctionnement Ready To
+Switch On, Switched On et
+Operation Enabled
+3 / Active / Acti : signale l'état
+de fonctionnement Operation
+Enabled
+4 / RMAC Active Or Finished /
+rMcA : déplacement relatif après
+Capture actif ou terminé (RMAC)
+5 / In Position Deviation Window /
+in-P : déviation de position à
+l'intérieur de la fenêtre
+6 / In Velocity Deviation Window /
+in-V : déviation de la vitesse à
+l'intérieur de la fenêtre
+7 / Velocity Below Threshold /
+Vthr : vitesse du moteur
+inférieure à la valeur de seuil
+8 / Current Below Threshold /
+ithr : courant du moteur
+inférieur à la valeur de seuil
+9 / Halt Acknowledge / hALt :
+acquittement Halt
+13 / Motor Standstill / MStd :
+moteur à l'arrêt
+14 / Selected Error / SErr : l'un
+des erreurs spécifiés des classes
+d'erreur 1 ... 4 est active
+15 / Valid Reference (ref_ok) /
+rEFo : le zéro est valable
+(ref_ok)
+16 / Selected Warning / SWrn :
+l'un des erreurs spécifiés de la
+classe d'erreur 0 est active
+18 / Position Register Channel 1 /
+PrC1 : canal 1 du registre de
+position
+19 / Position Register Channel 2 /
+PrC2 : canal 2 du registre de
+position
+20 / Position Register Channel 3 /
+PrC3 : canal 3 du registre de
+position
+21 / Position Register Channel 4 /
+PrC4 : canal 4 du registre de
+position
+22 / Motor Moves Positive / MPoS
+: mouvement de moteur dans la
+direction positive
+23 / Motor Moves Negative /
+MnEG : mouvement de moteur
+dans la direction négative
+Une modification de ce réglage
+n'est possible que lorsque l'étage
+de puissance est désactivé.
+Les nouvelles valeurs sont prises
+en compte après redémarrage du
+produit. -
+-
+-
+- UINT16
+R/W
+per.
+- CANopen 3007:9 h
+Modbus 1810
+0198441113756 09/2017Paramètre
+0198441113756 09/2017
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+IOfunct_DQ1
+ConF → i-o-
+do1 Fonction de la sortie DQ1
+1 / Freely Available / nonE : à
+libre disposition
+2 / No Fault / nFLt: signale les
+états de fonctionnement Ready To
+Switch On, Switched On et
+Operation Enabled
+3 / Active / Acti: signale l'état de
+fonctionnement Operation Enabled
+4 / RMAC Active Or Finished /
+rMcA: déplacement relatif après
+Capture actif ou terminé (RMAC)
+5 / In Position Deviation Window /
+in-P: déviation de position à
+l'intérieur de la fenêtre
+6 / In Velocity Deviation Window /
+in-V: déviation de la vitesse à
+l'intérieur de la fenêtre
+7 / Velocity Below Threshold /
+Vthr: vitesse du moteur
+inférieure à la valeur de seuil
+8 / Current Below Threshold /
+ithr: courant du moteur
+inférieur à la valeur de seuil
+9 / Halt Acknowledge / hALt:
+acquittement Halt
+13 / Motor Standstill / MStd:
+moteur à l'arrêt
+14 / Selected Error / SErr: l'un
+des erreurs spécifiés des classes
+d'erreur 1 ... 4 est active
+15 / Valid Reference (ref_ok) /
+rEFo: le zéro est valable (ref_ok)
+16 / Selected Warning / SWrn:
+l'un des erreurs spécifiés de la
+classe d'erreur 0 est active
+18 / Position Register Channel 1 /
+PrC1: canal 1 du registre de
+position
+19 / Position Register Channel 2 /
+PrC2: canal 2 du registre de
+position
+20 / Position Register Channel 3 /
+PrC3: canal 3 du registre de
+position
+21 / Position Register Channel 4 /
+PrC4: canal 4 du registre de
+position
+22 / Motor Moves Positive /
+MPoS: mouvement de moteur
+dans la direction positive
+23 / Motor Moves Negative /
+MnEG: mouvement de moteur
+dans la direction négative
+Une modification de ce réglage
+n'est possible que lorsque l'étage
+de puissance est désactivé.
+Les nouvelles valeurs sont prises
+en compte après redémarrage du
+produit. -
+-
+-
+- UINT16
+R/W
+per.
+- CANopen 3007:A h
+Modbus 1812
+469Paramètre
+470
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+IOsigCurrLim Évaluation du signal pour fonction
+d'entrée de signaux Current
+Limitation
+1 / Normally Closed: contact à
+ouverture
+2 / Normally Open: contact à
+fermeture
+Une modification de ce réglage
+n'est possible que lorsque l'étage
+de puissance est désactivé.
+Les nouvelles valeurs seront prises
+en compte après la prochaine
+activation de l'étage de puissance. -
+1
+2
+2 UINT16
+R/W
+per.
+- CANopen
+3008:28 h
+Modbus 2128
+IOsigLIMN Sélection du type du signal de la fin
+de course négative
+0 / Inactive: inactif
+1 / Normally Closed: contact à
+ouverture
+2 / Normally Open: contact à
+fermeture
+Une modification de ce réglage
+n'est possible que lorsque l'étage
+de puissance est désactivé.
+Les nouvelles valeurs seront prises
+en compte après la prochaine
+activation de l'étage de puissance. -
+0
+1
+2 UINT16
+R/W
+per.
+- CANopen 3006:F h
+Modbus 1566
+IOsigLIMP Sélection du type du signal de la fin
+de course positive
+0 / Inactive: inactif
+1 / Normally Closed: contact à
+ouverture
+2 / Normally Open: contact à
+fermeture
+Une modification de ce réglage
+n'est possible que lorsque l'étage
+de puissance est désactivé.
+Les nouvelles valeurs seront prises
+en compte après la prochaine
+activation de l'étage de puissance. -
+0
+1
+2 UINT16
+R/W
+per.
+- CANopen
+3006:10 h
+Modbus 1568
+IOsigREF Sélection du type du signal du
+commutateur de référence
+1 / Normally Closed: contact à
+ouverture
+2 / Normally Open: contact à
+fermeture
+Le commutateur de référence n'est
+activé que pendant le traitement du
+course de référence.
+Une modification de ce réglage
+n'est possible que lorsque l'étage
+de puissance est désactivé.
+Les nouvelles valeurs seront prises
+en compte après la prochaine
+activation de l'étage de puissance. -
+1
+1
+2 UINT16
+R/W
+per.
+- CANopen 3006:E h
+Modbus 1564
+0198441113756 09/2017Paramètre
+0198441113756 09/2017
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+IOsigRespOfPS Réaction au fin de course actif lors
+de l'activation de l'étage de
+puissance
+0 / Error: le fin de course actif
+déclenche une erreur.
+1 / No Error: le fin de course actif ne
+déclenche pas d'erreur.
+Définit la réaction lorsque l'étage de
+puissance est activé alors que le fin
+de course est actif.
+Les nouvelles valeurs sont prises
+en compte immédiatement. -
+0
+0
+1 UINT16
+R/W
+per.
+- CANopen 3006:6 h
+Modbus 1548
+IOsigVelLim Évaluation du signal pour fonction
+d'entrée de signaux Velocity
+Limitation
+1 / Normally Closed: contact à
+ouverture
+2 / Normally Open: contact à
+fermeture
+Une modification de ce réglage
+n'est possible que lorsque l'étage
+de puissance est désactivé.
+Les nouvelles valeurs seront prises
+en compte après la prochaine
+activation de l'étage de puissance. -
+1
+2
+2 UINT16
+R/W
+per.
+- CANopen
+3008:27 h
+Modbus 2126
+IP_IntTimInd Interpolation time index
+Disponible avec version ≥V01.08
+du micrologiciel.
+* type de données pour CANopen :
+INT8 -
+-128
+-3
+63 INT16*
+R/W
+-
+- CANopen 60C2:2 h
+Modbus 7002
+IP_IntTimPerVal Interpolation time period value
+Disponible avec version ≥V01.08
+du micrologiciel.
+* Type de données pour CANopen :
+UINT8 s
+0
+1
+255 UINT16*
+R/W
+-
+- CANopen 60C2:1 h
+Modbus 7000
+IPp_target Valeur de consigne de position
+pour le mode opératoire
+Interpolated Position
+Disponible avec version ≥V01.08
+du micrologiciel. -
+-2 147 483 648
+-
+2 147 483 647 INT32
+R/W
+-
+- CANopen 60C1:1 h
+Modbus 7004
+JOGactivate Activation du mode opératoire Jog
+(déplacement manuel)
+Bit 0 : direction positive du
+déplacement
+Bit 1 : direction négative du
+déplacement
+Bit 2 : 0=lent 1=rapide
+Les nouvelles valeurs sont prises
+en compte immédiatement. -
+0
+0
+7 UINT16
+R/W
+-
+- CANopen 301B:9 h
+Modbus 6930
+JOGmethod Sélection de la méthode Jog
+0 / Continuous Movement /
+coMo: Jog avec déplacement en
+continu
+1 / Step Movement / StMo: Jog
+avec déplacement par étapes
+Les nouvelles valeurs sont prises
+en compte immédiatement. -
+0
+1
+1 UINT16
+R/W
+-
+- CANopen 3029:3 h
+Modbus 10502
+JOGstep Distance du déplacement par
+étapes
+Les nouvelles valeurs seront prises
+en compte au prochain mouvement
+de moteur. usr_p
+1
+20
+2147 483 647 INT32
+R/W
+per.
+- CANopen 3029:7 h
+Modbus 10510
+471Paramètre
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+JOGtime Temps d'attente pour déplacement
+par étapes
+Les nouvelles valeurs seront prises
+en compte au prochain mouvement
+de moteur. ms
+1
+500
+32 767 UINT16
+R/W
+per.
+- CANopen 3029:8 h
+Modbus 10512
+JOGv_fast
+oP → JoG-
+JGhi Vitesse du déplacement rapide
+La valeur est limitée en interne au
+réglage du paramètre
+RAMP_v_max.
+Les nouvelles valeurs sont prises
+en compte immédiatement. usr_v
+1
+180
+2 147 483 647 UINT32
+R/W
+per.
+- CANopen 3029:5 h
+Modbus 10506
+JOGv_slow
+oP → JoG-
+JGLo Vitesse du déplacement lent
+La valeur est limitée en interne au
+réglage du paramètre
+RAMP_v_max.
+Les nouvelles valeurs sont prises
+en compte immédiatement. usr_v
+1
+60
+2 147 483 647 UINT32
+R/W
+per.
+- CANopen 3029:4 h
+Modbus 10504
+LIM_HaltReaction
+ConF → ACG-
+htyP Code d'option pour le type de
+rampe Halt
+1 / Deceleration Ramp / dEcE:
+rampe de décélération
+3 / Torque Ramp / torq: rampe
+de couple
+Type de décélération pour un Halt -
+1
+1
+3 INT16
+R/W
+per.
+- CANopen 605D:0 h
+Modbus 1582
+A rms
+-
+-
+- UINT16
+R/W
+per.
+- CANopen 3011:E h
+Modbus 4380
+Réglage de la rampe de
+décélération à l'aide du paramètre
+RAMP_v_dec.
+Réglage de la rampe de couple à
+l'aide du paramètre LIM_I_maxHalt.
+Si une rampe d'accélération est
+déjà active, le paramètre ne peut
+pas être inscrit.
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+LIM_I_maxHalt
+ConF → ACG-
+hcur
+Courant pour Arrêt
+Cette valeur est limitée uniquement
+par les valeurs minimale et
+maximale de la plage du paramètre
+(pas de limitation de la valeur par le
+moteur/étage de puissance)
+Dans le cas d'un Halt, la limitation
+de courant (_Imax_act) correspond
+à la plus petite des valeurs
+suivantes :
+- LIM_I_maxHalt
+- _M_I_max
+- _PS_I_max
+D'autres limitations de courant
+résultant de la surveillance I2t sont
+également prises en compte lors
+d'un Halt.
+Par défaut : _PS_I_max à une
+fréquence MLI de 8 kHz et une
+tension réseau de 230/480 V
+Par incréments de 0,01 A rms .
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+472
+0198441113756 09/2017Paramètre
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+LIM_I_maxQSTP
+ConF → FLt-
+qcur Courant pour Quick Stop
+Cette valeur est limitée uniquement
+par les valeurs minimale et
+maximale de la plage du paramètre
+(pas de limitation de la valeur par le
+moteur/étage de puissance) A rms
+-
+-
+- UINT16
+R/W
+per.
+- CANopen 3011:D h
+Modbus 4378
+-
+-2
+6
+7 INT16
+R/W
+per.
+- CANopen
+3006:18 h
+Modbus 1584
+Dans le cas d'un Quick Stop, la
+limitation de courant (_Imax_act)
+correspond à la plus petite des
+valeurs suivantes :
+- LIM_I_maxQSTP
+- _M_I_max
+- _PS_I_max
+D'autres limitations de courant
+résultant de la surveillance I2t sont
+également prises en compte lors
+d'un Quick Stop.
+Par défaut : _PS_I_max à une
+fréquence MLI de 8 kHz et une
+tension réseau de 230/480 V
+Par incréments de 0,01 A rms .
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+LIM_QStopReact
+ConF → FLt-
+qtyP
+Code d'option pour le type de
+rampe Quick Stop
+-2 / Torque ramp (Fault): utiliser la
+rampe de couple et rester dans
+l'état de fonctionnement 9 Fault
+-1 / Deceleration Ramp (Fault):
+utiliser la rampe de décélération et
+rester dans l'état de fonctionnement
+9 Fault
+6 / Deceleration ramp (Quick Stop):
+utiliser la rampe de décélération et
+rester dans l'état de fonctionnement
+7 Quick Stop
+7 / Torque ramp (Quick Stop):
+utiliser la rampe de couple et rester
+dans l'état de fonctionnement 7
+Quick Stop
+Type de décélération pour Quick
+Stop
+Réglage de la rampe de
+décélération à l'aide du paramètre
+RAMPquickstop.
+Réglage de la rampe de couple à
+l'aide du paramètre
+LIM_I_maxQSTP.
+Si une rampe d'accélération est
+déjà active, le paramètre ne peut
+pas être inscrit.
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+0198441113756 09/2017
+473Paramètre
+474
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+Mains_reactor Inductance de ligne
+0 / No: non
+1 / Yes: oui
+Valeur 0 : aucune inductance de
+ligne raccordée. La puissance
+nominale de l'étage de puissance
+est réduite.
+Valeur 1 : inductance de ligne
+raccordée.
+Une modification de ce réglage
+n'est possible que lorsque l'étage
+de puissance est désactivé.
+Les nouvelles valeurs sont prises
+en compte immédiatement. -
+0
+0
+1 UINT16
+R/W
+per.
+- CANopen
+3005:20 h
+Modbus 1344
+MBaddress
+ConF → CoM-
+MbAd Adresse Modbus
+Adresses valides : 1 à 247
+Les nouvelles valeurs sont prises
+en compte après redémarrage du
+produit. -
+1
+1
+247 UINT16
+R/W
+per.
+- CANopen 3016:4 h
+Modbus 5640
+MBbaud
+ConF → CoM-
+Mbbd Vitesse de transmission Modbus
+9600 / 9600 Baud / 9.6: 9600
+Bauds
+19200 / 19200 Baud / 19.2:
+19200 Bauds
+38400 / 38400 Baud / 38.4:
+38400 Bauds
+Les nouvelles valeurs sont prises
+en compte après redémarrage du
+produit. -
+9 600
+19 200
+38 400 UINT32
+R/W
+per.
+- CANopen 3016:3 h
+Modbus 5638
+Mfb_ResRatio Rapport de transformation
+Une modification de ce réglage
+n'est possible que lorsque l'étage
+de puissance est désactivé.
+Les nouvelles valeurs sont prises
+en compte après redémarrage du
+produit. -
+0,3
+-
+1,0 UINT16
+R/W
+-
+- CANopen
+305C:17 h
+Modbus 23598
+MOD_AbsDirection Direction du déplacement absolu
+avec modulo
+0 / Shortest Distance: déplacement
+avec la distance la plus courte
+1 / Positive Direction: déplacement
+uniquement en direction positive
+2 / Negative Direction: déplacement
+uniquement en direction négative
+Si le paramètre est sur 0,
+l'entraînement calcule la distance la
+plus courte vers la position cible et
+démarre le déplacement dans la
+direction correspondante. Si
+l'éloignement par rapport à la
+position cible en direction positive
+et négative est identique, un
+déplacement en direction positive
+est réalisé.
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+Disponible avec version ≥V01.03
+du micrologiciel. -
+0
+0
+2 UINT16
+R/W
+per.
+- CANopen
+3006:3B h
+Modbus 1654
+0198441113756 09/2017Paramètre
+0198441113756 09/2017
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+MOD_AbsMultiRng Plages multiples pour déplacement
+absolu avec modulo
+0 / Multiple Ranges Off:
+déplacement absolu dans une
+plage modulo
+1 / Multiple Ranges On:
+déplacement absolu dans plusieurs
+plages modulo
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+Disponible avec version ≥V01.03
+du micrologiciel. -
+0
+0
+1 UINT16
+R/W
+per.
+- CANopen
+3006:3C h
+Modbus 1656
+MOD_Enable
+ConF → ACG-
+AtyP Activation de modulo
+0 / Modulo Off / oFF: modulo
+désactivé
+1 / Modulo On / on: modulo activé
+Une modification de ce réglage
+n'est possible que lorsque l'étage
+de puissance est désactivé.
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+Disponible avec version ≥V01.03
+du micrologiciel. -
+0
+0
+1 UINT16
+R/W
+per.
+- CANopen
+3006:38 h
+Modbus 1648
+MOD_Max Position maximale de la plage
+modulo
+La valeur de position maximale de
+la plage modulo doit être
+supérieure à la valeur de position
+minimale de la plage modulo.
+La valeur ne doit pas être
+supérieure à la valeur maximale de
+mise à l'échelle de la position
+_ScalePOSmax.
+Une modification de ce réglage
+n'est possible que lorsque l'étage
+de puissance est désactivé.
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+Disponible avec version ≥V01.03
+du micrologiciel. usr_p
+-
+3 600
+- INT32
+R/W
+per.
+- CANopen
+3006:3A h
+Modbus 1652
+MOD_Min Position minimale de la plage
+modulo
+La valeur de position minimale de la
+plage modulo doit être inférieure à
+la valeur de position maximale de la
+plage modulo
+La valeur ne doit pas être
+supérieure à la valeur maximale de
+mise à l'échelle de la position
+_ScalePOSmax.
+Une modification de ce réglage
+n'est possible que lorsque l'étage
+de puissance est désactivé.
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+Disponible avec version ≥V01.03
+du micrologiciel. usr_p
+-
+0
+- INT32
+R/W
+per.
+- CANopen
+3006:39 h
+Modbus 1650
+475Paramètre
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+MON_ChkTime
+ConF → i-o-
+tthr Surveillance fenêtre de temps
+Réglage d'un temps pour la
+surveillance de la déviation de
+position, la déviation de la vitesse,
+de la valeur de vitesse et du
+courant. Si la valeur surveillée se
+trouve dans la gamme pendant le
+temps sélectionnée, la fonction de
+surveillance renvoie un résultat
+positif.
+L'état peut être émis par une sortie
+paramétrable.
+Les nouvelles valeurs sont prises
+en compte immédiatement. ms
+0
+0
+9 999 UINT16
+R/W
+per.
+- CANopen
+3006:1D h
+Modbus 1594
+MON_commutat Surveillance de la commutation
+0 / Off: surveillance de
+commutation inactive
+1 / On (OpState6) : surveillance de
+commutation active en mode
+opératoire 6
+2 / On (OpState6+7) : surveillance
+de commutation active dans les
+modes opératoires 6 et 7
+Une modification de ce réglage
+n'est possible que lorsque l'étage
+de puissance est désactivé.
+Les nouvelles valeurs seront prises
+en compte après la prochaine
+activation de l'étage de puissance. -
+0
+1
+2 UINT16
+R/W
+per.
+- CANopen 3005:5 h
+Modbus 1290
+MON_ConfModification Configuration de la modification de
+configuration
+Valeur 0 : la modification est
+détectée pour chaque accès en
+écriture.
+Valeur 1 : la modification est
+détectée pour chaque accès en
+écriture qui modifie une valeur.
+Valeur 2 : comme pour la valeur 0,
+lorsque le logiciel de mise en
+service n'est pas connecté. Comme
+la valeur 1 lorsque le logiciel de
+mise en service est connecté. -
+0
+2
+2 UINT16
+R/W
+per.
+- CANopen
+3004:1D h
+Modbus 1082
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+Disponible avec version ≥V01.26
+du micrologiciel.
+476
+0198441113756 09/2017Paramètre
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+MON_DCbusVdcThresh Valeur de seuil surveillance de
+surtension bus DC
+Ce paramètre permet de réduire la
+valeur de seuil pour la surveillance
+de surtension du bus DC. Le
+paramètre n'agit qu'avec les
+appareils monophasés alimentés
+avec 115 V et avec les appareils
+triphasés alimentés avec 208 V. -
+0
+0
+1 UINT16
+R/W
+per.
+- CANopen
+3005:3D h
+Modbus 1402
+Valeur 0:
+Monophasé : 450 V dc
+Triphasé : 820 V dc
+Valeur 1 :
+Monophasé : 260 V dc
+Triphasé : 450 V dc
+Une modification de ce réglage
+n'est possible que lorsque l'étage
+de puissance est désactivé.
+Les nouvelles valeurs seront prises
+en compte après la prochaine
+activation de l'étage de puissance.
+Disponible avec version ≥V01.26
+du micrologiciel.
+0198441113756 09/2017
+MON_ENC_Ampl Activation de la surveillance de
+l'amplitude SinCos
+Valeur 0 : désactiver la surveillance
+Valeur 1 : activer la surveillance
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+Disponible avec version ≥V01.26
+du micrologiciel. -
+0
+0
+1 UINT16
+R/W
+-
+- CANopen
+303F:61 h
+Modbus 16322
+MON_GroundFault Surveillance de défaut à la terre
+0 / Off: Surveillance du défaut à la
+terre inactive
+1 / On: Surveillance du défaut à la
+terre active
+Les nouvelles valeurs sont prises
+en compte après redémarrage du
+produit. -
+0
+1
+1 UINT16
+R/W
+per.
+expert CANopen
+3005:10 h
+Modbus 1312
+MON_I_Threshold
+ConF → i-o-
+ithr Surveillance du seuil de courant
+Il y a vérification si, pendant la
+durée paramétrée dans
+MON_ChkTime, le variateur se
+trouve en dessous de la valeur
+définie.
+L'état peut être émis par une sortie
+paramétrable.
+La valeur du paramètre
+_Iq_act_rms est utilisée comme
+valeur de comparaison.
+Par incréments de 0,01 A rms .
+Les nouvelles valeurs sont prises
+en compte immédiatement. A rms
+0,00
+0,20
+300,00 UINT16
+R/W
+per.
+- CANopen
+3006:1C h
+Modbus 1592
+MON_IO_SelErr1 Premier code d'erreur pour la
+fonction de sortie de signal
+Selected Error
+Ce paramètre définit le code
+d'erreur d'une erreur des classes
+d'erreur 1 à 4 censée activer la
+fonction de sortie de signal.
+Les nouvelles valeurs sont prises
+en compte immédiatement. -
+0
+0
+65 535 UINT16
+R/W
+per.
+- CANopen 303B:6 h
+Modbus 15116
+477Paramètre
+478
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+MON_IO_SelErr2 Deuxième code d'erreur pour la
+fonction de sortie de signal
+Selected Error
+Ce paramètre définit le code
+d'erreur d'une erreur des classes
+d'erreur 1 à 4 censée activer la
+fonction de sortie de signal.
+Les nouvelles valeurs sont prises
+en compte immédiatement. -
+0
+0
+65 535 UINT16
+R/W
+per.
+- CANopen 303B:7 h
+Modbus 15118
+MON_IO_SelWar1 Premier code d'erreur pour la
+fonction de sortie de signal
+Selected Warning
+Ce paramètre définit le code
+d'erreur d'une erreur de la classe 0
+censée activer la fonction de sortie
+de signal.
+Les nouvelles valeurs sont prises
+en compte immédiatement. -
+0
+0
+65 535 UINT16
+R/W
+per.
+- CANopen 303B:8 h
+Modbus 15120
+MON_IO_SelWar2 Deuxième code d'erreur pour la
+fonction de sortie de signal
+Selected Warning
+Ce paramètre définit le code
+d'erreur d'une erreur de la classe 0
+censée activer la fonction de sortie
+de signal.
+Les nouvelles valeurs sont prises
+en compte immédiatement. -
+0
+0
+65 535 UINT16
+R/W
+per.
+- CANopen 303B:9 h
+Modbus 15122
+0198441113756 09/2017Paramètre
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+MON_MainsVolt Détection et surveillance des
+phases réseaux
+0 / Automatic Mains Detection:
+détection automatique et
+surveillance de la tension réseau
+1 / DC-Bus Only (Mains 1~230 V /
+3~480 V): seulement bus DC,
+correspond à une tension réseau
+230 V (monophasé) ou 480 V
+(triphasé)
+2 / DC-Bus Only (Mains 1~115 V /
+3~208 V): seulement bus DC,
+correspond à une tension réseau
+115 V (monophasé) ou 208 V
+(triphasé)
+3 / Mains 1~230 V / 3~480 V:
+tension réseau 230 V
+(monophasée) ou 480 V (triphasée)
+4 / Mains 1~115 V / 3~208 V:
+tension réseau 115 V
+(monophasée) ou 208 V (triphasée)
+5 / Reserved: réservé
+Valeur 0 : dès que la tension
+réseau est détectée, l'appareil
+vérifie automatiquement si la
+tension réseau est de 115 V ou 230
+V dans le cas des appareils
+monophasés, et de 208 V ou
+400/480 V dans le cas des
+appareils triphasés. -
+0
+0
+5 UINT16
+R/W
+per.
+expert CANopen 3005:F h
+Modbus 1310
+Tour
+0,0001
+1,0000
+200,0000 UINT32
+R/W
+per.
+- CANopen 6065:0 h
+Modbus 1606
+Valeurs 1 ... 2 : si l'appareil est
+uniquement relié au bus DC, le
+paramètre doit être réglé sur la
+tension correspondant à la tension
+de l'appareil fournissant la tension.
+La tension réseau n'est pas
+surveillée.
+Valeurs 3 ... 4 : si la tension réseau
+n'est pas correctement détectée
+lors du démarrage, il est possible
+de régler manuellement la tension
+réseau à utiliser.
+Une modification de ce réglage
+n'est possible que lorsque l'étage
+de puissance est désactivé.
+Les nouvelles valeurs seront prises
+en compte après la prochaine
+activation de l'étage de puissance.
+MON_p_dif_load
+Déviation de position maximale
+résultant de la charge
+La déviation de position
+dépendante de la charge
+correspond à la différence entre la
+consigne de position et la position
+instantanée causée par la charge.
+La valeur peut être entrée en
+unités-utilisateur à l'aide du
+paramètre MON_p_dif_load_usr.
+Par incréments de 0,0001 tour.
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+0198441113756 09/2017
+479Paramètre
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+MON_p_dif_load_usr Déviation de position maximale
+résultant de la charge
+La déviation de position
+dépendante de la charge
+correspond à la différence entre la
+consigne de position et la position
+instantanée causée par la charge. usr_p
+1
+16 384
+2 147 483 647 INT32
+R/W
+per.
+- CANopen
+3006:3E h
+Modbus 1660
+La valeur minimale, le réglage
+d'usine et la valeur maximale
+dépendent du facteur de mise à
+l'échelle.
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+Disponible avec version ≥V01.05
+du micrologiciel.
+MON_p_dif_warn Déviation de position maximale
+résultant de la charge (classe
+d'erreur 0)
+100,0 % correspond à la déviation
+de position maximale (erreur de
+poursuite) réglé à l'aide du
+paramètre MON_p_dif_load.
+Les nouvelles valeurs sont prises
+en compte immédiatement. %
+0
+75
+100 UINT16
+R/W
+per.
+- CANopen
+3006:29 h
+Modbus 1618
+MON_p_DiffWin
+ConF → ACG-
+in-P Surveillance de la déviation de
+position
+Il y a vérification si, pendant la
+durée paramétrée dans
+MON_ChkTime, le variateur se
+trouve à l'intérieur de la déviation
+définie.
+L'état peut être émis par une sortie
+paramétrable. Tour
+0,0000
+0,0010
+0,9999 UINT16
+R/W
+per.
+- CANopen
+3006:19 h
+Modbus 1586
+usr_p
+0
+16
+2 147 483 647 INT32
+R/W
+per.
+- CANopen
+3006:3F h
+Modbus 1662
+La valeur peut être entrée en
+unités-utilisateur à l'aide du
+paramètre MON_p_DiffWin_usr.
+Par incréments de 0,0001 tour.
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+MON_p_DiffWin_usr
+ConF → ACG-
+in-P
+Surveillance de la déviation de
+position
+Il y a vérification si, pendant la
+durée paramétrée dans
+MON_ChkTime, le variateur se
+trouve à l'intérieur de la déviation
+définie.
+L'état peut être émis par une sortie
+paramétrable.
+La valeur minimale, le réglage
+d'usine et la valeur maximale
+dépendent du facteur de mise à
+l'échelle.
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+Disponible avec version ≥V01.05
+du micrologiciel.
+480
+0198441113756 09/2017Paramètre
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+MON_p_win Fenêtre Arrêt, déviation de
+régulation admissible
+La déviation de régulation pendant
+la durée de la fenêtre d'arrêt doit se
+trouver dans cette plage de valeurs
+pour qu'un arrêt de l'entraînement
+soit détecté. Tour
+0,0000
+0,0010
+3,2767 UINT16*
+R/W
+per.
+- CANopen 6067:0 h
+Modbus 1608
+usr_p
+0
+16
+2 147 483 647 INT32
+R/W
+per.
+- CANopen
+3006:40 h
+Modbus 1664
+ms
+0
+0
+32 767 UINT16
+R/W
+per.
+- CANopen 6068:0 h
+Modbus 1610
+L'utilisation de la fenêtre Arrêt doit
+être activée à l'aide du paramètre
+MON_p_winTime.
+La valeur peut être entrée en
+unités-utilisateur à l'aide du
+paramètre MON_p_win_usr.
+Par incréments de 0,0001 tour.
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+* Type de données pour CANopen :
+UINT32
+MON_p_win_usr
+Fenêtre Arrêt, déviation de
+régulation admissible
+La déviation de régulation pendant
+la durée de la fenêtre d'arrêt doit se
+trouver dans cette plage de valeurs
+pour qu'un arrêt de l'entraînement
+soit détecté.
+L'utilisation de la fenêtre Arrêt doit
+être activée à l'aide du paramètre
+MON_p_winTime.
+La valeur minimale, le réglage
+d'usine et la valeur maximale
+dépendent du facteur de mise à
+l'échelle.
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+Disponible avec version ≥V01.05
+du micrologiciel.
+MON_p_winTime
+0198441113756 09/2017
+Fenêtre Arrêt, temps
+Valeur 0 : Surveillance de la fenêtre
+d'arrêt inactive
+Valeur >0 : temps, exprimé en ms,
+en l'espace duquel la déviation de
+régulation doit se trouver dans la
+fenêtre Arrêt
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+481Paramètre
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+MON_p_winTout Timeout pour la surveillance de la
+fenêtre Arrêt
+Valeur 0 : Surveillance timeout
+désactivée
+Valeur >0 : Durée du timeout en ms ms
+0
+0
+16 000 UINT16
+R/W
+per.
+- CANopen
+3006:26 h
+Modbus 1612
+Les valeurs pour le traitement de la
+fenêtre Arrêt sont réglées dans les
+paramètres MON_p_win et
+MON_p_winTime.
+La surveillance du temps
+commence lorsque la position cible
+(consigne de position du régulateur
+de position) est atteinte ou à la fin
+du traitement du générateur de
+profil.
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+482
+MON_SW_Limits Activation des fins de course
+logicielles
+0 / None: désactivé
+1 / SWLIMP: activation des fins de
+course logicielles dans la direction
+positive
+2 / SWLIMN: Activation des fins de
+course logicielles dans la direction
+négative
+3 / SWLIMP+SWLIMN: Activation
+des fins de course logicielles dans
+les deux directions
+Les fins de course logicielles ne
+peuvent être activées qu'en cas de
+zéro valide.
+Les nouvelles valeurs sont prises
+en compte immédiatement. -
+0
+0
+3 UINT16
+R/W
+per.
+- CANopen 3006:3 h
+Modbus 1542
+MON_SWLimMode Comportement dès q'une limite de
+position est atteinte
+0 / Standstill Behind Position Limit:
+Quick Stop déclenché au niveau de
+la limite de position et arrêt réalisé
+après la limite de position
+1 / Standstill At Position Limit:
+Quick Stop déclenché avant la
+limite de position et arrêt réalisé au
+niveau de la limite de position
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+Disponible avec version ≥V01.16
+du micrologiciel. -
+0
+0
+1 UINT16
+R/W
+per.
+- CANopen
+3006:47 h
+Modbus 1678
+MON_swLimN Limite de positionnement négative
+pour fin de course logicielle
+Voir la description de
+'MON_swLimP'.
+Une modification de ce réglage
+n'est possible que lorsque l'étage
+de puissance est désactivé.
+Les nouvelles valeurs seront prises
+en compte après la prochaine
+activation de l'étage de puissance. usr_p
+-
+-2 147 483 648
+- INT32
+R/W
+per.
+- CANopen 607D:1 h
+Modbus 1546
+0198441113756 09/2017Paramètre
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+MON_swLimP Limite de positionnement positive
+pour fin de course logicielle
+En cas de réglage d'une valeur
+utilisateur en dehors de la plage
+admissible, les limites des fins de
+course sont automatiquement
+réglées en interne à la valeur
+utilisateur maximale.
+Une modification de ce réglage
+n'est possible que lorsque l'étage
+de puissance est désactivé.
+Les nouvelles valeurs seront prises
+en compte après la prochaine
+activation de l'étage de puissance. usr_p
+-
+2 147 483 647
+- INT32
+R/W
+per.
+- CANopen 607D:2 h
+Modbus 1544
+MON_tq_win Fenêtre de couple, déviation
+admissible
+La fenêtre de couple peut être
+activée uniquement en mode
+opératoire Profile Torque.
+Par incréments de 0,1 %.
+Les nouvelles valeurs sont prises
+en compte immédiatement. %
+0,0
+3,0
+3 000,0 UINT16
+R/W
+per.
+- CANopen
+3006:2D h
+Modbus 1626
+MON_tq_winTime ms
+Fenêtre de couple, temps
+Valeur 0 : Surveillance de la fenêtre 0
+0
+de couple inactive
+16 383
+Un changement de la valeur
+entraîne le démarrage de la
+surveillance de couple. UINT16
+R/W
+per.
+- CANopen
+3006:2E h
+Modbus 1628
+La fenêtre de couple est
+uniquement utilisé en mode
+opératoire Profile Torque.
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+0198441113756 09/2017
+MON_v_DiffWin
+ConF → i-o-
+in-n Surveillance de la déviation de la
+vitesse
+Il y a vérification si, pendant la
+durée paramétrée dans
+MON_ChkTime, le variateur se
+trouve à l'intérieur de la déviation
+définie.
+L'état peut être émis par une sortie
+paramétrable.
+Les nouvelles valeurs sont prises
+en compte immédiatement. usr_v
+1
+10
+2 147 483 647 UINT32
+R/W
+per.
+- CANopen
+3006:1A h
+Modbus 1588
+MON_v_Threshold
+ConF → i-o-
+nthr Surveillance du seuil de vitesse
+Il y a vérification si, pendant la
+durée paramétrée dans
+MON_ChkTime, le variateur se
+trouve en dessous de la valeur
+définie.
+L'état peut être émis par une sortie
+paramétrable.
+Les nouvelles valeurs sont prises
+en compte immédiatement. usr_v
+1
+10
+2 147 483 647 UINT32
+R/W
+per.
+- CANopen
+3006:1B h
+Modbus 1590
+MON_v_win Fenêtre de vitesse, déviation
+admissible
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+* Type de données pour CANopen :
+UINT16 usr_v
+1
+10
+2 147 483 647 UINT32*
+R/W
+per.
+- CANopen 606D:0 h
+Modbus 1576
+483Paramètre
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description
+Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale
+Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+MON_v_winTime ms
+Fenêtre de vitesse, durée
+Valeur 0 : surveillance de la fenêtre 0
+0
+de vitesse inactive
+16 383
+Un changement de la valeur
+entraîne le démarrage de la
+surveillance de la vitesse.
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+UINT16
+R/W
+per.
+- CANopen 606E:0 h
+Modbus 1578
+MON_v_zeroclamp
+ConF → i-o-
+ScLP Limitation de la vitesse pour Zero
+Clamp
+Zero Clamp est uniquement
+possible si la consigne de vitesse
+est inférieure à la valeur limite pour
+la vitesse du Zero Clamp.
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+usr_v
+0
+10
+2 147 483 647 UINT32
+R/W
+per.
+- CANopen
+3006:28 h
+Modbus 1616
+MON_VelDiff Déviation de vitesse maximale
+résultant de la charge
+Valeur 0 : surveillance désactivée.
+Valeur >0 : valeur maximale
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+Disponible avec version ≥V01.26
+du micrologiciel. usr_v
+0
+0
+2 147 483 647 UINT32
+R/W
+per.
+- CANopen
+3006:4B h
+Modbus 1686
+MON_VelDiff_Time Fenêtre de temps pour déviation de
+vitesse maximale résultant de la
+charge
+Valeur 0 : surveillance désactivée.
+Valeur >0 : fenêtre de temps pour la
+valeur maximale
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+Disponible avec version ≥V01.26
+du micrologiciel. ms
+0
+10
+- UINT16
+R/W
+per.
+- CANopen
+3006:4C h
+Modbus 1688
+MT_dismax Distance maximale admissible
+Si, pour la valeur de référence
+active, la distance maximale
+admissible est dépassée, une
+erreur de classe 1 est détectée. Tour
+0,0
+1,0
+999,9 UINT16
+R/W
+-
+- CANopen 302E:3 h
+Modbus 11782
+La valeur 0 désactive la
+surveillance.
+La valeur peut être entrée en
+unités-utilisateur à l'aide du
+paramètre MT_dismax_usr.
+Par incréments de 0,1 tour.
+Les nouvelles valeurs seront prises
+en compte au prochain mouvement
+de moteur.
+484
+0198441113756 09/2017Paramètre
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+MT_dismax_usr Distance maximale admissible
+Si, pour la valeur de référence
+active, la distance maximale
+admissible est dépassée, une
+erreur de classe 1 est détectée. usr_p
+0
+16 384
+2 147 483 647 INT32
+R/W
+-
+- CANopen
+302E:A h
+Modbus 11796
+-
+0
+0
+1 UINT16
+R/W
+-
+- CANopen 3004:7 h
+Modbus 1038
+-
+0
+0
+2 UINT16
+R/W
+-
+- CANopen
+3004:14 h
+Modbus 1064
+La valeur 0 désactive la
+surveillance.
+La valeur minimale, le réglage
+d'usine et la valeur maximale
+dépendent du facteur de mise à
+l'échelle.
+Les nouvelles valeurs seront prises
+en compte au prochain mouvement
+de moteur.
+Disponible avec version ≥V01.05
+du micrologiciel.
+PAR_CTRLreset
+ConF → FCS-
+rESC
+Réinitialiser les paramètres de
+boucle de régulation
+0 / No / no: non
+1 / Yes / yES: oui
+Les paramètres de boucle de
+régulation sont réinitialisés. Les
+paramètres de boucle de régulation
+sont recalculés à partir des
+données du moteur raccordé.
+Les limitations de courant et de
+vitesse ne sont pas réinitialisées.
+Pour cette raison, il faut réinitialiser
+les paramètres utilisateurs.
+Les nouveaux réglages ne sont pas
+sauvegardés dans l'EEPROM.
+Une modification de ce réglage
+n'est possible que lorsque l'étage
+de puissance est désactivé.
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+PAR_ScalingStart
+Nouveau calcul des paramètres
+avec unités-utilisateur
+Les paramètres avec unités-
+utilisateur peuvent être recalculés
+avec un facteur de mise à l'échelle
+modifié.
+Valeur 0 : inactif
+Valeur 1 : initialiser nouveau calcul
+Valeur 2 : démarrer nouveau calcul
+Une modification de ce réglage
+n'est possible que lorsque l'étage
+de puissance est désactivé.
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+Disponible avec version ≥V01.05
+du micrologiciel.
+0198441113756 09/2017
+485Paramètre
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+PAReeprSave Enregistrement des paramètres
+dans l'EEPROM
+Valeur 1 : enregistrer les
+paramètres persistants -
+-
+-
+- UINT16
+R/W
+-
+- CANopen 3004:1 h
+Modbus 1026
+Les paramètres actuellement
+réglés sont sauvegardés dans la
+mémoire non-volatile (EEPROM).
+L'opération d'enregistrement est
+terminée lorsqu'à la lecture du
+paramètre, un 0 est renvoyé.
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+PARfactorySet
+ConF → FCS-
+rStF Rétablissement du réglage d'usine
+(valeurs par défaut)
+No / no: non
+Yes / yES: oui
+Les réglages sortie usine des
+paramètres sont restaurés, puis
+enregistrés dans l'EEPROM..
+Le réglage sur les réglages sortie
+usine s'effectue par l'intermédiaire
+de l'IHM ou du logiciel de mise en
+service.
+L'opération d'enregistrement est
+terminée lorsqu'à la lecture du
+paramètre, un 0 est renvoyé.
+Une modification de ce réglage
+n'est possible que lorsque l'étage
+de puissance est désactivé.
+Les nouvelles valeurs sont prises
+en compte après redémarrage du
+produit. -
+0
+-
+1 UINT16
+R/W
+-
+- CANopen 3004:2 h
+Modbus 1028
+PARuserReset
+ConF → FCS-
+rESu Réinitialiser les paramètres
+utilisateur
+0 / No / no: non
+65535 / Yes / yES: oui
+Bit 0 : régler les paramètres
+utilisateurs persistants et les
+paramètres de boucle de régulation
+sur les valeurs par défaut
+Bits 1 ... 15 : réservé -
+0
+-
+65 535 UINT16
+R/W
+-
+- CANopen 3004:8 h
+Modbus 1040
+Les paramètres sont réinitialisés à
+l'exception des paramètres
+suivants :
+- les paramètres de communication
+- inversion de direction
+- fonctions des entrées logiques et
+des sorties logiques
+Les nouveaux réglages ne sont pas
+sauvegardés dans l'EEPROM.
+Une modification de ce réglage
+n'est possible que lorsque l'étage
+de puissance est désactivé.
+Les nouvelles valeurs seront prises
+en compte après la prochaine
+activation de l'étage de puissance.
+486
+0198441113756 09/2017Paramètre
+0198441113756 09/2017
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+PosReg1Mode Sélection des critères de
+comparaison pour le canal 1 du
+registre de position
+0 / Pact greater equal A : La
+position instantanée est supérieure
+ou égale à la valeur de
+comparaison A pour le canal 1 du
+registre de position
+1 / Pact less equal A : La position
+instantanée est inférieure ou égale
+à la valeur de comparaison A pour
+le canal 1 du registre de position
+2 / Pact in [A-B] (basic) : La position
+instantanée se trouve dans la plage
+A-B, limites incluses (simple)
+3 / Pact out [A-B] (basic) : La
+position instantanée se trouve à
+l'extérieur de la plage A-B, limites
+non incluses (simple)
+4 / Pact in [A-B] (extended) : La
+position instantanée se trouve dans
+la plage A-B, limites incluses
+(élargie)
+5 / Pact out [A-B] (extended) : La
+position instantanée se trouve à
+l'extérieur de la plage A-B, limites
+non incluses (élargie)
+Les nouvelles valeurs sont prises
+en compte immédiatement. -
+0
+0
+5 UINT16
+R/W
+per.
+- CANopen 300B:4 h
+Modbus 2824
+PosReg1Source Sélection de la source pour le canal
+1 du registre de position
+0 / Pact Encoder 1: la source pour
+le canal 1 du registre de position
+correspond à Pact du codeur 1
+Les nouvelles valeurs sont prises
+en compte immédiatement. -
+0
+0
+0 UINT16
+R/W
+per.
+- CANopen 300B:6 h
+Modbus 2828
+PosReg1Start Marche/arrêt, canal 1 du registre de
+position
+0 / Off (keep last state): le canal 1
+du registre de position est inactif et
+le bit d'état maintient le dernier état
+1 / On: le canal 1 du registre de
+position est actif
+2 / Off (set state 0): le canal 1 du
+registre de position est inactif et le
+bit d'état est réglé sur 0
+3 / Off (set state 1): le canal 1 du
+registre de position est inactif et le
+bit d'état est réglé sur 1
+Les nouvelles valeurs sont prises
+en compte immédiatement. -
+0
+0
+3 UINT16
+R/W
+-
+- CANopen 300B:2 h
+Modbus 2820
+PosReg1ValueA Valeur de comparaison A pour le
+canal 1 du registre de position usr_p
+-
+0
+- INT32
+R/W
+per.
+- CANopen 300B:8 h
+Modbus 2832
+PosReg1ValueB Valeur de comparaison B pour le
+canal 1 du registre de position usr_p
+-
+0
+- INT32
+R/W
+per.
+- CANopen 300B:9 h
+Modbus 2834
+487Paramètre
+488
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+PosReg2Mode Sélection des critères de
+comparaison pour le canal 2 du
+registre de position
+0 / Pact greater equal A : La
+position instantanée est supérieure
+ou égale à la valeur de
+comparaison A pour le canal 2 du
+registre de position
+1 / Pact less equal A : La position
+instantanée est inférieure ou égale
+à la valeur de comparaison A pour
+le canal 2 du registre de position
+2 / Pact in [A-B] (basic) : La position
+instantanée se trouve dans la plage
+A-B, limites incluses (simple)
+3 / Pact out [A-B] (basic) : La
+position instantanée se trouve à
+l'extérieur de la plage A-B, limites
+non incluses (simple)
+4 / Pact in [A-B] (extended) : La
+position instantanée se trouve dans
+la plage A-B, limites incluses
+(élargie)
+5 / Pact out [A-B] (extended) : La
+position instantanée se trouve à
+l'extérieur de la plage A-B, limites
+non incluses (élargie)
+Les nouvelles valeurs sont prises
+en compte immédiatement. -
+0
+0
+5 UINT16
+R/W
+per.
+- CANopen 300B:5 h
+Modbus 2826
+PosReg2Source Sélection de la source pour le canal
+2 du registre de position
+0 / Pact Encoder 1: la source pour
+le canal 2 du registre de position
+correspond à Pact du codeur 1
+Les nouvelles valeurs sont prises
+en compte immédiatement. -
+0
+0
+0 UINT16
+R/W
+per.
+- CANopen 300B:7 h
+Modbus 2830
+PosReg2Start Marche/arrêt, canal 2 du registre de
+position
+0 / Off (keep last state): le canal 2
+du registre de position est inactif et
+le bit d'état maintient le dernier état
+1 / On: le canal 2 du registre de
+position est actif
+2 / Off (set state 0): le canal 2 du
+registre de position est inactif et le
+bit d'état est réglé sur 0
+3 / Off (set state 1): le canal 2 du
+registre de position est inactif et le
+bit d'état est réglé sur 1
+Les nouvelles valeurs sont prises
+en compte immédiatement. -
+0
+0
+3 UINT16
+R/W
+-
+- CANopen 300B:3 h
+Modbus 2822
+PosReg2ValueA Valeur de comparaison A pour le
+canal 2 du registre de position usr_p
+-
+0
+- INT32
+R/W
+per.
+- CANopen
+300B:A h
+Modbus 2836
+PosReg2ValueB Valeur de comparaison B pour le
+canal 2 du registre de position usr_p
+-
+0
+- INT32
+R/W
+per.
+- CANopen
+300B:B h
+Modbus 2838
+0198441113756 09/2017Paramètre
+0198441113756 09/2017
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+PosReg3Mode Sélection des critères de
+comparaison pour le canal 3 du
+registre de position
+0 / Pact greater equal A : La
+position instantanée est supérieure
+ou égale à la valeur de
+comparaison A pour le canal 3 du
+registre de position
+1 / Pact less equal A : La position
+instantanée est inférieure ou égale
+à la valeur de comparaison A pour
+le canal 3 du registre de position
+2 / Pact in [A-B] (basic) : La position
+instantanée se trouve dans la plage
+A-B, limites incluses (simple)
+3 / Pact out [A-B] (basic) : La
+position instantanée se trouve à
+l'extérieur de la plage A-B, limites
+non incluses (simple)
+4 / Pact in [A-B] (extended) : La
+position instantanée se trouve dans
+la plage A-B, limites incluses
+(élargie)
+5 / Pact out [A-B] (extended) : La
+position instantanée se trouve à
+l'extérieur de la plage A-B, limites
+non incluses (élargie)
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+Disponible avec version ≥V01.06
+du micrologiciel. -
+0
+0
+5 UINT16
+R/W
+per.
+- CANopen
+300B:E h
+Modbus 2844
+PosReg3Source Sélection de la source pour le canal
+3 du registre de position
+0 / Pact Encoder 1: la source pour
+le canal 3 du registre de position
+correspond à Pact du codeur 1
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+Disponible avec version ≥V01.06
+du micrologiciel. -
+0
+0
+0 UINT16
+R/W
+per.
+- CANopen
+300B:10 h
+Modbus 2848
+PosReg3Start Marche/arrêt, canal 3 du registre de
+position
+0 / Off (keep last state): le canal 3
+du registre de position est inactif et
+le bit d'état maintient le dernier état
+1 / On: le canal 3 du registre de
+position est actif
+2 / Off (set state 0): le canal 3 du
+registre de position est inactif et le
+bit d'état est réglé sur 0
+3 / Off (set state 1): le canal 3 du
+registre de position est inactif et le
+bit d'état est réglé sur 1
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+Disponible avec version ≥V01.06
+du micrologiciel. -
+0
+0
+3 UINT16
+R/W
+-
+- CANopen
+300B:C h
+Modbus 2840
+PosReg3ValueA Valeur de comparaison A pour le
+canal 3 du registre de position
+Disponible avec version ≥V01.06
+du micrologiciel. usr_p
+-
+0
+- INT32
+R/W
+per.
+- CANopen
+300B:12 h
+Modbus 2852
+489Paramètre
+490
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+PosReg3ValueB Valeur de comparaison B pour le
+canal 3 du registre de position
+Disponible avec version ≥V01.06
+du micrologiciel. usr_p
+-
+0
+- INT32
+R/W
+per.
+- CANopen
+300B:13 h
+Modbus 2854
+PosReg4Mode Sélection des critères de
+comparaison pour le canal 4 du
+registre de position
+0 / Pact greater equal A : La
+position instantanée est supérieure
+ou égale à la valeur de
+comparaison A pour le canal 4 du
+registre de position
+1 / Pact less equal A : La position
+instantanée est inférieure ou égale
+à la valeur de comparaison A pour
+le canal 4 du registre de position
+2 / Pact in [A-B] (basic) : La position
+instantanée se trouve dans la plage
+A-B, limites incluses (simple)
+3 / Pact out [A-B] (basic) : La
+position instantanée se trouve à
+l'extérieur de la plage A-B, limites
+non incluses (simple)
+4 / Pact in [A-B] (extended) : La
+position instantanée se trouve dans
+la plage A-B, limites incluses
+(élargie)
+5 / Pact out [A-B] (extended) : La
+position instantanée se trouve à
+l'extérieur de la plage A-B, limites
+non incluses (élargie)
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+Disponible avec version ≥V01.06
+du micrologiciel. -
+0
+0
+5 UINT16
+R/W
+per.
+- CANopen 300B:F h
+Modbus 2846
+PosReg4Source Sélection de la source pour le canal
+4 du registre de position
+0 / Pact Encoder 1: la source pour
+le canal 4 du registre de position
+correspond à Pact du codeur 1
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+Disponible avec version ≥V01.06
+du micrologiciel. -
+0
+0
+0 UINT16
+R/W
+per.
+- CANopen
+300B:11 h
+Modbus 2850
+PosReg4Start Marche/arrêt, canal 4 du registre de
+position
+0 / Off (keep last state): le canal 4
+du registre de position est inactif et
+le bit d'état maintient le dernier état
+1 / On: le canal 4 du registre de
+position est actif
+2 / Off (set state 0): le canal 4 du
+registre de position est inactif et le
+bit d'état est réglé sur 0
+3 / Off (set state 1): le canal 4 du
+registre de position est inactif et le
+bit d'état est réglé sur 1
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+Disponible avec version ≥V01.06
+du micrologiciel. -
+0
+0
+3 UINT16
+R/W
+-
+- CANopen
+300B:D h
+Modbus 2842
+0198441113756 09/2017Paramètre
+0198441113756 09/2017
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+PosReg4ValueA Valeur de comparaison A pour le
+canal 4 du registre de position
+Disponible avec version ≥V01.06
+du micrologiciel. usr_p
+-
+0
+- INT32
+R/W
+per.
+- CANopen
+300B:14 h
+Modbus 2856
+PosReg4ValueB Valeur de comparaison B pour le
+canal 4 du registre de position
+Disponible avec version ≥V01.06
+du micrologiciel. usr_p
+-
+0
+- INT32
+R/W
+per.
+- CANopen
+300B:15 h
+Modbus 2858
+PosRegGroupStart Marche/Arrêt des canaux du
+registre de position
+0 / No Channel: aucun canal activé
+1 / Channel 1: canal 1 activé
+2 / Channel 2: canal 2 activé
+3 / Channel 1 & 2: canaux 1 et 2
+activés
+4 / Channel 3: canal 3 activé
+5 / Channel 1 & 3: canaux 1 et 3
+activés
+6 / Channel 2 & 3: canaux 2 et 3
+activés
+7 / Channel 1 & 2 & 3: canaux 1, 2
+et 3 activés
+8 / Channel 4: canal 4 activé
+9 / Channel 1 & 4: canaux 1 et 4
+activés
+10 / Channel 2 & 4: canaux 2 et 4
+activés
+11 / Channel 1 & 2 & 4: canaux 1, 2
+et 4 activés
+12 / Channel 3 & 4: canaux 3 et 4
+activés
+13 / Channel 1 & 3 & 4: canaux 1, 3
+et 4 activés
+14 / Channel 2 & 3 & 4: canaux 2, 3
+et 4 activés
+15 / Channel 1 & 2 & 3 & 4: canaux
+1, 2, 3 et 4 activés
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+Disponible avec version ≥V01.14
+du micrologiciel. -
+0
+0
+15 UINT16
+R/W
+per.
+- CANopen
+300B:16 h
+Modbus 2860
+PP_ModeRangeLim Déplacement absolu au-delà des
+limites de déplacement
+0 / NoAbsMoveAllowed:
+déplacement absolu impossible au-
+delà des limites de déplacement
+1 / AbsMoveAllowed: déplacement
+absolu possible au-delà des limites
+de déplacement
+Une modification de ce réglage
+n'est possible que lorsque l'étage
+de puissance est désactivé.
+Les nouvelles valeurs seront prises
+en compte après la prochaine
+activation de l'étage de puissance.
+Disponible avec version ≥V01.06
+du micrologiciel. -
+0
+0
+1 UINT16
+R/W
+per.
+- CANopen 3023:7 h
+Modbus 8974
+491Paramètre
+492
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+PP_OpmChgType Commutation en mode opératoire
+Profile Position au cours du
+déplacement
+0 / WithStandStill: commutation
+avec arrêt
+1 / OnTheFly: commutation sans
+arrêt
+Une modification de ce réglage
+n'est possible que lorsque l'étage
+de puissance est désactivé.
+Les nouvelles valeurs seront prises
+en compte après la prochaine
+activation de l'étage de puissance.
+Disponible avec version ≥V01.06
+du micrologiciel. -
+0
+0
+1 UINT16
+R/W
+per.
+- CANopen 3023:9 h
+Modbus 8978
+PPoption Options pour le mode opératoire
+Profile Position
+Définit la position de référence pour
+un positionnement relatif :
+0 : relatif par rapport à la position
+cible précédente du générateur de
+profil
+1 : non pris en charge
+2 : relatif par rapport à la position
+instantanée du moteur
+Les nouvelles valeurs seront prises
+en compte au prochain mouvement
+de moteur. -
+0
+0
+2 UINT16
+R/W
+-
+- CANopen 60F2:0 h
+Modbus 6960
+PPp_target Position cible pour le mode
+opératoire Profile Position (point-à-
+point)
+Les valeurs maximales / valeurs
+minimales dépendent de :
+- facteur de mise à l'échelle
+- fin de course logicielle (si activée)
+Les nouvelles valeurs sont prises
+en compte immédiatement. usr_p
+-
+-
+- INT32
+R/W
+-
+- CANopen 607A:0 h
+Modbus 6940
+PPv_target Vitesse cible pour le mode
+opératoire Profile Position (point-à-
+point)
+La vitesse cible est limitée au
+réglage des paramètres
+CTRL_v_max et RAMP_v_max.
+Les nouvelles valeurs seront prises
+en compte au prochain mouvement
+de moteur. usr_v
+1
+60
+4 294 967 295 UINT32
+R/W
+-
+- CANopen 6081:0 h
+Modbus 6942
+PTtq_target Couple cible pour le mode
+opératoire Profile Torque
+100,0 % correspond au couple
+continu à l’arrêt _M_M_0.
+Par incréments de 0,1 %.
+Les nouvelles valeurs sont prises
+en compte immédiatement. %
+-3 000,0
+0,0
+3 000,0 INT16
+R/W
+-
+- CANopen 6071:0 h
+Modbus 6944
+PVv_target Vitesse cible pour le mode
+opératoire Profile Velocity
+La vitesse cible est limitée au
+réglage des paramètres
+CTRL_v_max et RAMP_v_max.
+Les nouvelles valeurs sont prises
+en compte immédiatement. usr_v
+-
+0
+- INT32
+R/W
+-
+- CANopen 60FF:0 h
+Modbus 6938
+0198441113756 09/2017Paramètre
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+RAMP_tq_enable Activation du profil de déplacement
+pour le couple
+0 / Profile Off: profile inactif
+1 / Profile On: profil actif
+Dans le mode opératoire Profile
+Torque, le profil de déplacement
+pour le couple peut être activé ou
+désactivé.
+Dans les autres modes opératoires,
+le profil de déplacement pour le
+couple est désactivé.
+Une modification de ce réglage
+n'est possible que lorsque l'étage
+de puissance est désactivé.
+Les nouvelles valeurs sont prises
+en compte immédiatement. -
+0
+1
+1 UINT16
+R/W
+per.
+- CANopen
+3006:2C h
+Modbus 1624
+RAMP_tq_slope Pente du profil de déplacement
+pour le couple
+100,00 % de réglage du couple
+correspond au couple continu à
+l'arrêt _M_M_0. %/s
+0,1
+10 000,0
+3 000 000,0 UINT32
+R/W
+per.
+- CANopen 6087:0 h
+Modbus 1620
+Exemple :
+Un réglage de rampe de 10000,00
+%/s entraîne une modification du
+couple de 100,0% de _M_M_0 en
+l'espace de 0,01 s.
+Par incrément de 0,1 %/s.
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+RAMP_v_acc Accélération du profil de
+déplacement pour la vitesse
+L'inscription de la valeur 0 n'a
+aucune répercussion sur le
+paramètre.
+Les nouvelles valeurs seront prises
+en compte au prochain mouvement
+de moteur. usr_a
+1
+600
+2 147 483 647 UINT32
+R/W
+per.
+- CANopen 6083:0 h
+Modbus 1556
+RAMP_v_dec Décélération du profil de
+déplacement pour la vitesse
+La valeur minimale dépend du
+mode opératoire : usr_a
+1
+600
+2 147 483 647 UINT32
+R/W
+per.
+- CANopen 6084:0 h
+Modbus 1558
+Modes opératoires avec la valeur
+minimale 1 :
+Profile Velocity
+Modes opératoires avec la valeur
+minimale 120 :
+Jog
+Profile Position
+Homing
+L'inscription de la valeur 0 n'a
+aucune répercussion sur le
+paramètre.
+Les nouvelles valeurs seront prises
+en compte au prochain mouvement
+de moteur.
+0198441113756 09/2017
+493Paramètre
+494
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+RAMP_v_enable Activation du profil de déplacement
+pour la vitesse
+0 / Profile Off: profile inactif
+1 / Profile On: profil actif
+Une modification de ce réglage
+n'est possible que lorsque l'étage
+de puissance est désactivé.
+Les nouvelles valeurs sont prises
+en compte immédiatement. -
+0
+1
+1 UINT16
+R/W
+per.
+- CANopen
+3006:2B h
+Modbus 1622
+RAMP_v_jerk
+ConF → drC-
+JEr Limitation du Jerk du profil de
+déplacement pour la vitesse
+0 / Off / oFF: inactif
+1 / 1 / 1: 1 ms
+2 / 2 / 2: 2 ms
+4 / 4 / 4: 4 ms
+8 / 8 / 8: 8 ms
+16 / 16 / 16: 16 ms
+32 / 32 / 32: 32 ms
+64 / 64 / 64: 64 ms
+128 / 128 / 128: 128 ms
+Le réglage est possible uniquement
+avec le mode opératoire désactivé
+(x_end=1).
+Les nouvelles valeurs seront prises
+en compte au prochain mouvement
+de moteur. ms
+0
+0
+128 UINT16
+R/W
+per.
+- CANopen 3006:D h
+Modbus 1562
+RAMP_v_max
+ConF → ACG-
+nrMP Vitesse maximale du profil de
+déplacement pour la vitesse
+Si, dans l'un de ces modes
+opératoires, une consigne de
+vitesse plus élevée est paramétrée,
+il se produit automatiquement une
+limitation sur RAMP_v_max.
+Ainsi, ceci permet de simplifier la
+mise en service à une vitesse
+limitée.
+Une modification de ce réglage
+n'est possible que lorsque l'étage
+de puissance est désactivé.
+Les nouvelles valeurs seront prises
+en compte au prochain mouvement
+de moteur. usr_v
+1
+13 200
+2 147 483 647 UINT32
+R/W
+per.
+- CANopen 607F:0 h
+Modbus 1554
+0198441113756 09/2017Paramètre
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+RAMP_v_sym Accélération et décélération du
+profil de déplacement pour la
+vitesse
+Les valeurs sont multipliées par 10
+en interne (exemple : 1 = 10
+(1/min)/s). -
+-
+-
+- UINT16
+R/W
+-
+- CANopen 3006:1 h
+Modbus 1538
+-
+-
+-
+- UINT32
+R/W
+-
+- CANopen 3006:2 h
+Modbus 1540
+Un accès en écriture modifie les
+valeurs de RAMP_v_acc et
+RAMP_v_dec. Le contrôle de la
+valeur limite s'effectue sur la base
+des valeurs limites définies pour
+ces paramètres.
+Un accès en lecture fournit la valeur
+la plus élevée de
+RAMP_v_acc/RAMP_v_dec.
+Si la valeur ne peut pas être
+représentée sous forme de valeur à
+16 bits, la valeur est réglée sur
+65535 (valeur UINT16 maximale).
+Les nouvelles valeurs seront prises
+en compte au prochain mouvement
+de moteur.
+RAMPaccdec
+Accélération et décélération pour le
+profil d'entraînement Drive Profile
+Lexium
+High-Word : accélération
+Low-Word : décélération
+Les valeurs sont multipliées par 10
+en interne (exemple : 1 = 10
+(1/min)/s).
+Un accès en écriture modifie les
+valeurs de RAMP_v_acc et
+RAMP_v_dec. Le contrôle de la
+valeur limite s'effectue sur la base
+des valeurs limites définies pour
+ces paramètres.
+Si la valeur ne peut pas être
+représentée sous forme de valeur à
+16 bits, la valeur est réglée sur
+65535 (valeur UINT16 maximale).
+Les nouvelles valeurs seront prises
+en compte au prochain mouvement
+de moteur.
+0198441113756 09/2017
+RAMPquickstop Rampe de décélération pour Quick
+Stop
+Rampe de décélération pour un
+Stop logiciel ou une erreur de
+classe d'erreur 1 ou 2.
+Les nouvelles valeurs seront prises
+en compte au prochain mouvement
+de moteur. usr_a
+1
+6 000
+2 147 483 647 UINT32
+R/W
+per.
+- CANopen
+3006:12 h
+Modbus 1572
+RESext_P
+ConF → ACG-
+Pobr Puissance nominale de la
+résistance de freinage externe
+Une modification de ce réglage
+n'est possible que lorsque l'étage
+de puissance est désactivé.
+Les nouvelles valeurs seront prises
+en compte après la prochaine
+activation de l'étage de puissance. W
+1
+10
+32 767 UINT16
+R/W
+per.
+- CANopen
+3005:12 h
+Modbus 1316
+495Paramètre
+496
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+RESext_R
+ConF → ACG-
+rbr Valeur de résistance de la
+résistance de freinage externe
+La valeur minimale dépend de
+l'étage de puissance.
+Par incréments de 0,01 Ω.
+Une modification de ce réglage
+n'est possible que lorsque l'étage
+de puissance est désactivé.
+Les nouvelles valeurs seront prises
+en compte après la prochaine
+activation de l'étage de puissance. Ω
+0,00
+100,00
+327,67 UINT16
+R/W
+per.
+- CANopen
+3005:13 h
+Modbus 1318
+RESext_ton
+ConF → ACG-
+tbr Temps d'activation max. admissible
+de la résistance de freinage
+Une modification de ce réglage
+n'est possible que lorsque l'étage
+de puissance est désactivé.
+Les nouvelles valeurs seront prises
+en compte après la prochaine
+activation de l'étage de puissance. ms
+1
+1
+30 000 UINT16
+R/W
+per.
+- CANopen
+3005:11 h
+Modbus 1314
+RESint_ext
+ConF → ACG-
+Eibr Sélection du type de résistance de
+freinage
+0 / Internal Braking Resistor /
+int: résistance de freinage
+interne
+1 / External Braking Resistor /
+Eht: résistance de freinage
+externe
+2 / Reserved / rSVd: réservé
+Une modification de ce réglage
+n'est possible que lorsque l'étage
+de puissance est désactivé.
+Les nouvelles valeurs seront prises
+en compte après la prochaine
+activation de l'étage de puissance. -
+0
+0
+2 UINT16
+R/W
+per.
+- CANopen 3005:9 h
+Modbus 1298
+ResWriComNotOpEn Réaction à la commande d'écriture
+(l'état de fonctionnement n'est pas
+Operation enabled)
+0 / Emergency Message : un
+message Emergency est envoyé
+1 / Error class 0 : c'est une erreur
+de la classe d'erreur 0
+Ce paramètre définit la réaction du
+variateur à une commande
+d'écriture qui ne peut pas être
+exécutée car l'état de
+fonctionnement est Operation
+Enabled.
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+Disponible avec version ≥V01.26
+du micrologiciel. -
+0
+0
+1 UINT16
+R/W
+per.
+- CANopen
+3006:49 h
+Modbus 1682
+RMAC_Activate Activation du déplacement relatif
+après Capture
+0 / Off: inactif
+1 / On: actif
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+Disponible avec version ≥V01.10
+du micrologiciel. -
+0
+0
+1 UINT16
+R/W
+-
+- CANopen 3023:C h
+Modbus 8984
+0198441113756 09/2017Paramètre
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+RMAC_Edge Front du signal de capture pour le
+déplacement relatif après Capture
+0 / Falling edge: front descendant
+1 / Rising edge: front montant
+Disponible avec version ≥V01.10
+du micrologiciel. -
+0
+0
+1 UINT16
+R/W
+per.
+- CANopen
+3023:10 h
+Modbus 8992
+RMAC_Position Position cible du déplacement
+relatif après Capture
+Les valeurs maximales / valeurs
+minimales dépendent de :
+- facteur de mise à l'échelle
+Les nouvelles valeurs seront prises
+en compte au prochain mouvement
+de moteur.
+Disponible avec version ≥V01.10
+du micrologiciel. usr_p
+-
+0
+- INT32
+R/W
+per.
+- CANopen 3023:D h
+Modbus 8986
+RMAC_Response Réaction en cas de dépassement
+de la position cible
+0 / Error Class 1: Classe d'erreur 1
+1 / No Movement To Target
+Position: pas de déplacement en
+position cible
+2 / Movement To Target Position:
+déplacement en position cible
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+Disponible avec version ≥V01.10
+du micrologiciel. -
+0
+0
+2 UINT16
+R/W
+per.
+- CANopen 3023:F h
+Modbus 8990
+RMAC_Velocity Vitesse du déplacement relatif
+après Capture
+Valeur 0 : utiliser la vitesse
+instantanée du moteur
+Valeur >0 : la valeur est la vitesse
+cible usr_v
+0
+0
+2 147 483 647 UINT32
+R/W
+per.
+- CANopen 3023:E h
+Modbus 8988
+usr_p
+1
+16 384
+2 147 483 647 INT32
+R/W
+per.
+- CANopen 3006:7 h
+Modbus 1550
+La valeur est limitée en interne au
+réglage dans RAMP_v_max.
+Les nouvelles valeurs seront prises
+en compte au prochain mouvement
+de moteur.
+Disponible avec version ≥V01.10
+du micrologiciel.
+ScalePOSdenom
+Mise à l'échelle de la position :
+dénominateur
+Pour obtenir une description, voir le
+numérateur (ScalePOSnum)
+La reprise d'une nouvelle mise à
+l'échelle s'effectue lors du transfert
+de la valeur de numérateur.
+Une modification de ce réglage
+n'est possible que lorsque l'étage
+de puissance est désactivé.
+0198441113756 09/2017
+497Paramètre
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+ScalePOSnum Mise à l'échelle de la position :
+numérateur
+Indication du facteur de mise à
+l'échelle : Tour
+1
+1
+2 147 483 647 INT32
+R/W
+per.
+- CANopen 3006:8 h
+Modbus 1552
+usr_a
+1
+1
+2 147 483 647 INT32
+R/W
+per.
+- CANopen
+3006:30 h
+Modbus 1632
+Rotations moteur
+-------------------------------------------
+Unités-utilisateur [usr_p]
+La reprise d'une nouvelle mise à
+l'échelle s'effectue lors du transfert
+de la valeur de numérateur.
+Une modification de ce réglage
+n'est possible que lorsque l'étage
+de puissance est désactivé.
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+ScaleRAMPdenom
+Mise à l'échelle de la rampe :
+dénominateur
+Pour obtenir une description, voir le
+numérateur (ScaleRAMPnum).
+La reprise d'une nouvelle mise à
+l'échelle s'effectue lors du transfert
+de la valeur de numérateur.
+Une modification de ce réglage
+n'est possible que lorsque l'étage
+de puissance est désactivé.
+ScaleRAMPnum Mise à l'échelle de la rampe :
+numérateur
+Une modification de ce réglage
+n'est possible que lorsque l'étage
+de puissance est désactivé.
+Les nouvelles valeurs sont prises
+en compte immédiatement. (1/min)/s
+1
+1
+2 147 483 647 INT32
+R/W
+per.
+- CANopen
+3006:31 h
+Modbus 1634
+ScaleVELdenom Mise à l'échelle de la vitesse :
+dénominateur
+Pour obtenir une description, voir le
+numérateur (ScaleVELnum). usr_v
+1
+1
+2 147 483 647 INT32
+R/W
+per.
+- CANopen
+3006:21 h
+Modbus 1602
+La reprise d'une nouvelle mise à
+l'échelle s'effectue lors du transfert
+de la valeur de numérateur.
+Une modification de ce réglage
+n'est possible que lorsque l'étage
+de puissance est désactivé.
+498
+0198441113756 09/2017Paramètre
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+ScaleVELnum Mise à l'échelle de la vitesse :
+numérateur
+Indication du facteur de mise à
+l'échelle : 1/min
+1
+1
+2 147 483 647 INT32
+R/W
+per.
+- CANopen
+3006:22 h
+Modbus 1604
+-
+0
+0
+1 UINT16
+R/W
+per.
+- CANopen
+3005:21 h
+Modbus 1346
+Nombre de rotations du moteur
+[1/min]
+----------------------------------------------
+----
+Unité-utilisateur [usr_v]
+La reprise d'une nouvelle mise à
+l'échelle s'effectue lors du transfert
+de la valeur de numérateur.
+Une modification de ce réglage
+n'est possible que lorsque l'étage
+de puissance est désactivé.
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+ShiftEncWorkRang
+0198441113756 09/2017
+Décalage de la plage de travail du
+codeur
+0 / Off: décalage inactif
+1 / On: décalage actif
+Après l'activation de la fonction de
+décalage, la plage de positions du
+codeur est décalée de moitié de la
+plage.
+Exemple pour la plage de positions
+d'un codeur multitour avec 4096
+rotations :
+Valeur 0:
+Les valeurs de positions sont entre
+0 ... 4096 rotations.
+Valeur 1 :
+Les valeurs de positions sont entre
+2 048 et 2 048 rotations.
+Les nouvelles valeurs sont prises
+en compte après redémarrage du
+produit.
+499Paramètre
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+SimAbsolutePos
+ConF → ACG-
+qAbS Simulation de la position absolue
+lors de la désactivation/de
+l'activation
+0 / Simulation Off / oFF: ne pas
+utiliser la dernière position
+mécanique après la
+désactivation/l'activation
+1 / Simulation On / on: utiliser la
+dernière position mécanique après
+la désactivation/l'activation
+Ce paramètre définit la manière
+dont les valeurs de position sont
+traitées après la désactivation et
+l'activation et permet la simulation
+d'un codeur absolu lors de
+l'utilisation d'un codeur monotour. -
+0
+0
+1 UINT16
+R/W
+per.
+- CANopen
+3005:23 h
+Modbus 1350
+-
+0
+0
+2 UINT16
+R/W
+-
+- CANopen 3022:5 h
+Modbus 8714
+Si cette fonction est active, le
+variateur enregistre les données de
+position correspondantes avant la
+désactivation de sorte à pouvoir
+rétablir la position mécanique lors
+de la prochaine réactivation.
+Dans le cas des codeurs
+monotours, la position peut être
+rétablie si l'arbre du moteur n'a pas
+été tourné de plus de 0,25 rotation
+alors que le variateur était
+désactivé.
+Dans le cas des codeurs multitours,
+le déplacement autorisé de l'arbre
+du moteur est nettement plus
+important ; il dépend du type de
+codeur multitour.
+Cette fonction ne fonctionne
+correctement que si le variateur est
+désactivé lorsque le moteur est à
+l'arrêt et si l'arbre du moteur n'est
+pas déplacé hors de la plage
+autorisée (utiliser le frein de
+maintien par exemple).
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+Disponible avec version ≥V01.03
+du micrologiciel.
+SyncMechStart
+Activation du mécanisme de
+synchronisation
+Valeur 0 : désactiver le mécanisme
+de synchronisation.
+Valeur 1 : activer le mécanisme de
+synchronisation (CANmotion)
+Valeur 2 : activer le mécanisme de
+synchronisation, mécanisme
+CANopen standard
+Le temps de cycle du signal de
+synchronisation provient des
+paramètres intTimPerVal et
+intTimInd.
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+500
+0198441113756 09/2017Paramètre
+0198441113756 09/2017
+Nom du paramètre
+Menu IMH
+Dénomination IHM Description Unité
+Valeur minimale
+Réglage d'usine
+Valeur maximale Type de
+données
+R/W
+Persistant
+Expert Adresse de
+paramètre via bus
+de terrain
+SyncMechStatus État du mécanisme de
+synchronisation
+État du mécanisme de
+synchronisation
+Valeur 1 : le mécanisme de
+synchronisation du variateur est
+inactif.
+Valeur 32 : variateur synchronisé
+avec le signal de synchronisation
+externe
+Valeur 64 : le variateur est
+synchronisé avec le signal de
+synchronisation externe
+Disponible avec version ≥V01.08
+du micrologiciel. -
+-
+-
+- UINT16
+R/-
+-
+- CANopen 3022:6 h
+Modbus 8716
+SyncMechTol Tolérance de synchronisation
+La valeur est appliquée lorsque le
+mécanisme de synchronisation est
+activé via le paramètre
+SyncMechStart.
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+Disponible avec version ≥V01.08
+du micrologiciel. -
+1
+1
+20 UINT16
+R/W
+-
+- CANopen 3022:4 h
+Modbus 8712
+TouchProbeFct Fonction Touch Probe
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+Disponible avec version ≥V01.16
+du micrologiciel. -
+-
+-
+- UINT16
+R/W
+-
+- CANopen 60B8:0 h
+Modbus 7028
+UsrAppDataMem1 Données utilisateur 1
+Ce paramètre permet d'enregistrer
+les données spécifiques aux
+utilisateurs.
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+Disponible avec version ≥V01.20
+du micrologiciel. -
+-
+-
+- UINT32
+R/W
+per.
+- CANopen
+3001:43 h
+Modbus 390
+UsrAppDataMem2 Données utilisateur 2
+Ce paramètre permet d'enregistrer
+les données spécifiques aux
+utilisateurs.
+Les nouvelles valeurs sont prises
+en compte immédiatement.
+Disponible avec version ≥V01.20
+du micrologiciel. -
+-
+0
+- UINT32
+R/W
+per.
+- CANopen
+3001:44 h
+Modbus 392

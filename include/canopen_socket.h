@@ -26,7 +26,13 @@ class Canopen_socket
   Canopen_socket(const char* ifname,bool verbose = false);
 
   template <typename T=uint8_t>
-  int send_SDO(uint8_t nodeID, uint8_t dlc, bool w, uint16_t index, uint8_t subindex, T data=0)
+  uint32_t send_SDO(uint8_t nodeID, uint8_t dlc, bool w, uint32_t index, T data=0)
+    {
+      return send_SDO(nodeID, dlc, w, (uint16_t)(index>>16), (uint8_t)index, data);
+    };
+  
+  template <typename T=uint8_t>
+  uint32_t send_SDO(uint8_t nodeID, uint8_t dlc, bool w, uint16_t index, uint8_t subindex, T data=0)
   {
     m_frame.can_id  = 0x600+nodeID;
     m_frame.can_dlc = dlc;
@@ -47,6 +53,8 @@ class Canopen_socket
     write(m_socket, &m_frame, sizeof(struct can_frame));
 
     recv_SDO();
+
+    return *(uint32_t*)(m_frame.data+4);
   }
 
   int recv_SDO()

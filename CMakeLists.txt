@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0)
-set(EXEC_NAME canopen)
+set(EXEC_NAME lxm32)
 project(${EXEC_NAME})
 
 #get the sources and headers
