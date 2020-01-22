@@ -1,0 +1,3 @@
+[submodule "lib/canopen"]
+	path = lib/canopen
+	url = git@github.com:Aightech/canopen

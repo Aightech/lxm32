@@ -22,7 +22,7 @@ main(int argc, char** argv)
 
   LXM32 lxm32("can0", 4, true);
 
-  lxm32.start();
+  //lxm32.start();
   // Canopen_socket can("can0",true);
 
   // uint16_t t = 0x1234;
