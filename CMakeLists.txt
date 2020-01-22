@@ -24,7 +24,12 @@ file(GLOB HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/include/*.h" "include/*.hpp")
 
 
 
+
+
+
+
 #### add subdirectory libraries ####
+# get the version number
 function(subproject_version subproject_name VERSION_VAR)
   # Read CMakeLists.txt for subproject and extract project() call(s) from it.
   file(STRINGS "${${subproject_name}_SOURCE_DIR}/CMakeLists.txt" project_calls REGEX "[ \t]*set\\(")
@@ -42,6 +47,7 @@ function(subproject_version subproject_name VERSION_VAR)
   endif()
 endfunction(subproject_version)
 
+#get all folder of a directory
 MACRO(subdirlist result curdir)
   FILE(GLOB children RELATIVE ${curdir} ${curdir}/*)
   SET(dirlist "")
@@ -52,12 +58,12 @@ MACRO(subdirlist result curdir)
   ENDFOREACH()
   SET(${result} ${dirlist})
 ENDMACRO()
+
 subdirlist(LIBS "${CMAKE_CURRENT_SOURCE_DIR}/lib/")
 foreach(subdir ${LIBS})
+  #add subdirectory libraries
   execute_process(COMMAND git submodule update --init -- "lib/${subdir}"
                     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
-  
-  #add subdirectory libraries
   add_subdirectory("lib/${subdir}")
   
   subproject_version("${subdir}" subdir_version)
