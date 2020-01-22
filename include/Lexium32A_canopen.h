@@ -58,7 +58,6 @@ class LXM32
       /* new_pos(30000, 0, 60); */
       
       
-      m_can.set_PDO<1, R_PDO>(m_can_id);
       //m_can.send_PDO<1>( m_can_id,(uint16_t)OP_DISABLEVOL);
       
 
@@ -80,9 +79,9 @@ class LXM32
     m_can.send_PDO(PDO_2, m_can_id,(uint16_t)OP_ENABLEOP,   (int32_t)0x00);
 
     
-    m_can.send_SDO(m_can_id , SDO_W, 0x60830000, 2000); 
-    m_can.send_SDO(m_can_id , SDO_W, 0x60840000, 4000); 
-    m_can.send_SDO(m_can_id , SDO_W, 0x60810000, 4000);
+    /* m_can_SDO.send_SDO(m_can_id , SDO_W, 0x60830000, 2000);  */
+    /* m_can_SDO.send_SDO(m_can_id , SDO_W, 0x60840000, 4000);  */
+    /* m_can_SDO.send_SDO(m_can_id , SDO_W, 0x60810000, 4000); */
     usleep(10000);
 
   };
@@ -99,15 +98,19 @@ class LXM32
     m_PPv_target = (spd!=0)?spd:m_PPv_target;
     m_PPoption = (abs)?2:0;
 
-    if(m_m_dcom_mode == MODE_ProfilePosition)
+    if(m_dcom_mode == MODE_ProfilePosition)
       {
 	m_dcom_mode = MODE_ProfilePosition;
 	m_can.send_SDO(m_can_id , SDO_W, REG_DCOMopmode, m_dcom_mode);
       }
 
-    
-    m_can.send_PDO(PDO_2, m_can_id,(uint16_t)0x4F,(int32_t)m_PPp_target);
-    m_can.send_PDO(PDO_2, m_can_id,(uint16_t)0x5F,(int32_t)m_PPp_target);
+    m_dcom_control = 0x4F;
+    m_can.send_PDO<2>(m_can_id,(uint16_t)m_dcom_control,(int32_t)m_PPp_target);
+    m_can_PDO1.recv(m_dcom_status);
+
+    m_dcom_control = 0x5F;
+    m_can.send_PDO<2>(m_can_id,(uint16_t)m_dcom_control,(int32_t)m_PPp_target);
+    m_can_PDO1.recv(m_dcom_status);
   };
 
 
@@ -121,10 +124,10 @@ class LXM32
     m_dcom_status = (uint16_t)m_can.send_SDO(m_can_id, SDO_R, REG__DCOMstatus);
   };
 
-  void print_param()
+  void print_status()
   {
     
-    printf("> LXM32A Parameters\n");
+    printf("> LXM32A Status\n");
     printf("\t>> CANopen bus info:\n");
     printf("\t\t >>> Node_id: %03d\n", m_can_id);
     printf("\t\t >>> Baud: %d kps\n",  m_can_baud);
@@ -159,6 +162,49 @@ class LXM32
 
     printf("\t\t>>> Operating : %s\n",(m_dcom_status&0x4000)?"NO":"YES");
     printf("\t\t>>> Valid Zero Point : %s\n",(m_dcom_status&0x8000)?"YES":"NO");
+
+    if(m_dcom_mode==1)
+      {
+	printf("\t>> Position Profile:\n");
+	printf("\t\t>>> Target : %s\n",((m_dcom_status&0x40)==0x40)?"NOT REACHED":"REACHED");
+	printf("\t\t>>> Position : %s\n",((m_dcom_status&0x40)==0x40)?"POSSIBLE":"IMPOSSIBLE");
+      }
+    
+  };
+
+  void print_control()
+  {
+    
+    printf("> LXM32A Control s\n");
+    printf("\t>> Operating Control info:\n");
+
+    if((m_dcom_control&0x87)==0x06)//FAULT
+      m_ctrl_state=0;
+    else if((m_dcom_control&0x8F)==0x06)
+      m_op_state=1;
+    else if((m_dcom_control&0x82)==0x00)
+      m_op_state=2;
+    else if((m_dcom_control&0x86)==0x02)
+      m_op_state=3;
+    else if((m_dcom_control&0x8F)==0x07)
+      m_op_state=4;
+    else if((m_dcom_control&0x8F)==0x0F)
+      m_op_state=5;
+    else if((m_dcom_control&0x80)==0x80)
+      m_op_state=6;
+    printf("\t\t>>> [ %s ]\n",m_op_state_str[m_ctrl_state]);
+
+    if(m_dcom_mode==1)
+      {
+	printf("\t>> Position Profile:\n");
+	if((m_dcom_control&0x0230)==0x0010)
+	  printf("\t\t>>> MODE: 0 \n");
+	if((m_dcom_control&0x0230)==0x0210)
+	  printf("\t\t>>> MODE: 1 \n");
+	if((m_dcom_control&0x0030)==0x0030)
+	  printf("\t\t>>> MODE: 2 \n");       
+	printf("\t\t>>> Movement : %s\n",((m_dcom_status&0x40)==0x40)?"ABSOLUE":"RELATIVE");
+      }
     
     
   };
@@ -180,6 +226,7 @@ class LXM32
   uint16_t m_can_id;
   uint16_t m_can_baud;
   uint16_t m_dcom_status;
+  uint16_t m_dcom_control;
 
   int8_t m_dcom_mode; 
 
@@ -197,6 +244,15 @@ class LXM32
 				 "QUICK STOP",
 				 "FAULT",
 				 "FAULT, REACTION ACTIVE"};
+
+  uint8_t m_ctrl_state;
+  const char* m_op_control_str[8]={"SHUTDOWN",
+				   "SWITCH ON",
+				   "DISABLE VOLTAGE",
+				   "QUICK STOP",
+				   "DISABLE OPERATION",
+				   "ENABLE OPERATION",
+				   "FAULT RESET"};
   
   
 };
