@@ -38,18 +38,28 @@
 class LXM32 
 {
  public:
- LXM32(const char* ifname,uint16_t can_id, bool verbose = false): m_can(ifname,verbose), m_can_id(can_id), m_verbose(verbose)
+ LXM32(const char* ifname,uint16_t can_id, bool verbose = false):
+  m_verbose(verbose),
+    m_can(ifname,verbose),
+    m_can_PDO1(ifname, 0x180 +can_id, verbose),
+    m_can_PDO2(ifname, 0x280 +can_id, verbose),
+    m_can_PDO3(ifname, 0x380 +can_id, verbose),
+    m_can_PDO4(ifname, 0x480 +can_id, verbose),
+    m_can_SDO(ifname,  0x580 +can_id, verbose),
+    m_can_id(can_id)
     {
       
-      get_param();
-
-      init();
+      /* get_param(); */
       
-      print_param();
-
+      /* init(); */
       
-      new_pos(30000, 0, 60);
-
+      /* print_param(); */
+      
+      /* new_pos(30000, 0, 60); */
+      
+      
+      m_can.set_PDO<1, R_PDO>(m_can_id);
+      //m_can.send_PDO<1>( m_can_id,(uint16_t)OP_DISABLEVOL);
       
 
       
@@ -60,14 +70,19 @@ class LXM32
   void init()
   {
 
-    m_can.send_SDO(m_can_id , SDO_W, 0x14010001, 0x04000304);
-    m_can.send_SDO(m_can_id , SDO_W, 0x18010001, 0x04000284);
+    m_can_SDO.set_PDO<2,R_PDO>(m_can_id);
+    m_can_SDO.set_PDO<2,T_PDO>(m_can_id);
     
-    m_can.send_msg((uint32_t)0,(uint16_t)1);
+    m_can.send_NMT(NMT_START);
     
     m_can.send_PDO(PDO_2, m_can_id,(uint16_t)OP_DISABLEVOL, (int32_t)0x00);
     m_can.send_PDO(PDO_2, m_can_id,(uint16_t)OP_SHUTDOWN,   (int32_t)0x00);
     m_can.send_PDO(PDO_2, m_can_id,(uint16_t)OP_ENABLEOP,   (int32_t)0x00);
+
+    
+    m_can.send_SDO(m_can_id , SDO_W, 0x60830000, 2000); 
+    m_can.send_SDO(m_can_id , SDO_W, 0x60840000, 4000); 
+    m_can.send_SDO(m_can_id , SDO_W, 0x60810000, 4000);
     usleep(10000);
 
   };
@@ -84,24 +99,15 @@ class LXM32
     m_PPv_target = (spd!=0)?spd:m_PPv_target;
     m_PPoption = (abs)?2:0;
 
-    
-    m_can.send_SDO(m_can_id , SDO_W, 0x60830000, 2000); 
-    m_can.send_SDO(m_can_id , SDO_W, 0x60840000, 4000); 
-    m_can.send_SDO(m_can_id , SDO_W, 0x60810000, 4000);
+    if(m_m_dcom_mode == MODE_ProfilePosition)
+      {
+	m_dcom_mode = MODE_ProfilePosition;
+	m_can.send_SDO(m_can_id , SDO_W, REG_DCOMopmode, m_dcom_mode);
+      }
 
     
-    m_dcom_mode = MODE_ProfilePosition;
-    m_can.send_SDO(m_can_id , SDO_W, REG_DCOMopmode, m_dcom_mode);
-
-    
-    m_can.send_PDO(PDO_2, m_can_id,(uint16_t)0x5F,(int32_t)m_PPp_target);
-    usleep(100000);
     m_can.send_PDO(PDO_2, m_can_id,(uint16_t)0x4F,(int32_t)m_PPp_target);
-    usleep(100000);
-    m_can.send_PDO(PDO_2, m_can_id,(uint16_t)0x5F,(int32_t)-m_PPp_target);
-    
-
-    
+    m_can.send_PDO(PDO_2, m_can_id,(uint16_t)0x5F,(int32_t)m_PPp_target);
   };
 
 
@@ -159,8 +165,18 @@ class LXM32
 
   
  private:
-  Canopen_socket m_can;
+  
   bool m_verbose;
+  
+  Canopen_socket m_can;
+  
+  Canopen_socket m_can_PDO1;
+  Canopen_socket m_can_PDO2;
+  Canopen_socket m_can_PDO3;
+  Canopen_socket m_can_PDO4;
+  
+  Canopen_socket m_can_SDO;
+
   uint16_t m_can_id;
   uint16_t m_can_baud;
   uint16_t m_dcom_status;
