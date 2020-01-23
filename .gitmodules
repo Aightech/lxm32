@@ -1,6 +1,8 @@
 [submodule "lib/canopen"]
 	path = lib/canopen
-	url = git@github.com:Aightech/canopen
+	url = ../canopen
+	branch = master
 [submodule "lib/joystick"]
 	path = lib/joystick
-	url = git@github.com:Aightech/joystick
+	url = ../joystick
+	branch = master
