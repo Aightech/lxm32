@@ -30,46 +30,55 @@ file(GLOB HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/include/*.h" "include/*.hpp")
 
 #### add subdirectory libraries ####
 # get the version number
-function(subproject_version subproject_name VERSION_VAR)
-  # Read CMakeLists.txt for subproject and extract project() call(s) from it.
-  file(STRINGS "${${subproject_name}_SOURCE_DIR}/CMakeLists.txt" project_calls REGEX "[ \t]*set\\(")
-  # For every project() call try to extract its VERSION option
-  foreach(project_call ${project_calls})
-    string(REGEX MATCH "VERSION[ ]+([^ )]+)" version_param "${project_call}")
-    if(version_param)
-      set(version_value "${CMAKE_MATCH_1}")
+if(NOT COMMAND subproject_version)
+  function(subproject_version subproject_name VERSION_VAR)
+    # Read CMakeLists.txt for subproject and extract project() call(s) from it.
+
+    file(STRINGS "${CMAKE_CURRENT_SOURCE_DIR}/lib/${subproject_name}/CMakeLists.txt" project_calls REGEX "[ \t]*set\\(")
+    # For every project() call try to extract its VERSION option
+    foreach(project_call ${project_calls})
+      string(REGEX MATCH "VERSION[ ]+([^ )]+)" version_param "${project_call}")
+      if(version_param)
+	set(version_value "${CMAKE_MATCH_1}")
+      endif()
+    endforeach()
+    if(version_value)
+      set(${VERSION_VAR} "${version_value}" PARENT_SCOPE)
+    else()
+      message("WARNING: Cannot extract version for subproject '${subproject_name}'")
+      message("WARNING: default version")
+      set(${VERSION_VAR} 1.0 PARENT_SCOPE)
     endif()
-  endforeach()
-  if(version_value)
-    set(${VERSION_VAR} "${version_value}" PARENT_SCOPE)
-  else()
-    message("WARNING: Cannot extract version for subproject '${subproject_name}'")
-  endif()
-endfunction(subproject_version)
+  endfunction(subproject_version)
+endif()
 
 #get all folder of a directory
-MACRO(subdirlist result curdir)
-  FILE(GLOB children RELATIVE ${curdir} ${curdir}/*)
-  SET(dirlist "")
-  FOREACH(child ${children})
-    IF(IS_DIRECTORY ${curdir}/${child})
-      LIST(APPEND dirlist ${child})
-    ENDIF()
-  ENDFOREACH()
-  SET(${result} ${dirlist})
-ENDMACRO()
+if(NOT COMMAND subdirlist)
+  MACRO(subdirlist result curdir)
+    FILE(GLOB children RELATIVE ${curdir} ${curdir}/*)
+    SET(dirlist "")
+    FOREACH(child ${children})
+      IF(IS_DIRECTORY ${curdir}/${child})
+	LIST(APPEND dirlist ${child})
+      ENDIF()
+    ENDFOREACH()
+    SET(${result} ${dirlist})
+  ENDMACRO()
+endif()
 
-subdirlist(LIBS "${CMAKE_CURRENT_SOURCE_DIR}/lib/")
-foreach(subdir ${LIBS})
-  #add subdirectory libraries
-  execute_process(COMMAND git submodule update --init -- "lib/${subdir}"
-                    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
-  add_subdirectory("lib/${subdir}")
-  
-  subproject_version("${subdir}" subdir_version)
-  message("-- Added lib/${subdir} version: ${subdir_version}")
-  list(APPEND EXTRA_LIBS "${subdir}.${subdir_version}")
-endforeach()
+if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/lib") 
+  subdirlist(LIBS "${CMAKE_CURRENT_SOURCE_DIR}/lib/")
+  foreach(subdir ${LIBS})
+    #add subdirectory libraries
+    execute_process(COMMAND git submodule update --init -- "lib/${subdir}"
+      WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+    add_subdirectory("lib/${subdir}")
+    
+    subproject_version("${subdir}" subdir_version)
+    message("-- ${EXEC_NAME}: Added library ${subdir} version: ${subdir_version}")
+    list(APPEND EXTRA_LIBS "${subdir}.${subdir_version}")
+  endforeach()
+endif()
 
 list(APPEND EXTRA_LIBS "pthread")
 
