@@ -59,18 +59,19 @@ MACRO(subdirlist result curdir)
   SET(${result} ${dirlist})
 ENDMACRO()
 
-subdirlist(LIBS "${CMAKE_CURRENT_SOURCE_DIR}/lib/")
-foreach(subdir ${LIBS})
-  #add subdirectory libraries
-  execute_process(COMMAND git submodule update --init -- "lib/${subdir}"
-                    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
-  add_subdirectory("lib/${subdir}")
-  
-  subproject_version("${subdir}" subdir_version)
-  message("-- Added lib/${subdir} version: ${subdir_version}")
-  list(APPEND EXTRA_LIBS "${subdir}.${subdir_version}")
-endforeach()
-
+if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/lib") 
+  subdirlist(LIBS "${CMAKE_CURRENT_SOURCE_DIR}/lib/")
+  foreach(subdir ${LIBS})
+    #add subdirectory libraries
+    execute_process(COMMAND git submodule update --init -- "lib/${subdir}"
+      WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+    add_subdirectory("lib/${subdir}")
+    
+    subproject_version("${subdir}" subdir_version)
+    message("-- Added lib/${subdir} version: ${subdir_version}")
+    list(APPEND EXTRA_LIBS "${subdir}.${subdir_version}")
+  endforeach()
+endif()
 list(APPEND EXTRA_LIBS "pthread")
 
 #create executable
