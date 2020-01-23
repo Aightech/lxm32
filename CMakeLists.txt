@@ -11,6 +11,9 @@ set(LIB_NAME ${EXEC_NAME}.${PROJECT_VERSION})
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
+###### Special libraries  ######
+set(EXTRA_LIBS "pthread")
+
 
 
 
@@ -79,8 +82,6 @@ if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/lib")
     list(APPEND EXTRA_LIBS "${subdir}.${subdir_version}")
   endforeach()
 endif()
-
-list(APPEND EXTRA_LIBS "pthread")
 
 #create executable
 add_executable(${EXEC_NAME} ${SRCS})
