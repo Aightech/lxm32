@@ -71,7 +71,7 @@ foreach(subdir ${LIBS})
   list(APPEND EXTRA_LIBS "${subdir}.${subdir_version}")
 endforeach()
 
-
+list(APPEND EXTRA_LIBS "pthread")
 
 #create executable
 add_executable(${EXEC_NAME} ${SRCS})

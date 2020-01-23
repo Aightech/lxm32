@@ -22,9 +22,35 @@ int
 main(int argc, char** argv)
 {
 
-  LXM32 lxm32("can0", 4, true);
+  
   cJoystick js;
   printf("%d\n",js.joystickValue(1));
+  LXM32 lxm32_4("can0", 4,true);
+  lxm32_4.init();
+  lxm32_4.start();
+  LXM32 lxm32_3("can0", 3,true);
+  lxm32_3.init();
+  lxm32_3.start();
+
+  //lxm32_4.new_pos(50000);
+
+  int alpha4=0;
+  int alpha3=0;
+  int inc4=0;
+  int inc3=0;
+  
+
+  while(1)
+    {
+      inc4=js.joystickValue(1)-alpha4;
+      alpha4+=inc4;
+      printf("%d\n",alpha4);
+      inc3=js.joystickValue(4)-alpha3;
+      alpha3+=inc3;
+      lxm32_4.new_pos(inc4);
+      lxm32_3.new_pos(inc3);
+      usleep(100000);
+    }
 
   //lxm32.start();
   // Canopen_socket can("can0",true);

@@ -55,8 +55,11 @@ class LXM32
     {
       
       
-      init();
-      start();      
+      //init();
+      //start();
+
+
+      
     };
 
   
@@ -72,7 +75,7 @@ class LXM32
 
     //init R_PDO2 and T_PDO 
     m_can_SDO.set_PDO<2,R_PDO>(m_can_id);
-    //m_can_SDO.set_PDO<2,T_PDO>(m_can_id);
+    m_can_SDO.set_PDO<2,T_PDO>(m_can_id);
     
 
 	
@@ -93,12 +96,12 @@ class LXM32
     //set control to put in operating mode
     
     m_can.send_PDO<2>(m_can_id,(uint16_t)OP_DISABLEVOL,   (int32_t)0x00);
-    m_can_PDO1.recv(m_dcom_status);
+    //m_can_PDO1.recv(m_dcom_status);
 
     m_dcom_control = OP_ENABLEOP | PPctrl_RELATIVE| PPctrl_ON_DIRECT;
     print_control();
     m_can.send_PDO<2>(m_can_id,(uint16_t)m_dcom_control,(int32_t)m_PPp_target);
-    m_can_PDO1.recv(m_dcom_status);
+    //m_can_PDO1.recv(m_dcom_status);
     usleep(100000);
   };
 
