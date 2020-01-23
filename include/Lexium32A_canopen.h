@@ -22,11 +22,16 @@
 
 
 #define MODE_ProfilePosition 1
+#define PPctrl_SET_POINT  0x0010
+#define PPctrl_ON_TARGET  0x0040
+#define PPctrl_ON_DIRECT  0x0020
+#define PPctrl_RELATIVE     0x0040
+#define PPctrl_ABSOLUTE     0x0000
 
 #define OP_SHUTDOWN     0x0006
 #define OP_SWITCHON     0x0007
 #define OP_DISABLEVOL   0x0000
-#define OP_QUICKSTEP    0x0002
+#define OP_QUICKSTOP    0x0002
 #define OP_DISABLEOP    0x0007
 #define OP_ENABLEOP     0x000F
 #define OP_FAULTRESEST  0x0080
@@ -49,19 +54,9 @@ class LXM32
     m_can_id(can_id)
     {
       
-      /* get_param(); */
       
-      /* init(); */
-      
-      /* print_param(); */
-      
-      /* new_pos(30000, 0, 60); */
-      
-      
-      //m_can.send_PDO<1>( m_can_id,(uint16_t)OP_DISABLEVOL);
-      
-
-      
+      init();
+      start();      
     };
 
   
@@ -69,19 +64,23 @@ class LXM32
   void init()
   {
 
+    m_can_id   = (uint16_t)m_can_SDO.send_SDO(m_can_id, SDO_R, REG_CANaddress);
+    m_can_baud = (uint16_t)m_can_SDO.send_SDO(m_can_id, SDO_R, REG_CANbaud);
+    m_dcom_status = (uint16_t)m_can_SDO.send_SDO(m_can_id, SDO_R, REG__DCOMstatus);
+    if(m_verbose)
+      print_status();
+
+    //init R_PDO2 and T_PDO 
     m_can_SDO.set_PDO<2,R_PDO>(m_can_id);
-    m_can_SDO.set_PDO<2,T_PDO>(m_can_id);
+    //m_can_SDO.set_PDO<2,T_PDO>(m_can_id);
     
-    m_can.send_NMT(NMT_START);
-    
-    m_can.send_PDO(PDO_2, m_can_id,(uint16_t)OP_DISABLEVOL, (int32_t)0x00);
-    m_can.send_PDO(PDO_2, m_can_id,(uint16_t)OP_SHUTDOWN,   (int32_t)0x00);
-    m_can.send_PDO(PDO_2, m_can_id,(uint16_t)OP_ENABLEOP,   (int32_t)0x00);
+
+	
 
     
-    /* m_can_SDO.send_SDO(m_can_id , SDO_W, 0x60830000, 2000);  */
-    /* m_can_SDO.send_SDO(m_can_id , SDO_W, 0x60840000, 4000);  */
-    /* m_can_SDO.send_SDO(m_can_id , SDO_W, 0x60810000, 4000); */
+    m_can_SDO.send_SDO(m_can_id , SDO_W, 0x60830000, 2000);
+    m_can_SDO.send_SDO(m_can_id , SDO_W, 0x60840000, 4000);
+    m_can_SDO.send_SDO(m_can_id , SDO_W, 0x60810000, 4000);
     usleep(10000);
 
   };
@@ -89,39 +88,53 @@ class LXM32
 
   void start()
   {
+    m_can.send_NMT(NMT_START);
     
+    //set control to put in operating mode
+    
+    m_can.send_PDO<2>(m_can_id,(uint16_t)OP_DISABLEVOL,   (int32_t)0x00);
+    m_can_PDO1.recv(m_dcom_status);
+
+    m_dcom_control = OP_ENABLEOP | PPctrl_RELATIVE| PPctrl_ON_DIRECT;
+    print_control();
+    m_can.send_PDO<2>(m_can_id,(uint16_t)m_dcom_control,(int32_t)m_PPp_target);
+    m_can_PDO1.recv(m_dcom_status);
+    usleep(100000);
   };
 
-  void new_pos(int32_t pos, bool abs, uint32_t spd=0)
+  
+
+  void stop()
+  {
+    m_can.send_NMT(NMT_STOP);
+  };
+
+  void new_pos(int32_t pos)
   {
     m_PPp_target = pos;
-    m_PPv_target = (spd!=0)?spd:m_PPv_target;
-    m_PPoption = (abs)?2:0;
 
-    if(m_dcom_mode == MODE_ProfilePosition)
+    set_mode(MODE_ProfilePosition);
+    
+    if(m_verbose)
+      print_control();
+    m_can.send_PDO<2>(m_can_id,(uint16_t)(m_dcom_control),(int32_t)m_PPp_target);
+    m_can.send_PDO<2>(m_can_id,(uint16_t)(m_dcom_control|PPctrl_SET_POINT),(int32_t)m_PPp_target);
+  };
+
+  void set_mode(int8_t mode)
+  {
+     if(m_dcom_mode != mode)
       {
 	m_dcom_mode = MODE_ProfilePosition;
 	m_can.send_SDO(m_can_id , SDO_W, REG_DCOMopmode, m_dcom_mode);
       }
+  }
 
-    m_dcom_control = 0x4F;
-    m_can.send_PDO<2>(m_can_id,(uint16_t)m_dcom_control,(int32_t)m_PPp_target);
-    m_can_PDO1.recv(m_dcom_status);
-
-    m_dcom_control = 0x5F;
-    m_can.send_PDO<2>(m_can_id,(uint16_t)m_dcom_control,(int32_t)m_PPp_target);
-    m_can_PDO1.recv(m_dcom_status);
-  };
-
-
-  void stop()
-  {};
 
   void get_param()
   {
     m_can_id   = (uint16_t)m_can.send_SDO(m_can_id, SDO_R, REG_CANaddress);
     m_can_baud = (uint16_t)m_can.send_SDO(m_can_id, SDO_R, REG_CANbaud);
-    m_dcom_status = (uint16_t)m_can.send_SDO(m_can_id, SDO_R, REG__DCOMstatus);
   };
 
   void print_status()
@@ -174,36 +187,37 @@ class LXM32
 
   void print_control()
   {
-    
     printf("> LXM32A Control s\n");
     printf("\t>> Operating Control info:\n");
 
-    if((m_dcom_control&0x87)==0x06)//FAULT
+    if((m_dcom_control&0x87)==OP_SHUTDOWN)//FAULT
       m_ctrl_state=0;
-    else if((m_dcom_control&0x8F)==0x06)
-      m_op_state=1;
-    else if((m_dcom_control&0x82)==0x00)
-      m_op_state=2;
-    else if((m_dcom_control&0x86)==0x02)
-      m_op_state=3;
-    else if((m_dcom_control&0x8F)==0x07)
-      m_op_state=4;
-    else if((m_dcom_control&0x8F)==0x0F)
-      m_op_state=5;
-    else if((m_dcom_control&0x80)==0x80)
-      m_op_state=6;
-    printf("\t\t>>> [ %s ]\n",m_op_state_str[m_ctrl_state]);
+    else if((m_dcom_control&0x8F)==OP_SWITCHON)
+      m_ctrl_state=1;
+    else if((m_dcom_control&0x82)==OP_DISABLEVOL)
+      m_ctrl_state=2;
+    else if((m_dcom_control&0x86)==OP_QUICKSTOP)
+      m_ctrl_state=3;
+    else if((m_dcom_control&0x8F)==OP_DISABLEOP)
+      m_ctrl_state=4;
+    else if((m_dcom_control&0x8F)==OP_ENABLEOP)
+      m_ctrl_state=5;
+    else if((m_dcom_control&0x80)==OP_FAULTRESEST)
+      m_ctrl_state=6;
+    printf("\t\t>>> [ %s ]\n",m_op_control_str[m_ctrl_state]);
 
     if(m_dcom_mode==1)
       {
 	printf("\t>> Position Profile:\n");
-	if((m_dcom_control&0x0230)==0x0010)
-	  printf("\t\t>>> MODE: 0 \n");
-	if((m_dcom_control&0x0230)==0x0210)
-	  printf("\t\t>>> MODE: 1 \n");
-	if((m_dcom_control&0x0030)==0x0030)
-	  printf("\t\t>>> MODE: 2 \n");       
-	printf("\t\t>>> Movement : %s\n",((m_dcom_status&0x40)==0x40)?"ABSOLUE":"RELATIVE");
+	printf("\t\t>>> Set point: %s\n",((m_dcom_control&0x0010)==0x0010)?"SET": "UNSET");
+	       
+	if((m_dcom_control&0x0030)==0x0000)
+	  printf("\t\t>>> MODE: on set point \n");
+	if((m_dcom_control&0x0030)==0x0020)
+	  printf("\t\t>>> MODE: on target reached \n");
+	if((m_dcom_control&0x0010)==0x0010)
+	  printf("\t\t>>> MODE: immediately \n");       
+	printf("\t\t>>> Movement : %s\n",((m_dcom_status&0x40)==0x40)?"ABSOLUTE":"RELATIVE");
       }
     
     

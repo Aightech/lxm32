@@ -14,6 +14,8 @@
 
 #include "Lexium32A_canopen.h"
 
+#include "joystick.h"
+
 
 
 int
@@ -21,6 +23,8 @@ main(int argc, char** argv)
 {
 
   LXM32 lxm32("can0", 4, true);
+  cJoystick js;
+  printf("%d\n",js.joystickValue(1));
 
   //lxm32.start();
   // Canopen_socket can("can0",true);
