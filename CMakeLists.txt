@@ -1,8 +1,38 @@
 cmake_minimum_required(VERSION 3.0)
+###### Author: Alexis Devillard
+###### Date:   27/01/2020
+###### Brief: This CmakeLists.txt file enable to build generic project with the following structure:
+######                                +---------+
+######                                | porject |
+######                                +----+----+
+######                                     |
+######            +----------+------------++-------------+-----------+
+######            |          |            |              |           |
+######         +--+--+  +----+----+ +-----+------+ +-----+------+ +--+--+
+######         | src |  | include | | CMakelists | | CMakefunct | | lib |
+######         +--+--+  +----+----+ |    .txt    | |  ions.txt  | +--+--+
+######            |          |      +------------+ +------------+    |
+######      +-----+------+   |                                       |
+######      |            |   +-------+            +--------------+---+
+###### +----+-----+      |           |            |              |
+###### | main.cpp | +----+----+ +----+----+ +-----+------+ +-----+------+
+###### +----------+ | lib.cpp | | lib.hpp | | subproject | | subproject |
+######              +---------+ +---------+ |     1      | |     2      |
+######                                      +-----+------+ +------------+
+######                                            |
+######                        +-----------+-------+------+-----------+
+######                        |           |              |           |
+######                     +--+---+ +-----+------+ +-----+------+ +--+--+
+######                     | .git | | CMakelists | | CMakeFunct | | ... |
+######                     +------+ |    .txt    | |  ions.txt  | +-----+
+######                              +------------+ +------------+
+###### 
+######
 
 ###### PROJECT NAME AND VERSION ######
 set(EXEC_NAME lxm32)
 set(PROJECT_VERSION 1.0)
+project(${EXEC_NAME} VERSION ${PROJECT_VERSION})
 
 ###### LIBRARY NAME ######
 set(LIB_NAME ${EXEC_NAME}.${PROJECT_VERSION})
@@ -12,95 +42,71 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 ###### Special libraries  ######
-set(EXTRA_LIBS "pthread")
+if(NO)
+  set(EXTRA_LIBS "")
+endif()
 
 
 
-
-#Set prooject name
-project(${EXEC_NAME} VERSION ${PROJECT_VERSION})
-#get the sources and headers
+###### Get the sources and headers ######
+###### Exec main src file ######
 set(MAIN_FILE "src/main.cpp")
-file(GLOB SRCS "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp" "src/*.c")
-list(REMOVE_ITEM SRCS ${MAIN_FILE})
-file(GLOB HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/include/*.h" "include/*.hpp")
+###### Exec-only header file ######
+set(EXTRA_HEADERS "include/gnuplot-iostream.h")
+
+###### Library src and headezr files (everything else) ######
+file(GLOB LIB_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp" "src/*.c")
+list(REMOVE_ITEM LIB_SRCS ${MAIN_FILE})
+file(GLOB LIB_HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/include/*.h" "include/*.hpp")
+list(REMOVE_ITEM LIB_HEADERS ${EXTRA_HEADERS})
 
 
 
 
 
+###### include helper functions ######
+include(CMakeFunctions.txt)
 
 
-#### add subdirectory libraries ####
-# get the version number
-if(NOT COMMAND subproject_version)
-  function(subproject_version subproject_name VERSION_VAR)
-    # Read CMakeLists.txt for subproject and extract project() call(s) from it.
-
-    file(STRINGS "${CMAKE_CURRENT_SOURCE_DIR}/lib/${subproject_name}/CMakeLists.txt" project_calls REGEX "[ \t]*set\\(")
-    # For every project() call try to extract its VERSION option
-    foreach(project_call ${project_calls})
-      string(REGEX MATCH "VERSION[ ]+([^ )]+)" version_param "${project_call}")
-      if(version_param)
-	set(version_value "${CMAKE_MATCH_1}")
-      endif()
-    endforeach()
-    if(version_value)
-      set(${VERSION_VAR} "${version_value}" PARENT_SCOPE)
-    else()
-      message("WARNING: Cannot extract version for subproject '${subproject_name}'")
-      message("WARNING: default version")
-      set(${VERSION_VAR} 1.0 PARENT_SCOPE)
-    endif()
-  endfunction(subproject_version)
-endif()
-
-#get all folder of a directory
-if(NOT COMMAND subdirlist)
-  MACRO(subdirlist result curdir)
-    FILE(GLOB children RELATIVE ${curdir} ${curdir}/*)
-    SET(dirlist "")
-    FOREACH(child ${children})
-      IF(IS_DIRECTORY ${curdir}/${child})
-	LIST(APPEND dirlist ${child})
-      ENDIF()
-    ENDFOREACH()
-    SET(${result} ${dirlist})
-  ENDMACRO()
-endif()
-
+###### Search for Subdirectories/Libraries ######
 if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/lib") 
   subdirlist(LIBS "${CMAKE_CURRENT_SOURCE_DIR}/lib/")
   foreach(subdir ${LIBS})
-    #add subdirectory libraries
+    #git submodules init
     execute_process(COMMAND git submodule update --init -- "lib/${subdir}"
-      WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+                    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
     add_subdirectory("lib/${subdir}")
-    
+    #get the version
     subproject_version("${subdir}" subdir_version)
     message("-- ${EXEC_NAME}: Added library ${subdir} version: ${subdir_version}")
     list(APPEND EXTRA_LIBS "${subdir}.${subdir_version}")
   endforeach()
 endif()
 
-#create executable
-add_executable(${EXEC_NAME} ${SRCS})
+
+
+
+###### Create the library ######
+add_library(${LIB_NAME} ${LIB_SRCS})
+target_link_libraries (${LIB_NAME}
+  PUBLIC ${EXTRA_LIBS})
+target_include_directories(${LIB_NAME}
+  PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include")
+
+
+
+###### Create the executable ######
+add_executable(${EXEC_NAME} ${MAIN_FILE})
 target_link_libraries (${EXEC_NAME}
-  PUBLIC "${EXTRA_LIBS}")
+  PUBLIC ${LIB_NAME}
+  PUBLIC ${EXTRA_LIBS})
 target_include_directories(${EXEC_NAME}
   PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include")
 
 
-#create library
-add_library(${LIB_NAME} ${SRCS})
-target_include_directories( ${LIB_NAME}
-  PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include"
-  )
-target_link_libraries (${LIB_NAME}
-  PUBLIC "${EXTRA_LIBS}")
 
  
-
+###### Instalation rule ######
 install(TARGETS ${EXEC_NAME} DESTINATION bin)
 install(TARGETS ${LIB_NAME} DESTINATION lib)
 install(FILES ${HEADERS} DESTINATION include)

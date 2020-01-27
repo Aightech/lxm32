@@ -19,5 +19,6 @@
 !.gitmodules
 !README.org
 !CMakeLists.txt
+!CMakeFunctions.txt
 !Doxyfile
 !todo.org

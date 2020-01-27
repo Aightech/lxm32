@@ -22,33 +22,50 @@ int
 main(int argc, char** argv)
 {
 
+
+  std::vector<LXM32*> motors;
+  int32_t m_motor_pos[6];
+  int32_t m_inc[6];
+  double m_conv=50000.0f/24.0f*180.0f/M_PI;
+
+  
+  int m_motor_lookup[6] = {5,2,0,1,4,3};
+  
+  for(int i=0; i<6; i++)
+    {
+      motors.push_back(new LXM32("can0", i+1,false));
+      motors.back()->init();
+      motors.back()->start();
+      m_motor_pos[i]=0;
+      m_inc[i]=0;
+    }
   
   cJoystick js;
-  printf("%d\n",js.joystickValue(1));
-  LXM32 lxm32_4("can0", 4,true);
-  lxm32_4.init();
-  lxm32_4.start();
-  LXM32 lxm32_3("can0", 3,true);
-  lxm32_3.init();
-  lxm32_3.start();
 
-  //lxm32_4.new_pos(50000);
-
-  int alpha4=0;
-  int alpha3=0;
-  int inc4=0;
-  int inc3=0;
-  
-
+  int c=0;
+  int i_n;
+  int i=0;
+  i_n = m_motor_lookup[i];
   while(1)
     {
-      inc4=js.joystickValue(1)-alpha4;
-      alpha4+=inc4;
-      printf("%d\n",alpha4);
-      inc3=js.joystickValue(4)-alpha3;
-      alpha3+=inc3;
-      lxm32_4.new_pos(inc4);
-      lxm32_3.new_pos(inc3);
+      if(js.buttonPressed(0)>0 && c==0)
+	{
+	  i=(i+1)%6;
+	  if(i==0)
+	      for(int i=0; i<6; i++)
+		m_motor_pos[i]=0;
+	  printf("motor %d\n",i);
+	  c++;
+	  i_n = m_motor_lookup[i];
+	}
+      if(js.buttonPressed(0)==0)
+	c=0;
+
+      int target = js.joystickValue(1)*m_conv*3.14/32000/2;
+      m_inc[i_n]=target-m_motor_pos[i_n];
+      m_motor_pos[i_n]+=m_inc[i_n];
+      motors[i_n]->new_pos(m_inc[i_n]);
+      printf("val %d\n",target);
       usleep(100000);
     }
 
