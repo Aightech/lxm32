@@ -1,0 +1,296 @@
+\hypertarget{_lexium32_a__canopen_8h}{}\section{include/\+Lexium32\+A\+\_\+canopen.h File Reference}
+\label{_lexium32_a__canopen_8h}\index{include/\+Lexium32\+A\+\_\+canopen.\+h@{include/\+Lexium32\+A\+\_\+canopen.\+h}}
+{\ttfamily \#include \char`\"{}canopen\+\_\+socket.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$string$>$}\newline
+{\ttfamily \#include $<$unistd.\+h$>$}\newline
+Include dependency graph for Lexium32\+A\+\_\+canopen.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=305pt]{_lexium32_a__canopen_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=229pt]{_lexium32_a__canopen_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{class_l_x_m32}{L\+X\+M32}
+\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_lexium32_a__canopen_8h_a288301cb406c37bce2e676a61a47069f}{R\+E\+G\+\_\+\+C\+A\+Naddress}~0x30410002
+\item 
+\#define \hyperlink{_lexium32_a__canopen_8h_a0cc1502471745a5a5d2953588405e4bb}{R\+E\+G\+\_\+\+C\+A\+Nbaud}~0x30410003
+\item 
+\#define \hyperlink{_lexium32_a__canopen_8h_a45fd1c3357c3e7820e73914b4aa2d3ee}{R\+E\+G\+\_\+\+\_\+\+D\+C\+O\+Mstatus}~0x60410000
+\item 
+\#define \hyperlink{_lexium32_a__canopen_8h_adb964aa4eaba974ed438fee7b9d09ccd}{R\+E\+G\+\_\+\+D\+C\+O\+Mopmode}~0x60600000
+\item 
+\#define \hyperlink{_lexium32_a__canopen_8h_a37233bac366559f38558d6ffeb5daf01}{R\+E\+G\+\_\+\+D\+C\+O\+Mcontrol}~0x60400000
+\item 
+\#define \hyperlink{_lexium32_a__canopen_8h_ac2ea552341a2aacf207cfc8c8bcc27af}{R\+E\+G\+\_\+\+P\+Pp\+\_\+target}~0x607\+A0000
+\item 
+\#define \hyperlink{_lexium32_a__canopen_8h_a5684fffd76d166871a0f7618cb33fa76}{R\+E\+G\+\_\+\+P\+Pv\+\_\+target}~0x60810000
+\item 
+\#define \hyperlink{_lexium32_a__canopen_8h_aac1fb3a95430fb03df0455a3e849d076}{R\+E\+G\+\_\+\+P\+Poption}~0x60\+F20000
+\item 
+\#define \hyperlink{_lexium32_a__canopen_8h_ab2aeca9392d3d3fe2889e2a4799e53a4}{R\+E\+G\+\_\+\+J\+O\+Gactivate}~0x301\+B0009
+\item 
+\#define \hyperlink{_lexium32_a__canopen_8h_abd03ed23facc5aa2eac935fa69608547}{M\+O\+D\+E\+\_\+\+Profile\+Position}~1
+\item 
+\#define \hyperlink{_lexium32_a__canopen_8h_a73172a8fb87a3183ff29444335ba4fdb}{P\+Pctrl\+\_\+\+S\+E\+T\+\_\+\+P\+O\+I\+NT}~0x0010
+\item 
+\#define \hyperlink{_lexium32_a__canopen_8h_a88648c72edc2879a93ba4723ae3652e7}{P\+Pctrl\+\_\+\+O\+N\+\_\+\+T\+A\+R\+G\+ET}~0x0040
+\item 
+\#define \hyperlink{_lexium32_a__canopen_8h_ab9cafb4211b0fa97cfc73b15d7b72b11}{P\+Pctrl\+\_\+\+O\+N\+\_\+\+D\+I\+R\+E\+CT}~0x0020
+\item 
+\#define \hyperlink{_lexium32_a__canopen_8h_a0349d409f0d302bb5374bcd5cd77c126}{P\+Pctrl\+\_\+\+R\+E\+L\+A\+T\+I\+VE}~0x0040
+\item 
+\#define \hyperlink{_lexium32_a__canopen_8h_ac8368603aa9e8065efb0a231bd007ee5}{P\+Pctrl\+\_\+\+A\+B\+S\+O\+L\+U\+TE}~0x0000
+\item 
+\#define \hyperlink{_lexium32_a__canopen_8h_ac4772c1c1c24a4b5837a2000c62aa0a3}{O\+P\+\_\+\+S\+H\+U\+T\+D\+O\+WN}~0x0006
+\item 
+\#define \hyperlink{_lexium32_a__canopen_8h_acf9b640777e01c586865a1b2791fc8b9}{O\+P\+\_\+\+S\+W\+I\+T\+C\+H\+ON}~0x0007
+\item 
+\#define \hyperlink{_lexium32_a__canopen_8h_a05d94d73527d10913d800850b4ea65f4}{O\+P\+\_\+\+D\+I\+S\+A\+B\+L\+E\+V\+OL}~0x0000
+\item 
+\#define \hyperlink{_lexium32_a__canopen_8h_ac3cecf02598899083372e24e0093544c}{O\+P\+\_\+\+Q\+U\+I\+C\+K\+S\+T\+OP}~0x0002
+\item 
+\#define \hyperlink{_lexium32_a__canopen_8h_ad45ed0f1fc61ec91eea44c1e64daac17}{O\+P\+\_\+\+D\+I\+S\+A\+B\+L\+E\+OP}~0x0007
+\item 
+\#define \hyperlink{_lexium32_a__canopen_8h_ac2d32ebfb52f2cf10d7fec601f266a0f}{O\+P\+\_\+\+E\+N\+A\+B\+L\+E\+OP}~0x000F
+\item 
+\#define \hyperlink{_lexium32_a__canopen_8h_a64e5209a86a8aa06bd3e71c354616b1c}{O\+P\+\_\+\+F\+A\+U\+L\+T\+R\+E\+S\+E\+ST}~0x0080
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\mbox{\Hypertarget{_lexium32_a__canopen_8h_abd03ed23facc5aa2eac935fa69608547}\label{_lexium32_a__canopen_8h_abd03ed23facc5aa2eac935fa69608547}} 
+\index{Lexium32\+A\+\_\+canopen.\+h@{Lexium32\+A\+\_\+canopen.\+h}!M\+O\+D\+E\+\_\+\+Profile\+Position@{M\+O\+D\+E\+\_\+\+Profile\+Position}}
+\index{M\+O\+D\+E\+\_\+\+Profile\+Position@{M\+O\+D\+E\+\_\+\+Profile\+Position}!Lexium32\+A\+\_\+canopen.\+h@{Lexium32\+A\+\_\+canopen.\+h}}
+\subsubsection{\texorpdfstring{M\+O\+D\+E\+\_\+\+Profile\+Position}{MODE\_ProfilePosition}}
+{\footnotesize\ttfamily \#define M\+O\+D\+E\+\_\+\+Profile\+Position~1}
+
+
+
+Definition at line 24 of file Lexium32\+A\+\_\+canopen.\+h.
+
+\mbox{\Hypertarget{_lexium32_a__canopen_8h_ad45ed0f1fc61ec91eea44c1e64daac17}\label{_lexium32_a__canopen_8h_ad45ed0f1fc61ec91eea44c1e64daac17}} 
+\index{Lexium32\+A\+\_\+canopen.\+h@{Lexium32\+A\+\_\+canopen.\+h}!O\+P\+\_\+\+D\+I\+S\+A\+B\+L\+E\+OP@{O\+P\+\_\+\+D\+I\+S\+A\+B\+L\+E\+OP}}
+\index{O\+P\+\_\+\+D\+I\+S\+A\+B\+L\+E\+OP@{O\+P\+\_\+\+D\+I\+S\+A\+B\+L\+E\+OP}!Lexium32\+A\+\_\+canopen.\+h@{Lexium32\+A\+\_\+canopen.\+h}}
+\subsubsection{\texorpdfstring{O\+P\+\_\+\+D\+I\+S\+A\+B\+L\+E\+OP}{OP\_DISABLEOP}}
+{\footnotesize\ttfamily \#define O\+P\+\_\+\+D\+I\+S\+A\+B\+L\+E\+OP~0x0007}
+
+
+
+Definition at line 35 of file Lexium32\+A\+\_\+canopen.\+h.
+
+\mbox{\Hypertarget{_lexium32_a__canopen_8h_a05d94d73527d10913d800850b4ea65f4}\label{_lexium32_a__canopen_8h_a05d94d73527d10913d800850b4ea65f4}} 
+\index{Lexium32\+A\+\_\+canopen.\+h@{Lexium32\+A\+\_\+canopen.\+h}!O\+P\+\_\+\+D\+I\+S\+A\+B\+L\+E\+V\+OL@{O\+P\+\_\+\+D\+I\+S\+A\+B\+L\+E\+V\+OL}}
+\index{O\+P\+\_\+\+D\+I\+S\+A\+B\+L\+E\+V\+OL@{O\+P\+\_\+\+D\+I\+S\+A\+B\+L\+E\+V\+OL}!Lexium32\+A\+\_\+canopen.\+h@{Lexium32\+A\+\_\+canopen.\+h}}
+\subsubsection{\texorpdfstring{O\+P\+\_\+\+D\+I\+S\+A\+B\+L\+E\+V\+OL}{OP\_DISABLEVOL}}
+{\footnotesize\ttfamily \#define O\+P\+\_\+\+D\+I\+S\+A\+B\+L\+E\+V\+OL~0x0000}
+
+
+
+Definition at line 33 of file Lexium32\+A\+\_\+canopen.\+h.
+
+\mbox{\Hypertarget{_lexium32_a__canopen_8h_ac2d32ebfb52f2cf10d7fec601f266a0f}\label{_lexium32_a__canopen_8h_ac2d32ebfb52f2cf10d7fec601f266a0f}} 
+\index{Lexium32\+A\+\_\+canopen.\+h@{Lexium32\+A\+\_\+canopen.\+h}!O\+P\+\_\+\+E\+N\+A\+B\+L\+E\+OP@{O\+P\+\_\+\+E\+N\+A\+B\+L\+E\+OP}}
+\index{O\+P\+\_\+\+E\+N\+A\+B\+L\+E\+OP@{O\+P\+\_\+\+E\+N\+A\+B\+L\+E\+OP}!Lexium32\+A\+\_\+canopen.\+h@{Lexium32\+A\+\_\+canopen.\+h}}
+\subsubsection{\texorpdfstring{O\+P\+\_\+\+E\+N\+A\+B\+L\+E\+OP}{OP\_ENABLEOP}}
+{\footnotesize\ttfamily \#define O\+P\+\_\+\+E\+N\+A\+B\+L\+E\+OP~0x000F}
+
+
+
+Definition at line 36 of file Lexium32\+A\+\_\+canopen.\+h.
+
+\mbox{\Hypertarget{_lexium32_a__canopen_8h_a64e5209a86a8aa06bd3e71c354616b1c}\label{_lexium32_a__canopen_8h_a64e5209a86a8aa06bd3e71c354616b1c}} 
+\index{Lexium32\+A\+\_\+canopen.\+h@{Lexium32\+A\+\_\+canopen.\+h}!O\+P\+\_\+\+F\+A\+U\+L\+T\+R\+E\+S\+E\+ST@{O\+P\+\_\+\+F\+A\+U\+L\+T\+R\+E\+S\+E\+ST}}
+\index{O\+P\+\_\+\+F\+A\+U\+L\+T\+R\+E\+S\+E\+ST@{O\+P\+\_\+\+F\+A\+U\+L\+T\+R\+E\+S\+E\+ST}!Lexium32\+A\+\_\+canopen.\+h@{Lexium32\+A\+\_\+canopen.\+h}}
+\subsubsection{\texorpdfstring{O\+P\+\_\+\+F\+A\+U\+L\+T\+R\+E\+S\+E\+ST}{OP\_FAULTRESEST}}
+{\footnotesize\ttfamily \#define O\+P\+\_\+\+F\+A\+U\+L\+T\+R\+E\+S\+E\+ST~0x0080}
+
+
+
+Definition at line 37 of file Lexium32\+A\+\_\+canopen.\+h.
+
+\mbox{\Hypertarget{_lexium32_a__canopen_8h_ac3cecf02598899083372e24e0093544c}\label{_lexium32_a__canopen_8h_ac3cecf02598899083372e24e0093544c}} 
+\index{Lexium32\+A\+\_\+canopen.\+h@{Lexium32\+A\+\_\+canopen.\+h}!O\+P\+\_\+\+Q\+U\+I\+C\+K\+S\+T\+OP@{O\+P\+\_\+\+Q\+U\+I\+C\+K\+S\+T\+OP}}
+\index{O\+P\+\_\+\+Q\+U\+I\+C\+K\+S\+T\+OP@{O\+P\+\_\+\+Q\+U\+I\+C\+K\+S\+T\+OP}!Lexium32\+A\+\_\+canopen.\+h@{Lexium32\+A\+\_\+canopen.\+h}}
+\subsubsection{\texorpdfstring{O\+P\+\_\+\+Q\+U\+I\+C\+K\+S\+T\+OP}{OP\_QUICKSTOP}}
+{\footnotesize\ttfamily \#define O\+P\+\_\+\+Q\+U\+I\+C\+K\+S\+T\+OP~0x0002}
+
+
+
+Definition at line 34 of file Lexium32\+A\+\_\+canopen.\+h.
+
+\mbox{\Hypertarget{_lexium32_a__canopen_8h_ac4772c1c1c24a4b5837a2000c62aa0a3}\label{_lexium32_a__canopen_8h_ac4772c1c1c24a4b5837a2000c62aa0a3}} 
+\index{Lexium32\+A\+\_\+canopen.\+h@{Lexium32\+A\+\_\+canopen.\+h}!O\+P\+\_\+\+S\+H\+U\+T\+D\+O\+WN@{O\+P\+\_\+\+S\+H\+U\+T\+D\+O\+WN}}
+\index{O\+P\+\_\+\+S\+H\+U\+T\+D\+O\+WN@{O\+P\+\_\+\+S\+H\+U\+T\+D\+O\+WN}!Lexium32\+A\+\_\+canopen.\+h@{Lexium32\+A\+\_\+canopen.\+h}}
+\subsubsection{\texorpdfstring{O\+P\+\_\+\+S\+H\+U\+T\+D\+O\+WN}{OP\_SHUTDOWN}}
+{\footnotesize\ttfamily \#define O\+P\+\_\+\+S\+H\+U\+T\+D\+O\+WN~0x0006}
+
+
+
+Definition at line 31 of file Lexium32\+A\+\_\+canopen.\+h.
+
+\mbox{\Hypertarget{_lexium32_a__canopen_8h_acf9b640777e01c586865a1b2791fc8b9}\label{_lexium32_a__canopen_8h_acf9b640777e01c586865a1b2791fc8b9}} 
+\index{Lexium32\+A\+\_\+canopen.\+h@{Lexium32\+A\+\_\+canopen.\+h}!O\+P\+\_\+\+S\+W\+I\+T\+C\+H\+ON@{O\+P\+\_\+\+S\+W\+I\+T\+C\+H\+ON}}
+\index{O\+P\+\_\+\+S\+W\+I\+T\+C\+H\+ON@{O\+P\+\_\+\+S\+W\+I\+T\+C\+H\+ON}!Lexium32\+A\+\_\+canopen.\+h@{Lexium32\+A\+\_\+canopen.\+h}}
+\subsubsection{\texorpdfstring{O\+P\+\_\+\+S\+W\+I\+T\+C\+H\+ON}{OP\_SWITCHON}}
+{\footnotesize\ttfamily \#define O\+P\+\_\+\+S\+W\+I\+T\+C\+H\+ON~0x0007}
+
+
+
+Definition at line 32 of file Lexium32\+A\+\_\+canopen.\+h.
+
+\mbox{\Hypertarget{_lexium32_a__canopen_8h_ac8368603aa9e8065efb0a231bd007ee5}\label{_lexium32_a__canopen_8h_ac8368603aa9e8065efb0a231bd007ee5}} 
+\index{Lexium32\+A\+\_\+canopen.\+h@{Lexium32\+A\+\_\+canopen.\+h}!P\+Pctrl\+\_\+\+A\+B\+S\+O\+L\+U\+TE@{P\+Pctrl\+\_\+\+A\+B\+S\+O\+L\+U\+TE}}
+\index{P\+Pctrl\+\_\+\+A\+B\+S\+O\+L\+U\+TE@{P\+Pctrl\+\_\+\+A\+B\+S\+O\+L\+U\+TE}!Lexium32\+A\+\_\+canopen.\+h@{Lexium32\+A\+\_\+canopen.\+h}}
+\subsubsection{\texorpdfstring{P\+Pctrl\+\_\+\+A\+B\+S\+O\+L\+U\+TE}{PPctrl\_ABSOLUTE}}
+{\footnotesize\ttfamily \#define P\+Pctrl\+\_\+\+A\+B\+S\+O\+L\+U\+TE~0x0000}
+
+
+
+Definition at line 29 of file Lexium32\+A\+\_\+canopen.\+h.
+
+\mbox{\Hypertarget{_lexium32_a__canopen_8h_ab9cafb4211b0fa97cfc73b15d7b72b11}\label{_lexium32_a__canopen_8h_ab9cafb4211b0fa97cfc73b15d7b72b11}} 
+\index{Lexium32\+A\+\_\+canopen.\+h@{Lexium32\+A\+\_\+canopen.\+h}!P\+Pctrl\+\_\+\+O\+N\+\_\+\+D\+I\+R\+E\+CT@{P\+Pctrl\+\_\+\+O\+N\+\_\+\+D\+I\+R\+E\+CT}}
+\index{P\+Pctrl\+\_\+\+O\+N\+\_\+\+D\+I\+R\+E\+CT@{P\+Pctrl\+\_\+\+O\+N\+\_\+\+D\+I\+R\+E\+CT}!Lexium32\+A\+\_\+canopen.\+h@{Lexium32\+A\+\_\+canopen.\+h}}
+\subsubsection{\texorpdfstring{P\+Pctrl\+\_\+\+O\+N\+\_\+\+D\+I\+R\+E\+CT}{PPctrl\_ON\_DIRECT}}
+{\footnotesize\ttfamily \#define P\+Pctrl\+\_\+\+O\+N\+\_\+\+D\+I\+R\+E\+CT~0x0020}
+
+
+
+Definition at line 27 of file Lexium32\+A\+\_\+canopen.\+h.
+
+\mbox{\Hypertarget{_lexium32_a__canopen_8h_a88648c72edc2879a93ba4723ae3652e7}\label{_lexium32_a__canopen_8h_a88648c72edc2879a93ba4723ae3652e7}} 
+\index{Lexium32\+A\+\_\+canopen.\+h@{Lexium32\+A\+\_\+canopen.\+h}!P\+Pctrl\+\_\+\+O\+N\+\_\+\+T\+A\+R\+G\+ET@{P\+Pctrl\+\_\+\+O\+N\+\_\+\+T\+A\+R\+G\+ET}}
+\index{P\+Pctrl\+\_\+\+O\+N\+\_\+\+T\+A\+R\+G\+ET@{P\+Pctrl\+\_\+\+O\+N\+\_\+\+T\+A\+R\+G\+ET}!Lexium32\+A\+\_\+canopen.\+h@{Lexium32\+A\+\_\+canopen.\+h}}
+\subsubsection{\texorpdfstring{P\+Pctrl\+\_\+\+O\+N\+\_\+\+T\+A\+R\+G\+ET}{PPctrl\_ON\_TARGET}}
+{\footnotesize\ttfamily \#define P\+Pctrl\+\_\+\+O\+N\+\_\+\+T\+A\+R\+G\+ET~0x0040}
+
+
+
+Definition at line 26 of file Lexium32\+A\+\_\+canopen.\+h.
+
+\mbox{\Hypertarget{_lexium32_a__canopen_8h_a0349d409f0d302bb5374bcd5cd77c126}\label{_lexium32_a__canopen_8h_a0349d409f0d302bb5374bcd5cd77c126}} 
+\index{Lexium32\+A\+\_\+canopen.\+h@{Lexium32\+A\+\_\+canopen.\+h}!P\+Pctrl\+\_\+\+R\+E\+L\+A\+T\+I\+VE@{P\+Pctrl\+\_\+\+R\+E\+L\+A\+T\+I\+VE}}
+\index{P\+Pctrl\+\_\+\+R\+E\+L\+A\+T\+I\+VE@{P\+Pctrl\+\_\+\+R\+E\+L\+A\+T\+I\+VE}!Lexium32\+A\+\_\+canopen.\+h@{Lexium32\+A\+\_\+canopen.\+h}}
+\subsubsection{\texorpdfstring{P\+Pctrl\+\_\+\+R\+E\+L\+A\+T\+I\+VE}{PPctrl\_RELATIVE}}
+{\footnotesize\ttfamily \#define P\+Pctrl\+\_\+\+R\+E\+L\+A\+T\+I\+VE~0x0040}
+
+
+
+Definition at line 28 of file Lexium32\+A\+\_\+canopen.\+h.
+
+\mbox{\Hypertarget{_lexium32_a__canopen_8h_a73172a8fb87a3183ff29444335ba4fdb}\label{_lexium32_a__canopen_8h_a73172a8fb87a3183ff29444335ba4fdb}} 
+\index{Lexium32\+A\+\_\+canopen.\+h@{Lexium32\+A\+\_\+canopen.\+h}!P\+Pctrl\+\_\+\+S\+E\+T\+\_\+\+P\+O\+I\+NT@{P\+Pctrl\+\_\+\+S\+E\+T\+\_\+\+P\+O\+I\+NT}}
+\index{P\+Pctrl\+\_\+\+S\+E\+T\+\_\+\+P\+O\+I\+NT@{P\+Pctrl\+\_\+\+S\+E\+T\+\_\+\+P\+O\+I\+NT}!Lexium32\+A\+\_\+canopen.\+h@{Lexium32\+A\+\_\+canopen.\+h}}
+\subsubsection{\texorpdfstring{P\+Pctrl\+\_\+\+S\+E\+T\+\_\+\+P\+O\+I\+NT}{PPctrl\_SET\_POINT}}
+{\footnotesize\ttfamily \#define P\+Pctrl\+\_\+\+S\+E\+T\+\_\+\+P\+O\+I\+NT~0x0010}
+
+
+
+Definition at line 25 of file Lexium32\+A\+\_\+canopen.\+h.
+
+\mbox{\Hypertarget{_lexium32_a__canopen_8h_a45fd1c3357c3e7820e73914b4aa2d3ee}\label{_lexium32_a__canopen_8h_a45fd1c3357c3e7820e73914b4aa2d3ee}} 
+\index{Lexium32\+A\+\_\+canopen.\+h@{Lexium32\+A\+\_\+canopen.\+h}!R\+E\+G\+\_\+\+\_\+\+D\+C\+O\+Mstatus@{R\+E\+G\+\_\+\+\_\+\+D\+C\+O\+Mstatus}}
+\index{R\+E\+G\+\_\+\+\_\+\+D\+C\+O\+Mstatus@{R\+E\+G\+\_\+\+\_\+\+D\+C\+O\+Mstatus}!Lexium32\+A\+\_\+canopen.\+h@{Lexium32\+A\+\_\+canopen.\+h}}
+\subsubsection{\texorpdfstring{R\+E\+G\+\_\+\+\_\+\+D\+C\+O\+Mstatus}{REG\_\_DCOMstatus}}
+{\footnotesize\ttfamily \#define R\+E\+G\+\_\+\+\_\+\+D\+C\+O\+Mstatus~0x60410000}
+
+
+
+Definition at line 13 of file Lexium32\+A\+\_\+canopen.\+h.
+
+\mbox{\Hypertarget{_lexium32_a__canopen_8h_a288301cb406c37bce2e676a61a47069f}\label{_lexium32_a__canopen_8h_a288301cb406c37bce2e676a61a47069f}} 
+\index{Lexium32\+A\+\_\+canopen.\+h@{Lexium32\+A\+\_\+canopen.\+h}!R\+E\+G\+\_\+\+C\+A\+Naddress@{R\+E\+G\+\_\+\+C\+A\+Naddress}}
+\index{R\+E\+G\+\_\+\+C\+A\+Naddress@{R\+E\+G\+\_\+\+C\+A\+Naddress}!Lexium32\+A\+\_\+canopen.\+h@{Lexium32\+A\+\_\+canopen.\+h}}
+\subsubsection{\texorpdfstring{R\+E\+G\+\_\+\+C\+A\+Naddress}{REG\_CANaddress}}
+{\footnotesize\ttfamily \#define R\+E\+G\+\_\+\+C\+A\+Naddress~0x30410002}
+
+
+
+Definition at line 10 of file Lexium32\+A\+\_\+canopen.\+h.
+
+\mbox{\Hypertarget{_lexium32_a__canopen_8h_a0cc1502471745a5a5d2953588405e4bb}\label{_lexium32_a__canopen_8h_a0cc1502471745a5a5d2953588405e4bb}} 
+\index{Lexium32\+A\+\_\+canopen.\+h@{Lexium32\+A\+\_\+canopen.\+h}!R\+E\+G\+\_\+\+C\+A\+Nbaud@{R\+E\+G\+\_\+\+C\+A\+Nbaud}}
+\index{R\+E\+G\+\_\+\+C\+A\+Nbaud@{R\+E\+G\+\_\+\+C\+A\+Nbaud}!Lexium32\+A\+\_\+canopen.\+h@{Lexium32\+A\+\_\+canopen.\+h}}
+\subsubsection{\texorpdfstring{R\+E\+G\+\_\+\+C\+A\+Nbaud}{REG\_CANbaud}}
+{\footnotesize\ttfamily \#define R\+E\+G\+\_\+\+C\+A\+Nbaud~0x30410003}
+
+
+
+Definition at line 11 of file Lexium32\+A\+\_\+canopen.\+h.
+
+\mbox{\Hypertarget{_lexium32_a__canopen_8h_a37233bac366559f38558d6ffeb5daf01}\label{_lexium32_a__canopen_8h_a37233bac366559f38558d6ffeb5daf01}} 
+\index{Lexium32\+A\+\_\+canopen.\+h@{Lexium32\+A\+\_\+canopen.\+h}!R\+E\+G\+\_\+\+D\+C\+O\+Mcontrol@{R\+E\+G\+\_\+\+D\+C\+O\+Mcontrol}}
+\index{R\+E\+G\+\_\+\+D\+C\+O\+Mcontrol@{R\+E\+G\+\_\+\+D\+C\+O\+Mcontrol}!Lexium32\+A\+\_\+canopen.\+h@{Lexium32\+A\+\_\+canopen.\+h}}
+\subsubsection{\texorpdfstring{R\+E\+G\+\_\+\+D\+C\+O\+Mcontrol}{REG\_DCOMcontrol}}
+{\footnotesize\ttfamily \#define R\+E\+G\+\_\+\+D\+C\+O\+Mcontrol~0x60400000}
+
+
+
+Definition at line 15 of file Lexium32\+A\+\_\+canopen.\+h.
+
+\mbox{\Hypertarget{_lexium32_a__canopen_8h_adb964aa4eaba974ed438fee7b9d09ccd}\label{_lexium32_a__canopen_8h_adb964aa4eaba974ed438fee7b9d09ccd}} 
+\index{Lexium32\+A\+\_\+canopen.\+h@{Lexium32\+A\+\_\+canopen.\+h}!R\+E\+G\+\_\+\+D\+C\+O\+Mopmode@{R\+E\+G\+\_\+\+D\+C\+O\+Mopmode}}
+\index{R\+E\+G\+\_\+\+D\+C\+O\+Mopmode@{R\+E\+G\+\_\+\+D\+C\+O\+Mopmode}!Lexium32\+A\+\_\+canopen.\+h@{Lexium32\+A\+\_\+canopen.\+h}}
+\subsubsection{\texorpdfstring{R\+E\+G\+\_\+\+D\+C\+O\+Mopmode}{REG\_DCOMopmode}}
+{\footnotesize\ttfamily \#define R\+E\+G\+\_\+\+D\+C\+O\+Mopmode~0x60600000}
+
+
+
+Definition at line 14 of file Lexium32\+A\+\_\+canopen.\+h.
+
+\mbox{\Hypertarget{_lexium32_a__canopen_8h_ab2aeca9392d3d3fe2889e2a4799e53a4}\label{_lexium32_a__canopen_8h_ab2aeca9392d3d3fe2889e2a4799e53a4}} 
+\index{Lexium32\+A\+\_\+canopen.\+h@{Lexium32\+A\+\_\+canopen.\+h}!R\+E\+G\+\_\+\+J\+O\+Gactivate@{R\+E\+G\+\_\+\+J\+O\+Gactivate}}
+\index{R\+E\+G\+\_\+\+J\+O\+Gactivate@{R\+E\+G\+\_\+\+J\+O\+Gactivate}!Lexium32\+A\+\_\+canopen.\+h@{Lexium32\+A\+\_\+canopen.\+h}}
+\subsubsection{\texorpdfstring{R\+E\+G\+\_\+\+J\+O\+Gactivate}{REG\_JOGactivate}}
+{\footnotesize\ttfamily \#define R\+E\+G\+\_\+\+J\+O\+Gactivate~0x301\+B0009}
+
+
+
+Definition at line 21 of file Lexium32\+A\+\_\+canopen.\+h.
+
+\mbox{\Hypertarget{_lexium32_a__canopen_8h_aac1fb3a95430fb03df0455a3e849d076}\label{_lexium32_a__canopen_8h_aac1fb3a95430fb03df0455a3e849d076}} 
+\index{Lexium32\+A\+\_\+canopen.\+h@{Lexium32\+A\+\_\+canopen.\+h}!R\+E\+G\+\_\+\+P\+Poption@{R\+E\+G\+\_\+\+P\+Poption}}
+\index{R\+E\+G\+\_\+\+P\+Poption@{R\+E\+G\+\_\+\+P\+Poption}!Lexium32\+A\+\_\+canopen.\+h@{Lexium32\+A\+\_\+canopen.\+h}}
+\subsubsection{\texorpdfstring{R\+E\+G\+\_\+\+P\+Poption}{REG\_PPoption}}
+{\footnotesize\ttfamily \#define R\+E\+G\+\_\+\+P\+Poption~0x60\+F20000}
+
+
+
+Definition at line 19 of file Lexium32\+A\+\_\+canopen.\+h.
+
+\mbox{\Hypertarget{_lexium32_a__canopen_8h_ac2ea552341a2aacf207cfc8c8bcc27af}\label{_lexium32_a__canopen_8h_ac2ea552341a2aacf207cfc8c8bcc27af}} 
+\index{Lexium32\+A\+\_\+canopen.\+h@{Lexium32\+A\+\_\+canopen.\+h}!R\+E\+G\+\_\+\+P\+Pp\+\_\+target@{R\+E\+G\+\_\+\+P\+Pp\+\_\+target}}
+\index{R\+E\+G\+\_\+\+P\+Pp\+\_\+target@{R\+E\+G\+\_\+\+P\+Pp\+\_\+target}!Lexium32\+A\+\_\+canopen.\+h@{Lexium32\+A\+\_\+canopen.\+h}}
+\subsubsection{\texorpdfstring{R\+E\+G\+\_\+\+P\+Pp\+\_\+target}{REG\_PPp\_target}}
+{\footnotesize\ttfamily \#define R\+E\+G\+\_\+\+P\+Pp\+\_\+target~0x607\+A0000}
+
+
+
+Definition at line 17 of file Lexium32\+A\+\_\+canopen.\+h.
+
+\mbox{\Hypertarget{_lexium32_a__canopen_8h_a5684fffd76d166871a0f7618cb33fa76}\label{_lexium32_a__canopen_8h_a5684fffd76d166871a0f7618cb33fa76}} 
+\index{Lexium32\+A\+\_\+canopen.\+h@{Lexium32\+A\+\_\+canopen.\+h}!R\+E\+G\+\_\+\+P\+Pv\+\_\+target@{R\+E\+G\+\_\+\+P\+Pv\+\_\+target}}
+\index{R\+E\+G\+\_\+\+P\+Pv\+\_\+target@{R\+E\+G\+\_\+\+P\+Pv\+\_\+target}!Lexium32\+A\+\_\+canopen.\+h@{Lexium32\+A\+\_\+canopen.\+h}}
+\subsubsection{\texorpdfstring{R\+E\+G\+\_\+\+P\+Pv\+\_\+target}{REG\_PPv\_target}}
+{\footnotesize\ttfamily \#define R\+E\+G\+\_\+\+P\+Pv\+\_\+target~0x60810000}
+
+
+
+Definition at line 18 of file Lexium32\+A\+\_\+canopen.\+h.
+
