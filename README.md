@@ -9,7 +9,7 @@
 
 | Ubuntu           | Window10         | MacOS            |
 |:----------------:|:----------------:|:----------------:|
-|:x:|:heavy_check_mark:|:grey_question:   |
+|:heavy_check_mark:|:x:|:grey_question:   |
 
 
 ## Building
