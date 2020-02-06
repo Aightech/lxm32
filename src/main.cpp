@@ -34,7 +34,7 @@ main(int argc, char** argv)
     {
       motors.push_back(new LXM32("can0", i+1,false));
       motors.back()->init();
-      motors.back()->start();
+      motors.back()->start(MODE_ProfilePosition, PPctrl_RELATIVE| PPctrl_ON_DIRECT);
       m_motor_pos[i]=0;
       m_inc[i]=0;
     }
