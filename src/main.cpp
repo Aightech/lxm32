@@ -28,7 +28,6 @@ main(int argc, char** argv)
   int32_t m_inc[6];
   double m_conv=50000.0f/24.0f*180.0f/M_PI;
 
-  
   int m_motor_lookup[6] = {5,2,0,1,4,3};
   
   for(int i=0; i<6; i++)
