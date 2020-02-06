@@ -45,16 +45,7 @@ class LXM32
      *  \param ifname : Name of the CAN interface.
      *  \param can_id : Node CAN ID of the driver.
      */
-    LXM32(const char *ifname, uint16_t can_id, bool verbose = false)
-        : m_verbose(verbose), m_can(ifname, verbose),
-          m_can_PDO1(ifname, 0x180 + can_id, verbose),
-          m_can_PDO2(ifname, 0x280 + can_id, verbose),
-          m_can_PDO3(ifname, 0x380 + can_id, verbose),
-          m_can_PDO4(ifname, 0x480 + can_id, verbose),
-          m_can_SDO(ifname, 0x580 + can_id, verbose), m_can_id(can_id)
-    {
-        m_ifavailable = m_can.is_available();
-    };
+  LXM32(const char *ifname, uint16_t can_id, bool verbose = false);
 
     /*!
      *  \brief return true if the can interface is available
@@ -67,9 +58,11 @@ class LXM32
 
     void
     init();
-    void
+
+  void
     start(int8_t mode, uint16_t control);
-    void
+
+  void
     stop();
 
     void
@@ -107,7 +100,7 @@ class LXM32
 
     Canopen_socket m_can_SDO;
 
-    uint16_t m_can_id;
+    uint8_t m_can_id;
     uint16_t m_can_baud;
     uint16_t m_dcom_status;
     uint16_t m_dcom_control;

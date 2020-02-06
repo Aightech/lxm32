@@ -11,6 +11,7 @@ LXM32::LXM32(const char* ifname,uint16_t can_id, bool verbose):
   m_can_SDO(ifname,  0x580 +can_id, verbose),
   m_can_id(can_id)
 {
+   m_ifavailable = m_can.is_available();
   //init();
   //start(MODE_ProfilePosition, PPctrl_RELATIVE| PPctrl_ON_DIRECT); 
 }
@@ -20,7 +21,7 @@ LXM32::init()
 {
 
   //get address (useless)
-  m_can_id   = (uint16_t)m_can_SDO.send_SDO(m_can_id, SDO_R, REG_CANaddress);
+  m_can_id   = (uint16_t)m_can_SDO.send_SDO(m_can_id, (bool)SDO_R,(uint32_t) REG_CANaddress);
   //get baudrate (useless)
   m_can_baud = (uint16_t)m_can_SDO.send_SDO(m_can_id, SDO_R, REG_CANbaud);
   //get status
