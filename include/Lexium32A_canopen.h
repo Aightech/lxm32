@@ -53,10 +53,10 @@ class LXM32
     bool
     is_available()
     {
-        return m_ifavailable;
+        return m_available;
     };
 
-    void
+    int32_t
     init();
 
   void
@@ -89,7 +89,7 @@ class LXM32
 
     private:
     bool m_verbose;
-    bool m_ifavailable;
+    bool m_available;
 
     Canopen_socket m_can;
 
