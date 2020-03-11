@@ -25,3 +25,7 @@ git clone https://gitlab-dev.isir.upmc.fr/devillard/lxm32.git && cd lxm32
 ```bash
 mkdir build && cd build && cmake .. && cmake --build .
 ```
+
+## Schematics
+![test](docs/steps.png)
+![test](docs/registers.png)
