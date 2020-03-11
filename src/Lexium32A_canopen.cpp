@@ -38,7 +38,7 @@ LXM32::init()
         if(m_verbose)
             print_status();
 
-        //init R_PDO2 and T_PDO
+        //init R_PDO2 and T_PDO2
         m_can_SDO.set_PDO<2, R_PDO>(m_can_id);
         m_can_SDO.set_PDO<2, T_PDO>(m_can_id);
 
@@ -115,7 +115,27 @@ LXM32::stop()
 }
 
 void
-LXM32::new_pos(int32_t pos)
+LXM32::new_pos(int32_t spd)
+{
+
+    if(m_available)
+    {
+        if(m_dcom_mode == MODE_ProfilePosition)
+        {
+            m_PPv_target = spd;
+            m_can.send_PDO<3>(m_can_id, (uint16_t)(m_dcom_control),
+                              (int32_t)m_PPp_target);
+            m_can.send_PDO<3>(m_can_id,
+                              (uint16_t)(m_dcom_control | PPctrl_SET_POINT),
+                              (int32_t)m_PPp_target);
+        }
+        else
+            printf("[ERROR] Wrong mode or not implemented yet.");
+    }
+}
+
+void
+LXM32::new_spd(int32_t pos)
 {
 
     if(m_available)

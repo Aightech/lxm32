@@ -45,7 +45,7 @@ class LXM32
      *  \param ifname : Name of the CAN interface.
      *  \param can_id : Node CAN ID of the driver.
      */
-  LXM32(const char *ifname, uint16_t can_id, bool verbose = false);
+    LXM32(const char *ifname, uint16_t can_id, bool verbose = false);
 
     /*!
      *  \brief return true if the can interface is available
@@ -59,10 +59,10 @@ class LXM32
     int32_t
     init();
 
-  void
-    start(int8_t mode, uint16_t control);
+    void
+    start(int8_t mode, uint16_t control=0);
 
-  void
+    void
     stop();
 
     void
@@ -77,6 +77,8 @@ class LXM32
     setDecel(uint32_t dec);
     void
     new_pos(int32_t pos);
+    void
+    new_spd(int32_t spd);
 
     void
     get_param();
@@ -110,7 +112,6 @@ class LXM32
     //Position profil param
     int32_t m_PPp_target;
     int32_t m_PPv_target = 60;
-    uint16_t m_PPoption;
 
     uint8_t m_op_state;
     const char *m_op_state_str[8] = {
