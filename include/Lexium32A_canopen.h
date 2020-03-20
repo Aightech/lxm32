@@ -1,7 +1,7 @@
 #ifndef _LEXIUM32A_CANOPEN_H_
 #define _LEXIUM32A_CANOPEN_H_
 
-#include "canopen_socket.h"
+#include "CANopen_socket.h"
 //#include "LXM32A_CANopen_register.h"
 #include <string>
 #include <unistd.h>
@@ -60,7 +60,7 @@ class LXM32
     init();
 
     void
-    start(int8_t mode, uint16_t control=0);
+    start(int8_t mode, uint16_t control = 0);
 
     void
     stop();
@@ -93,16 +93,9 @@ class LXM32
     bool m_verbose;
     bool m_available;
 
-    Canopen_socket m_can;
+    CANopen::Socket* m_sockets[6];
 
-    Canopen_socket m_can_PDO1;
-    Canopen_socket m_can_PDO2;
-    Canopen_socket m_can_PDO3;
-    Canopen_socket m_can_PDO4;
-
-    Canopen_socket m_can_SDO;
-
-    uint8_t m_can_id;
+    uint8_t m_node_id;
     uint16_t m_can_baud;
     uint16_t m_dcom_status;
     uint16_t m_dcom_control;

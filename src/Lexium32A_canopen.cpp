@@ -1,19 +1,19 @@
 #include "Lexium32A_canopen.h"
 
 LXM32::LXM32(const char *ifname, uint16_t can_id, bool verbose)
-    : m_verbose(verbose), m_can(ifname, verbose),
-      m_can_PDO1(ifname, 0x180 + can_id, verbose),
-      m_can_PDO2(ifname, 0x280 + can_id, verbose),
-      m_can_PDO3(ifname, 0x380 + can_id, verbose),
-      m_can_PDO4(ifname, 0x480 + can_id, verbose),
-      m_can_SDO(ifname, 0x580 + can_id, verbose), m_can_id(can_id)
+  : m_verbose(verbose), m_available(true), m_node_id(can_id) 
 {
-    if(m_can.is_available() &&
-       m_can_SDO.send_SDO(m_can_id, (bool)SDO_R, (uint32_t)REG_CANaddress,
-                          m_can_id) > 0)
-        m_available = true;
-    else
-        m_available = false;
+
+  
+  m_sockets[0] = new CANopen::Socket(ifname, CANopen::Message::PDO1Transmit + can_id, verbose);
+  m_sockets[1] = new CANopen::Socket(ifname, CANopen::Message::PDO2Transmit + can_id, verbose);
+  m_sockets[2] = new CANopen::Socket(ifname, CANopen::Message::PDO3Transmit + can_id, verbose);
+  m_sockets[3] = new CANopen::Socket(ifname, CANopen::Message::PDO4Transmit + can_id, verbose);
+  m_sockets[4] = new CANopen::Socket(ifname, CANopen::Message::SDOTransmit + can_id, verbose);
+  for(unsigned i =0; i< 5; i++)
+      if(!m_sockets[i]->bind())
+	m_available=false;
+      
 
     //init();
     //start(MODE_ProfilePosition, PPctrl_RELATIVE| PPctrl_ON_DIRECT);
@@ -24,19 +24,11 @@ LXM32::init()
 {
     if(m_available)
     {
-        //get address (useless)
-        int32_t n = m_can_SDO.send_SDO(m_can_id, (bool)SDO_R,
-                                       (uint32_t)REG_CANaddress, m_can_id);
-        if(n < 0)
-            return -1;
-
-        //get baudrate (useless)
-        n = m_can_SDO.send_SDO(m_can_id, SDO_R, REG_CANbaud, m_can_baud);
-        //get status
-        n = m_dcom_status = (uint16_t)m_can_SDO.send_SDO(
-            m_can_id, SDO_R, REG__DCOMstatus, m_dcom_status);
-        if(m_verbose)
-            print_status();
+      m_sockets[4]->send(CANopen::SDOOutboundRead(m_node_id, REG__DCOMstatus));
+      //get status
+      m_dcom_status = m_sockets[4]->receive().value<uint16_t>();
+      if(m_verbose)
+	print_status();
 
         //init R_PDO2 and T_PDO2
         m_can_SDO.set_PDO<2, R_PDO>(m_can_id);
@@ -189,7 +181,7 @@ LXM32::print_status()
     {
         printf("> LXM32A Status\n");
         printf("\t>> CANopen bus info:\n");
-        printf("\t\t >>> Node_id: %03d\n", m_can_id);
+        printf("\t\t >>> Node_id: %03d\n", m_node_id);
         printf("\t\t >>> Baud: %d kps\n", m_can_baud);
         printf("\t>> Operating State info:\n");
 
