@@ -1,81 +1,38 @@
-#include "Lexium32A_canopen.h"
+#include "CANopen_lxm32.h"
 
 LXM32::LXM32(const char *ifname, uint16_t can_id, bool verbose)
-  : m_verbose(verbose), m_available(true), m_node_id(can_id) 
-{
+    : m_verbose(verbose), m_available(true), m_socket(ifname, verbose), m_node_id(can_id) {
 
-  
-  m_sockets[0] = new CANopen::Socket(ifname, CANopen::Message::PDO1Transmit + can_id, verbose);
-  m_sockets[1] = new CANopen::Socket(ifname, CANopen::Message::PDO2Transmit + can_id, verbose);
-  m_sockets[2] = new CANopen::Socket(ifname, CANopen::Message::PDO3Transmit + can_id, verbose);
-  m_sockets[3] = new CANopen::Socket(ifname, CANopen::Message::PDO4Transmit + can_id, verbose);
-  m_sockets[4] = new CANopen::Socket(ifname, CANopen::Message::SDOTransmit + can_id, verbose);
-  for(unsigned i =0; i< 5; i++)
-      if(!m_sockets[i]->bind())
-	m_available=false;
-      
+    if(!m_socket.bind())
+        m_available = false;
 
     //init();
     //start(MODE_ProfilePosition, PPctrl_RELATIVE| PPctrl_ON_DIRECT);
 }
 
-int32_t
-LXM32::init()
-{
-    if(m_available)
-    {
-      m_sockets[4]->send(CANopen::SDOOutboundRead(m_node_id, REG__DCOMstatus));
-      //get status
-      m_dcom_status = m_sockets[4]->receive().value<uint16_t>();
-      if(m_verbose)
-	print_status();
+void 
+LXM32::init() {
+    if(m_available) {
+        //get status
+        m_socket.send(CANopen::SDOOutboundRead(m_node_id, REG__DCOMstatus));
+        m_dcom_status = m_socket.receive()->payload().value<uint16_t>();
+        if(m_verbose)
+            print_status();
 
         //init R_PDO2 and T_PDO2
-        m_can_SDO.set_PDO<2, R_PDO>(m_can_id);
-        m_can_SDO.set_PDO<2, T_PDO>(m_can_id);
 
         //set speed and accel
-        setSpeed(4000);
-        setAccel(2000);
-        setDecel(4000);
+        set(Register::PPv_target, (uint32_t)4000);
+        set(Register::RAMP_v_acc, (uint32_t)2000);
+        set(Register::RAMP_v_dec, (uint32_t)4000);
         usleep(10000);
-        return n;
     }
-    else
-        return -10;
 }
 
 void
-LXM32::setSpeed(uint32_t speed)
-{
+LXM32::start(int8_t mode, uint16_t control) {
 
-    if(m_available)
-        m_can_SDO.send_SDO(m_can_id, SDO_W, REG_PPv_target, speed);
-}
-
-void
-LXM32::setAccel(uint32_t acc)
-{
-
-    if(m_available)
-        m_can_SDO.send_SDO(m_can_id, SDO_W, REG_RAMP_v_acc, acc);
-}
-
-void
-LXM32::setDecel(uint32_t dec)
-{
-
-    if(m_available)
-
-        m_can_SDO.send_SDO(m_can_id, SDO_W, REG_RAMP_v_dec, dec);
-}
-
-void
-LXM32::start(int8_t mode, uint16_t control)
-{
-
-    if(m_available)
-    {
+    if(m_available) {
         //start network manager
         m_can.send_NMT(NMT_START);
         //set mode
@@ -95,90 +52,49 @@ LXM32::start(int8_t mode, uint16_t control)
 }
 
 void
-LXM32::stop()
-{
+LXM32::stop() {
 
-    if(m_available)
-    {
-        //switch off
-        m_can.send_PDO<2>(m_can_id, (uint16_t)OP_DISABLEVOL, (int32_t)0x00);
-        m_can.send_NMT(NMT_STOP);
+    if(m_available) {
+        fast_set(PDO::Control, (uint16_t)OP_DISABLEVOL);
+        m_socket.send(CANopen::NMTMessage(CANopen::NMTMessage::Stopped, m_node_id));
     }
 }
 
 void
-LXM32::new_pos(int32_t spd)
-{
+LXM32::fast_set(PDO pdo, uint16_t ctrl, int32_t param) {
 
-    if(m_available)
-    {
-        if(m_dcom_mode == MODE_ProfilePosition)
-        {
-            m_PPv_target = spd;
-            m_can.send_PDO<3>(m_can_id, (uint16_t)(m_dcom_control),
-                              (int32_t)m_PPp_target);
-            m_can.send_PDO<3>(m_can_id,
-                              (uint16_t)(m_dcom_control | PPctrl_SET_POINT),
-                              (int32_t)m_PPp_target);
+    if(m_available) {
+        CANopen::Payload payload;
+	m_dcom_control = ctrl;
+	payload << m_dcom_control;
+        switch(pdo) {
+        case PDO::Control:
+            break;
+        case PDO::Position:
+            payload << param;
+            break;
+        case PDO::Velocity:
+            payload << param;
+            break;
         }
-        else
-            printf("[ERROR] Wrong mode or not implemented yet.");
+        CANopen::PDOMessage::PDOFunctionCode fn = (CANopen::PDOMessage::PDOFunctionCode)pdo;
+        m_socket.send(CANopen::PDOMessage(fn, m_node_id, payload));
     }
 }
 
 void
-LXM32::new_spd(int32_t pos)
-{
+LXM32::set_mode(int8_t mode) {
 
-    if(m_available)
-    {
-        if(m_dcom_mode == MODE_ProfilePosition)
-        {
-            m_PPp_target = pos;
-            m_can.send_PDO<2>(m_can_id, (uint16_t)(m_dcom_control),
-                              (int32_t)m_PPp_target);
-            m_can.send_PDO<2>(m_can_id,
-                              (uint16_t)(m_dcom_control | PPctrl_SET_POINT),
-                              (int32_t)m_PPp_target);
-        }
-        else
-            printf("[ERROR] Wrong mode or not implemented yet.");
+    if(m_available) {
+      m_dcom_mode = MODE_ProfilePosition;
+      set(Register::DCOMopmode, mode);
     }
 }
 
 void
-LXM32::set_mode(int8_t mode)
-{
+LXM32::print_status() {
 
-    if(m_available)
-    {
-        if(m_dcom_mode != mode)
-        {
-            m_dcom_mode = MODE_ProfilePosition;
-            m_can.send_SDO(m_can_id, SDO_W, REG_DCOMopmode, m_dcom_mode);
-        }
-    }
-}
-
-void
-LXM32::get_param()
-{
-
-    if(m_available)
-    {
-        m_can.send_SDO<uint8_t>(m_can_id, SDO_R, (uint32_t)REG_CANaddress,
-                                m_can_id);
-        m_can.send_SDO<uint16_t>(m_can_id, SDO_R, (uint32_t)REG_CANbaud,
-                                 m_can_baud);
-    }
-}
-
-void
-LXM32::print_status()
-{
-
-    if(m_available)
-    {
+    if(m_available) {
         printf("> LXM32A Status\n");
         printf("\t>> CANopen bus info:\n");
         printf("\t\t >>> Node_id: %03d\n", m_node_id);
@@ -190,13 +106,11 @@ LXM32::print_status()
             m_op_state = 6;
             if(m_dcom_status & 0x0007)
                 m_op_state = 7;
-        }
-        else if(m_dcom_status & 0x0040) //DISABLE
+        } else if(m_dcom_status & 0x0040) //DISABLE
             m_op_state = 0;
         else if((m_dcom_status & 0x0020) == 0)
             m_op_state = 5;
-        else
-        {
+        else {
             m_op_state = (m_dcom_status & 0x0007);
             m_op_state =
                 (m_op_state == 0x00)
@@ -222,8 +136,7 @@ LXM32::print_status()
         printf("\t\t>>> Valid Zero Point : %s\n",
                (m_dcom_status & 0x8000) ? "YES" : "NO");
 
-        if(m_dcom_mode == 1)
-        {
+        if(m_dcom_mode == 1) {
             printf("\t>> Position Profile:\n");
             printf("\t\t>>> Target : %s\n", ((m_dcom_status & 0x40) == 0x40)
                                                 ? "NOT REACHED"
@@ -236,11 +149,9 @@ LXM32::print_status()
 }
 
 void
-LXM32::print_control()
-{
+LXM32::print_control() {
 
-    if(m_available)
-    {
+    if(m_available) {
         printf("> LXM32A Control s\n");
         printf("\t>> Operating Control info:\n");
 
@@ -260,8 +171,7 @@ LXM32::print_control()
             m_ctrl_state = 6;
         printf("\t\t>>> [ %s ]\n", m_op_control_str[m_ctrl_state]);
 
-        if(m_dcom_mode == 1)
-        {
+        if(m_dcom_mode == 1) {
             printf("\t>> Position Profile:\n");
             printf("\t\t>>> Set point: %s\n",
                    ((m_dcom_control & 0x0010) == 0x0010) ? "SET" : "UNSET");

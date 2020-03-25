@@ -1,5 +1,5 @@
-#ifndef _LEXIUM32A_CANOPEN_H_
-#define _LEXIUM32A_CANOPEN_H_
+#ifndef _CANOPEN_DRIVER_H_
+#define _CANOPEN_DRIVER_H_
 
 #include "CANopen_socket.h"
 //#include "LXM32A_CANopen_register.h"
@@ -37,30 +37,51 @@
 #define OP_ENABLEOP 0x000F
 #define OP_FAULTRESEST 0x0080
 
-class LXM32
-{
+namespace CANopen {
+class Driver {
     public:
+    enum Register : uint32_t {
+        Status = 0x60410000,
+        Control = 0x60400000,
+        OpMode = 0x60600000,
+        PPp_target = 0x607A0000,
+        PPv_target = 0x60810000,
+        RAMP_v_acc = 0x60830000,
+        RAMP_v_dec = 0x60840000
+    };
+
+    enum OPmode : uint8_t {
+        ProfilePosition = 1,
+        ProfileVelocity = 2
+    };
+
+    enum PDOFunctionCode : uint32_t {
+        PDO1Transmit = Message::PDO1Transmit,
+        PDO1Receive = Message::PDO1Receive,
+        PDO2Transmit = Message::PDO2Transmit,
+        PDO2Receive = Message::PDO2Receive,
+        PDO3Transmit = Message::PDO3Transmit,
+        PDO3Receive = Message::PDO3Receive,
+        PDO4Transmit = Message::PDO4Transmit,
+        PDO4Receive = Message::PDO4Receive,
+    };
     /*!
      *  \brief Constructor
      *  \param ifname : Name of the CAN interface.
      *  \param can_id : Node CAN ID of the driver.
      */
-    LXM32(const char *ifname, uint16_t can_id, bool verbose = false);
+    Driver(const char *ifname, uint16_t can_id, bool verbose = false);
 
     /*!
      *  \brief return true if the can interface is available
      */
     bool
-    is_available()
-    {
+    is_available() {
         return m_available;
     };
 
-    int32_t
-    init();
-
     void
-    start(int8_t mode, uint16_t control = 0);
+    set_PDO(uint8_t node_id, PDOFunctionCode fn);
 
     void
     stop();
@@ -68,20 +89,15 @@ class LXM32
     void
     set_mode(int8_t mode);
 
-    //Motion profile
+    template <typename T>
     void
-    setSpeed(uint32_t speed);
-    void
-    setAccel(uint32_t acc);
-    void
-    setDecel(uint32_t dec);
-    void
-    new_pos(int32_t pos);
-    void
-    new_spd(int32_t spd);
+    set(Register reg, T param) {
+        if(m_available)
+            m_socket.send(CANopen::SDOOutboundWrite(m_node_id, Register::PPv_target, param));
+    }
 
     void
-    get_param();
+    send_PDO(PDOFunctionCode pdo, Payload payload);
 
     void
     print_status();
@@ -93,7 +109,7 @@ class LXM32
     bool m_verbose;
     bool m_available;
 
-    CANopen::Socket* m_sockets[6];
+    CANopen::Socket m_socket;
 
     uint8_t m_node_id;
     uint16_t m_can_baud;
@@ -108,14 +124,15 @@ class LXM32
 
     uint8_t m_op_state;
     const char *m_op_state_str[8] = {
-        "DISABLED", "NOT READY",  "READY", "ON",
-        "ENABLED",  "QUICK STOP", "FAULT", "FAULT, REACTION ACTIVE"};
+        "DISABLED", "NOT READY", "READY", "ON",
+        "ENABLED", "QUICK STOP", "FAULT", "FAULT, REACTION ACTIVE"};
 
     uint8_t m_ctrl_state;
-    const char *m_op_control_str[8] = {"SHUTDOWN",          "SWITCH ON",
-                                       "DISABLE VOLTAGE",   "QUICK STOP",
+    const char *m_op_control_str[8] = {"SHUTDOWN", "SWITCH ON",
+                                       "DISABLE VOLTAGE", "QUICK STOP",
                                        "DISABLE OPERATION", "ENABLE OPERATION",
                                        "FAULT RESET"};
 };
 
+} // namespace CANopen
 #endif

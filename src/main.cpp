@@ -12,7 +12,7 @@
 #include <linux/can.h>
 #include <linux/can/raw.h>
 
-#include "Lexium32A_canopen.h"
+#include "CANopen_lxm32.h"
 
 #include "joystick.h"
 
