@@ -3,46 +3,17 @@
 
 #include "CANopen_socket.h"
 //#include "LXM32A_CANopen_register.h"
+#include <cstdarg>
+#include <iostream>
 #include <string>
-#include <unistd.h>
-
-#define REG_CANaddress 0x30410002
-#define REG_CANbaud 0x30410003
-
-#define REG__DCOMstatus 0x60410000
-#define REG_DCOMopmode 0x60600000
-#define REG_DCOMcontrol 0x60400000
-
-#define REG_PPp_target 0x607A0000
-#define REG_PPv_target 0x60810000
-#define REG_RAMP_v_acc 0x60830000
-#define REG_RAMP_v_dec 0x60840000
-
-#define REG_PPoption 0x60F20000
-
-#define REG_JOGactivate 0x301B0009
-
-#define MODE_ProfilePosition 1
-#define PPctrl_SET_POINT 0x0010
-#define PPctrl_ON_TARGET 0x0040
-#define PPctrl_ON_DIRECT 0x0020
-#define PPctrl_RELATIVE 0x0040
-#define PPctrl_ABSOLUTE 0x0000
-
-#define OP_SHUTDOWN 0x0006
-#define OP_SWITCHON 0x0007
-#define OP_DISABLEVOL 0x0000
-#define OP_QUICKSTOP 0x0002
-#define OP_DISABLEOP 0x0007
-#define OP_ENABLEOP 0x000F
-#define OP_FAULTRESEST 0x0080
+#include <thread>
 
 namespace CANopen {
 class Driver {
     public:
     enum Register : uint32_t {
-        Status = 0x60410000,
-        Control = 0x60400000,
+        StatusWord = 0x60410000,
+        ControlWord = 0x60400000,
         OpMode = 0x60600000,
         PPp_target = 0x607A0000,
         PPv_target = 0x60810000,
@@ -50,9 +21,85 @@ class Driver {
         RAMP_v_dec = 0x60840000
     };
 
-    enum OPmode : uint8_t {
+    enum OperationMode : int8_t {
         ProfilePosition = 1,
-        ProfileVelocity = 2
+        Velocity = 2,
+        ProfileVelocity = 3,
+        ProfileTorque = 4,
+        Homing = 6,
+        InterpolatedPosition = 7,
+    };
+
+    /*! Possible States */
+    enum State : uint16_t {
+        mask = 0x006f,                /*!< Keeping only main state bytes. */
+        NotReadyToSwitchtON = 0x0000, /*!< Not Ready to Switch ON:
+				       * - Low level Power (e.g. 15V, 5V) has been applied to the drive.
+				       * - The drive is being initialized or is running self test.
+				       * - A brake, if present, has to be applied in this state.
+				       * -  The drive function is disabled. */
+
+        SwitchONDisabled = 0x0040, /*!< Switch ON Disabled:
+				      * - Drive Initialisation is complete.
+				      * - The drive parameters have been set up.
+				      * - Drive parameters may be changed.
+				      * - High Voltage may not be applied to the drive, (e.g. for safety reasons).
+				      * - The drive function is disabled. */
+
+        ReadyToSwitchON = 0x0021, /*!< Ready to Switch ON:
+				       * -  High Voltage may be applied to the drive.
+				       * - The drive parameters may be changed.
+				       * - The drive function is disabled */
+
+        SwitchedON = 0x0023, /*!< Switched ON:
+				      * - High Voltage has been applied to the drive. 
+				      * - The Power Amplifier is ready.
+				      * - The drive parameters may be changed.
+				      * - The drive function is disabled. */
+
+        OperationEnabled = 0x0027, /*!< Operation Enabled:
+				      * - No faults have been detected.
+				      * - The drive function is enabled and power is applied to the motor.
+				      * - The drive parameters may be changed.(This corresponds to normal operation of the drive.) */
+
+        Fault = 0x000f, /*!< Fault:
+				      * - The drive parameters may be changed.
+				      * - A fault has occured in the drive.
+				      * - The drive function is disabled. */
+
+        FaultReactionActive = 0x000f, /*!< Fault Reaction Active:
+				      * - The drive parameters may be changed.
+				      * - A non-fatal fault has occured in the drive.
+				      * - The Quick Stop function is being executed.
+				      * - The drive function is enabled and power is applied to the motor.*/
+
+        QuickStopActive = 0x0007 /*!< Quick Stop Active:
+				      * - The drive parameters may be changed.The Quick Stop function is being executed.
+				      * - The drive function is enabled and power is applied to the motor.
+				      * If the ‘Quick-Stop-Option-Code’ is switched to 5 (Stay in Quick-Stop), 
+				      * you can’t leave the  Quick-Stop-State,  but  you  can  transmit  to  ‘Operation  Enable’
+				      * with  the  command‘Enable Operation’*/
+    };
+    enum StatusBits : uint16_t {
+        Voltage_disable = 0x0010,
+        Quick_stop = 0x0020,
+        Warning = 0x0080,
+        Manufacterer = 0xC100,
+        Remote = 0x0200,
+        Target_reached = 0x0400,
+        Internal_limit_reached = 0x0800,
+        Operation_Mode = 0x3000
+    };
+
+    /*! Possible Control commands */
+    enum Control : uint16_t {
+        Shutdown = 0x0006,         /*!< goto ReadySwitchON */
+        SwitchON = 0x0007,         /*!< goto SwitchedON */
+        DisableVoltage = 0x0000,   /*!< goto SwitchONDisabled */
+        QuickStop = 0x0002,        /*!< goto QuickStopActiv */
+        DisableOperation = 0x0007, /*!< goto SwitchedON */
+        EnableOperation = 0x000f,  /*!< goto OperationEnabled */
+        FaultResest = 0x0080       /*!< goto SwitchONDisabled */
     };
 
     enum PDOFunctionCode : uint32_t {
@@ -65,12 +112,66 @@ class Driver {
         PDO4Transmit = Message::PDO4Transmit,
         PDO4Receive = Message::PDO4Receive,
     };
+
     /*!
      *  \brief Constructor
      *  \param ifname : Name of the CAN interface.
      *  \param can_id : Node CAN ID of the driver.
      */
     Driver(const char *ifname, uint16_t can_id, bool verbose = false);
+
+    void
+    test() {
+        std::cout << "hey base" << std::endl;
+    };
+
+    bool
+    set_state(Control ctrl);
+
+    State
+    get_state();
+
+    void
+    activate_PDO(uint8_t node_id, PDOFunctionCode fn, bool set = true);
+
+    void
+    set_mode(OperationMode mode);
+
+    template <typename T>
+    void
+    set(Register reg, T param) {
+        if(m_available)
+            m_socket.send(CANopen::SDOOutboundWrite(m_node_id, reg, param));
+    }
+
+    template <typename T, typename S = uint8_t>
+    void
+    pdo_watchdog(PDOFunctionCode pdo, T *p1, S *p2 = nullptr) {
+        std::cout << m_ifname << std::endl;
+        Socket socket(m_ifname, m_verbose);//TODO: add mask
+        socket.bind();
+	std::shared_ptr<Message> msg;
+	Payload p;
+        while(1) {
+	  msg = socket.receive();
+	  p = msg->payload();
+	  *p1 = p.value<T>();
+            if(p2 != nullptr)
+                *p2 = p.value<T>(sizeof(T));
+        }
+    }
+
+    void
+    send_PDO(PDOFunctionCode pdo, Payload payload);
+
+    void
+    print_status();
+
+    virtual void
+    print_manufacturer_status() = 0;
+
+    void
+    print_control(Control control);
 
     /*!
      *  \brief return true if the can interface is available
@@ -80,58 +181,20 @@ class Driver {
         return m_available;
     };
 
-    void
-    set_PDO(uint8_t node_id, PDOFunctionCode fn);
-
-    void
-    stop();
-
-    void
-    set_mode(int8_t mode);
-
-    template <typename T>
-    void
-    set(Register reg, T param) {
-        if(m_available)
-            m_socket.send(CANopen::SDOOutboundWrite(m_node_id, Register::PPv_target, param));
-    }
-
-    void
-    send_PDO(PDOFunctionCode pdo, Payload payload);
-
-    void
-    print_status();
-
-    void
-    print_control();
-
-    private:
+    protected:
+    const char *m_ifname;
     bool m_verbose;
     bool m_available;
 
     CANopen::Socket m_socket;
 
+    bool activated_PDO[8] = {0};
+
     uint8_t m_node_id;
     uint16_t m_can_baud;
-    uint16_t m_dcom_status;
-    uint16_t m_dcom_control;
-
-    int8_t m_dcom_mode;
-
-    //Position profil param
-    int32_t m_PPp_target;
-    int32_t m_PPv_target = 60;
-
-    uint8_t m_op_state;
-    const char *m_op_state_str[8] = {
-        "DISABLED", "NOT READY", "READY", "ON",
-        "ENABLED", "QUICK STOP", "FAULT", "FAULT, REACTION ACTIVE"};
-
-    uint8_t m_ctrl_state;
-    const char *m_op_control_str[8] = {"SHUTDOWN", "SWITCH ON",
-                                       "DISABLE VOLTAGE", "QUICK STOP",
-                                       "DISABLE OPERATION", "ENABLE OPERATION",
-                                       "FAULT RESET"};
+    uint16_t m_status;
+    State m_state;
+    OperationMode m_opMode;
 };
 
 } // namespace CANopen

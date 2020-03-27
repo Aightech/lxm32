@@ -1,0 +1,171 @@
+\hypertarget{class_c_a_nopen_1_1_s_d_o_message}{}\section{C\+A\+Nopen\+:\+:S\+D\+O\+Message Class Reference}
+\label{class_c_a_nopen_1_1_s_d_o_message}\index{C\+A\+Nopen\+::\+S\+D\+O\+Message@{C\+A\+Nopen\+::\+S\+D\+O\+Message}}
+
+
+{\ttfamily \#include $<$sdo.\+h$>$}
+
+
+
+Inheritance diagram for C\+A\+Nopen\+:\+:S\+D\+O\+Message\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_c_a_nopen_1_1_s_d_o_message__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for C\+A\+Nopen\+:\+:S\+D\+O\+Message\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=207pt]{class_c_a_nopen_1_1_s_d_o_message__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{class_c_a_nopen_1_1_s_d_o_message_aba8926782f1557b8d7d90f430b26cd8d}{R\+D\+WR} \{ \hyperlink{class_c_a_nopen_1_1_s_d_o_message_aba8926782f1557b8d7d90f430b26cd8da289c8fc8152983893c105c7babdc681b}{Read}, 
+\hyperlink{class_c_a_nopen_1_1_s_d_o_message_aba8926782f1557b8d7d90f430b26cd8da0583f2eb7789cc0917f023c833e64ea2}{Write}
+ \}
+\item 
+enum \hyperlink{class_c_a_nopen_1_1_s_d_o_message_a87e867140acb008777fb9419626d19ea}{C\+CS} \{ \newline
+\hyperlink{class_c_a_nopen_1_1_s_d_o_message_a87e867140acb008777fb9419626d19eaa44e7a57deaad302a380a06c5788f780f}{Segment\+Download} = 0, 
+\hyperlink{class_c_a_nopen_1_1_s_d_o_message_a87e867140acb008777fb9419626d19eaa78901951e33e3579cb856b53609248fe}{Initiate\+Download} = 1, 
+\hyperlink{class_c_a_nopen_1_1_s_d_o_message_a87e867140acb008777fb9419626d19eaaf330c9070f66925edbece3a896f4c0e3}{Initiate\+Upload} = 2, 
+\hyperlink{class_c_a_nopen_1_1_s_d_o_message_a87e867140acb008777fb9419626d19eaaebae2db15a511c989cfa09218d3858f9}{Segment\+Upload} = 3, 
+\newline
+\hyperlink{class_c_a_nopen_1_1_s_d_o_message_a87e867140acb008777fb9419626d19eaa211ad465c11d2bac3504d46fdc020954}{Abort\+Transfer} = 4, 
+\hyperlink{class_c_a_nopen_1_1_s_d_o_message_a87e867140acb008777fb9419626d19eaab1dec130d95dc1c743b8d87dd56b8d7f}{Block\+Upload} = 5, 
+\hyperlink{class_c_a_nopen_1_1_s_d_o_message_a87e867140acb008777fb9419626d19eaade0ce8477f2b012117aa5fa6c2c10479}{Block\+Download} = 6
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_c_a_nopen_1_1_s_d_o_message_a6229048c08585beeb1e19d76ae0966cd}{S\+D\+O\+Message} ()=default
+\item 
+\hyperlink{class_c_a_nopen_1_1_s_d_o_message_a73ab5aad06fd6a6f53fb614f4d9a8465}{S\+D\+O\+Message} (const can\+\_\+frame \&other)
+\item 
+\hyperlink{class_c_a_nopen_1_1_s_d_o_message_ad299429ca0de823d392fb24addf4fe85}{S\+D\+O\+Message} (\hyperlink{class_c_a_nopen_1_1_message_a0f8f95e4ea1284011cd122629edc5468}{Function\+Code} fn, uint8\+\_\+t \hyperlink{class_c_a_nopen_1_1_message_a845fe0c7682bd6eeef0a5dd87b5e3c63}{node\+\_\+id}, \hyperlink{class_c_a_nopen_1_1_s_d_o_message_a87e867140acb008777fb9419626d19ea}{C\+CS} spec, uint8\+\_\+t n, uint8\+\_\+t e, uint8\+\_\+t s, uint16\+\_\+t index, uint8\+\_\+t subindex, \hyperlink{class_c_a_nopen_1_1_payload}{Payload} \hyperlink{class_c_a_nopen_1_1_s_d_o_message_a051509ddb3a59dfe066f9d90c80c2eec}{payload})
+\item 
+\hyperlink{class_c_a_nopen_1_1_payload}{Payload} \hyperlink{class_c_a_nopen_1_1_s_d_o_message_a051509ddb3a59dfe066f9d90c80c2eec}{payload} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 7 of file sdo.\+h.
+
+
+
+\subsection{Member Enumeration Documentation}
+\mbox{\Hypertarget{class_c_a_nopen_1_1_s_d_o_message_a87e867140acb008777fb9419626d19ea}\label{class_c_a_nopen_1_1_s_d_o_message_a87e867140acb008777fb9419626d19ea}} 
+\index{C\+A\+Nopen\+::\+S\+D\+O\+Message@{C\+A\+Nopen\+::\+S\+D\+O\+Message}!C\+CS@{C\+CS}}
+\index{C\+CS@{C\+CS}!C\+A\+Nopen\+::\+S\+D\+O\+Message@{C\+A\+Nopen\+::\+S\+D\+O\+Message}}
+\subsubsection{\texorpdfstring{C\+CS}{CCS}}
+{\footnotesize\ttfamily enum \hyperlink{class_c_a_nopen_1_1_s_d_o_message_a87e867140acb008777fb9419626d19ea}{C\+A\+Nopen\+::\+S\+D\+O\+Message\+::\+C\+CS}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Segment\+Download@{Segment\+Download}!C\+A\+Nopen\+::\+S\+D\+O\+Message@{C\+A\+Nopen\+::\+S\+D\+O\+Message}}\index{C\+A\+Nopen\+::\+S\+D\+O\+Message@{C\+A\+Nopen\+::\+S\+D\+O\+Message}!Segment\+Download@{Segment\+Download}}}\mbox{\Hypertarget{class_c_a_nopen_1_1_s_d_o_message_a87e867140acb008777fb9419626d19eaa44e7a57deaad302a380a06c5788f780f}\label{class_c_a_nopen_1_1_s_d_o_message_a87e867140acb008777fb9419626d19eaa44e7a57deaad302a380a06c5788f780f}} 
+Segment\+Download&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Initiate\+Download@{Initiate\+Download}!C\+A\+Nopen\+::\+S\+D\+O\+Message@{C\+A\+Nopen\+::\+S\+D\+O\+Message}}\index{C\+A\+Nopen\+::\+S\+D\+O\+Message@{C\+A\+Nopen\+::\+S\+D\+O\+Message}!Initiate\+Download@{Initiate\+Download}}}\mbox{\Hypertarget{class_c_a_nopen_1_1_s_d_o_message_a87e867140acb008777fb9419626d19eaa78901951e33e3579cb856b53609248fe}\label{class_c_a_nopen_1_1_s_d_o_message_a87e867140acb008777fb9419626d19eaa78901951e33e3579cb856b53609248fe}} 
+Initiate\+Download&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Initiate\+Upload@{Initiate\+Upload}!C\+A\+Nopen\+::\+S\+D\+O\+Message@{C\+A\+Nopen\+::\+S\+D\+O\+Message}}\index{C\+A\+Nopen\+::\+S\+D\+O\+Message@{C\+A\+Nopen\+::\+S\+D\+O\+Message}!Initiate\+Upload@{Initiate\+Upload}}}\mbox{\Hypertarget{class_c_a_nopen_1_1_s_d_o_message_a87e867140acb008777fb9419626d19eaaf330c9070f66925edbece3a896f4c0e3}\label{class_c_a_nopen_1_1_s_d_o_message_a87e867140acb008777fb9419626d19eaaf330c9070f66925edbece3a896f4c0e3}} 
+Initiate\+Upload&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Segment\+Upload@{Segment\+Upload}!C\+A\+Nopen\+::\+S\+D\+O\+Message@{C\+A\+Nopen\+::\+S\+D\+O\+Message}}\index{C\+A\+Nopen\+::\+S\+D\+O\+Message@{C\+A\+Nopen\+::\+S\+D\+O\+Message}!Segment\+Upload@{Segment\+Upload}}}\mbox{\Hypertarget{class_c_a_nopen_1_1_s_d_o_message_a87e867140acb008777fb9419626d19eaaebae2db15a511c989cfa09218d3858f9}\label{class_c_a_nopen_1_1_s_d_o_message_a87e867140acb008777fb9419626d19eaaebae2db15a511c989cfa09218d3858f9}} 
+Segment\+Upload&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Abort\+Transfer@{Abort\+Transfer}!C\+A\+Nopen\+::\+S\+D\+O\+Message@{C\+A\+Nopen\+::\+S\+D\+O\+Message}}\index{C\+A\+Nopen\+::\+S\+D\+O\+Message@{C\+A\+Nopen\+::\+S\+D\+O\+Message}!Abort\+Transfer@{Abort\+Transfer}}}\mbox{\Hypertarget{class_c_a_nopen_1_1_s_d_o_message_a87e867140acb008777fb9419626d19eaa211ad465c11d2bac3504d46fdc020954}\label{class_c_a_nopen_1_1_s_d_o_message_a87e867140acb008777fb9419626d19eaa211ad465c11d2bac3504d46fdc020954}} 
+Abort\+Transfer&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Block\+Upload@{Block\+Upload}!C\+A\+Nopen\+::\+S\+D\+O\+Message@{C\+A\+Nopen\+::\+S\+D\+O\+Message}}\index{C\+A\+Nopen\+::\+S\+D\+O\+Message@{C\+A\+Nopen\+::\+S\+D\+O\+Message}!Block\+Upload@{Block\+Upload}}}\mbox{\Hypertarget{class_c_a_nopen_1_1_s_d_o_message_a87e867140acb008777fb9419626d19eaab1dec130d95dc1c743b8d87dd56b8d7f}\label{class_c_a_nopen_1_1_s_d_o_message_a87e867140acb008777fb9419626d19eaab1dec130d95dc1c743b8d87dd56b8d7f}} 
+Block\+Upload&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Block\+Download@{Block\+Download}!C\+A\+Nopen\+::\+S\+D\+O\+Message@{C\+A\+Nopen\+::\+S\+D\+O\+Message}}\index{C\+A\+Nopen\+::\+S\+D\+O\+Message@{C\+A\+Nopen\+::\+S\+D\+O\+Message}!Block\+Download@{Block\+Download}}}\mbox{\Hypertarget{class_c_a_nopen_1_1_s_d_o_message_a87e867140acb008777fb9419626d19eaade0ce8477f2b012117aa5fa6c2c10479}\label{class_c_a_nopen_1_1_s_d_o_message_a87e867140acb008777fb9419626d19eaade0ce8477f2b012117aa5fa6c2c10479}} 
+Block\+Download&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line 14 of file sdo.\+h.
+
+\mbox{\Hypertarget{class_c_a_nopen_1_1_s_d_o_message_aba8926782f1557b8d7d90f430b26cd8d}\label{class_c_a_nopen_1_1_s_d_o_message_aba8926782f1557b8d7d90f430b26cd8d}} 
+\index{C\+A\+Nopen\+::\+S\+D\+O\+Message@{C\+A\+Nopen\+::\+S\+D\+O\+Message}!R\+D\+WR@{R\+D\+WR}}
+\index{R\+D\+WR@{R\+D\+WR}!C\+A\+Nopen\+::\+S\+D\+O\+Message@{C\+A\+Nopen\+::\+S\+D\+O\+Message}}
+\subsubsection{\texorpdfstring{R\+D\+WR}{RDWR}}
+{\footnotesize\ttfamily enum \hyperlink{class_c_a_nopen_1_1_s_d_o_message_aba8926782f1557b8d7d90f430b26cd8d}{C\+A\+Nopen\+::\+S\+D\+O\+Message\+::\+R\+D\+WR}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Read@{Read}!C\+A\+Nopen\+::\+S\+D\+O\+Message@{C\+A\+Nopen\+::\+S\+D\+O\+Message}}\index{C\+A\+Nopen\+::\+S\+D\+O\+Message@{C\+A\+Nopen\+::\+S\+D\+O\+Message}!Read@{Read}}}\mbox{\Hypertarget{class_c_a_nopen_1_1_s_d_o_message_aba8926782f1557b8d7d90f430b26cd8da289c8fc8152983893c105c7babdc681b}\label{class_c_a_nopen_1_1_s_d_o_message_aba8926782f1557b8d7d90f430b26cd8da289c8fc8152983893c105c7babdc681b}} 
+Read&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Write@{Write}!C\+A\+Nopen\+::\+S\+D\+O\+Message@{C\+A\+Nopen\+::\+S\+D\+O\+Message}}\index{C\+A\+Nopen\+::\+S\+D\+O\+Message@{C\+A\+Nopen\+::\+S\+D\+O\+Message}!Write@{Write}}}\mbox{\Hypertarget{class_c_a_nopen_1_1_s_d_o_message_aba8926782f1557b8d7d90f430b26cd8da0583f2eb7789cc0917f023c833e64ea2}\label{class_c_a_nopen_1_1_s_d_o_message_aba8926782f1557b8d7d90f430b26cd8da0583f2eb7789cc0917f023c833e64ea2}} 
+Write&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line 9 of file sdo.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_c_a_nopen_1_1_s_d_o_message_a6229048c08585beeb1e19d76ae0966cd}\label{class_c_a_nopen_1_1_s_d_o_message_a6229048c08585beeb1e19d76ae0966cd}} 
+\index{C\+A\+Nopen\+::\+S\+D\+O\+Message@{C\+A\+Nopen\+::\+S\+D\+O\+Message}!S\+D\+O\+Message@{S\+D\+O\+Message}}
+\index{S\+D\+O\+Message@{S\+D\+O\+Message}!C\+A\+Nopen\+::\+S\+D\+O\+Message@{C\+A\+Nopen\+::\+S\+D\+O\+Message}}
+\subsubsection{\texorpdfstring{S\+D\+O\+Message()}{SDOMessage()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily C\+A\+Nopen\+::\+S\+D\+O\+Message\+::\+S\+D\+O\+Message (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+\mbox{\Hypertarget{class_c_a_nopen_1_1_s_d_o_message_a73ab5aad06fd6a6f53fb614f4d9a8465}\label{class_c_a_nopen_1_1_s_d_o_message_a73ab5aad06fd6a6f53fb614f4d9a8465}} 
+\index{C\+A\+Nopen\+::\+S\+D\+O\+Message@{C\+A\+Nopen\+::\+S\+D\+O\+Message}!S\+D\+O\+Message@{S\+D\+O\+Message}}
+\index{S\+D\+O\+Message@{S\+D\+O\+Message}!C\+A\+Nopen\+::\+S\+D\+O\+Message@{C\+A\+Nopen\+::\+S\+D\+O\+Message}}
+\subsubsection{\texorpdfstring{S\+D\+O\+Message()}{SDOMessage()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily C\+A\+Nopen\+::\+S\+D\+O\+Message\+::\+S\+D\+O\+Message (\begin{DoxyParamCaption}\item[{const can\+\_\+frame \&}]{other }\end{DoxyParamCaption})}
+
+
+
+Definition at line 6 of file sdo.\+cpp.
+
+\mbox{\Hypertarget{class_c_a_nopen_1_1_s_d_o_message_ad299429ca0de823d392fb24addf4fe85}\label{class_c_a_nopen_1_1_s_d_o_message_ad299429ca0de823d392fb24addf4fe85}} 
+\index{C\+A\+Nopen\+::\+S\+D\+O\+Message@{C\+A\+Nopen\+::\+S\+D\+O\+Message}!S\+D\+O\+Message@{S\+D\+O\+Message}}
+\index{S\+D\+O\+Message@{S\+D\+O\+Message}!C\+A\+Nopen\+::\+S\+D\+O\+Message@{C\+A\+Nopen\+::\+S\+D\+O\+Message}}
+\subsubsection{\texorpdfstring{S\+D\+O\+Message()}{SDOMessage()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily C\+A\+Nopen\+::\+S\+D\+O\+Message\+::\+S\+D\+O\+Message (\begin{DoxyParamCaption}\item[{\hyperlink{class_c_a_nopen_1_1_message_a0f8f95e4ea1284011cd122629edc5468}{Function\+Code}}]{fn,  }\item[{uint8\+\_\+t}]{node\+\_\+id,  }\item[{\hyperlink{class_c_a_nopen_1_1_s_d_o_message_a87e867140acb008777fb9419626d19ea}{C\+CS}}]{spec,  }\item[{uint8\+\_\+t}]{n,  }\item[{uint8\+\_\+t}]{e,  }\item[{uint8\+\_\+t}]{s,  }\item[{uint16\+\_\+t}]{index,  }\item[{uint8\+\_\+t}]{subindex,  }\item[{\hyperlink{class_c_a_nopen_1_1_payload}{Payload}}]{payload }\end{DoxyParamCaption})}
+
+
+
+Definition at line 10 of file sdo.\+cpp.
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_c_a_nopen_1_1_s_d_o_message_a051509ddb3a59dfe066f9d90c80c2eec}\label{class_c_a_nopen_1_1_s_d_o_message_a051509ddb3a59dfe066f9d90c80c2eec}} 
+\index{C\+A\+Nopen\+::\+S\+D\+O\+Message@{C\+A\+Nopen\+::\+S\+D\+O\+Message}!payload@{payload}}
+\index{payload@{payload}!C\+A\+Nopen\+::\+S\+D\+O\+Message@{C\+A\+Nopen\+::\+S\+D\+O\+Message}}
+\subsubsection{\texorpdfstring{payload()}{payload()}}
+{\footnotesize\ttfamily \hyperlink{class_c_a_nopen_1_1_payload}{Payload} C\+A\+Nopen\+::\+S\+D\+O\+Message\+::payload (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 28 of file sdo.\+cpp.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/adev/\+Documents/\+S\+T\+E\+C\+H/lxm32/lib/canopen/include/\hyperlink{sdo_8h}{sdo.\+h}\item 
+/home/adev/\+Documents/\+S\+T\+E\+C\+H/lxm32/lib/canopen/src/\hyperlink{sdo_8cpp}{sdo.\+cpp}\end{DoxyCompactItemize}

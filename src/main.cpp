@@ -23,7 +23,7 @@ main(int argc, char** argv)
 {
 
 
-  std::vector<LXM32*> motors;
+  std::vector<CANopen::LXM32*> motors;
   int32_t m_motor_pos[6];
   int32_t m_inc[6];
   double m_conv=50000.0f/24.0f*180.0f/M_PI;
@@ -32,9 +32,14 @@ main(int argc, char** argv)
   
   for(int i=0; i<6; i++)
     {
-      motors.push_back(new LXM32("can0", i+1,false));
-      motors.back()->init();
-      motors.back()->start(MODE_ProfilePosition, PPctrl_RELATIVE| PPctrl_ON_DIRECT);
+      //std::cout << CANopen::LXM32::OPmode::ProfilePosition << std::endl;
+      motors.push_back(new CANopen::LXM32("vcan0", i+1,false));
+      int a = 1;
+      int b = 2;
+      motors.back()->pdo_watchdog(CANopen::Driver::PDOFunctionCode::PDO1Receive,&a);
+
+      std::cout << a << " " << b << std::endl;
+      //motors.back()->start(MODE_ProfilePosition, PPctrl_RELATIVE| PPctrl_ON_DIRECT);
       m_motor_pos[i]=0;
       m_inc[i]=0;
     }
@@ -63,7 +68,7 @@ main(int argc, char** argv)
       int target = js.joystickValue(1)*m_conv*3.14/32000/2;
       m_inc[i_n]=target-m_motor_pos[i_n];
       m_motor_pos[i_n]+=m_inc[i_n];
-      motors[i_n]->new_pos(m_inc[i_n]);
+      //motors[i_n]->fa_pos(m_inc[i_n]);
       printf("val %d\n",target);
       usleep(100000);
     }

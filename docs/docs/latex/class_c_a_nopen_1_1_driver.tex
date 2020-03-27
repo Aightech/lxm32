@@ -1,0 +1,411 @@
+\hypertarget{class_c_a_nopen_1_1_driver}{}\section{C\+A\+Nopen\+:\+:Driver Class Reference}
+\label{class_c_a_nopen_1_1_driver}\index{C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}}
+
+
+{\ttfamily \#include $<$C\+A\+Nopen\+\_\+driver.\+h$>$}
+
+
+
+Inheritance diagram for C\+A\+Nopen\+:\+:Driver\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=176pt]{class_c_a_nopen_1_1_driver__inherit__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{class_c_a_nopen_1_1_driver_a9504ce08c5bec248880fe4e6803565f7}{Register} \+: uint32\+\_\+t \{ \newline
+\hyperlink{class_c_a_nopen_1_1_driver_a9504ce08c5bec248880fe4e6803565f7a42423874643f633363c2ae56cac6f9b6}{Status\+Word} = 0x60410000, 
+\hyperlink{class_c_a_nopen_1_1_driver_a9504ce08c5bec248880fe4e6803565f7ae4950e20abee18ade1ac2a03cb7da315}{Control\+Word} = 0x60400000, 
+\hyperlink{class_c_a_nopen_1_1_driver_a9504ce08c5bec248880fe4e6803565f7a3999e1eaed36f6474242552c151d4053}{Op\+Mode} = 0x60600000, 
+\hyperlink{class_c_a_nopen_1_1_driver_a9504ce08c5bec248880fe4e6803565f7a9388c18e3ec79d918b872aab89a47387}{P\+Pp\+\_\+target} = 0x607\+A0000, 
+\newline
+\hyperlink{class_c_a_nopen_1_1_driver_a9504ce08c5bec248880fe4e6803565f7a97069ba1c67700d01ba84c05f2a31adb}{P\+Pv\+\_\+target} = 0x60810000, 
+\hyperlink{class_c_a_nopen_1_1_driver_a9504ce08c5bec248880fe4e6803565f7ae34a009131bb4956dbb9a5c9e76b1c5a}{R\+A\+M\+P\+\_\+v\+\_\+acc} = 0x60830000, 
+\hyperlink{class_c_a_nopen_1_1_driver_a9504ce08c5bec248880fe4e6803565f7a6f355b7bef6158931cc8cf5e4b1f9c83}{R\+A\+M\+P\+\_\+v\+\_\+dec} = 0x60840000
+ \}
+\item 
+enum \hyperlink{class_c_a_nopen_1_1_driver_af29fc14b8ec3ed982247a5129088a40f}{O\+Pmode} \+: uint8\+\_\+t \{ \hyperlink{class_c_a_nopen_1_1_driver_af29fc14b8ec3ed982247a5129088a40fa3502834b10b8f0201a628b9a0e227425}{Profile\+Position} = 1, 
+\hyperlink{class_c_a_nopen_1_1_driver_af29fc14b8ec3ed982247a5129088a40fadb9f0017145112261254a48699a41961}{Profile\+Velocity} = 2
+ \}
+\item 
+enum \hyperlink{class_c_a_nopen_1_1_driver_a16a451fc3593c0f174911e969a7be02d}{State} \+: uint16\+\_\+t \{ \newline
+\hyperlink{class_c_a_nopen_1_1_driver_a16a451fc3593c0f174911e969a7be02da94d00ab583965d1d22f48674f7aefa7a}{Not\+Ready\+To\+Switcht\+ON} = 0x0000, 
+\hyperlink{class_c_a_nopen_1_1_driver_a16a451fc3593c0f174911e969a7be02da868b030749591aa7b6afd1eade00edf7}{Switch\+On\+Disabled} = 0x0040, 
+\hyperlink{class_c_a_nopen_1_1_driver_a16a451fc3593c0f174911e969a7be02dafa947edce547a30b314910e6931235a4}{Ready\+To\+Switch\+ON} = 0x0021, 
+\hyperlink{class_c_a_nopen_1_1_driver_a16a451fc3593c0f174911e969a7be02dac2e13098b6500cdcde217d2a9cc9ebb6}{Switched\+ON} = 0x0023, 
+\newline
+\hyperlink{class_c_a_nopen_1_1_driver_a16a451fc3593c0f174911e969a7be02da1692c431e1cf20446dbf23a53913af0c}{Operation\+Enabled} = 0x0027, 
+\hyperlink{class_c_a_nopen_1_1_driver_a16a451fc3593c0f174911e969a7be02da9028b5332c8352a087606c2cc79e9517}{Fault} = 0x000f, 
+\hyperlink{class_c_a_nopen_1_1_driver_a16a451fc3593c0f174911e969a7be02dabafb33b6c4f43661a3257ca5b7569372}{Fault\+Reaction\+Active} = 0x000f, 
+\hyperlink{class_c_a_nopen_1_1_driver_a16a451fc3593c0f174911e969a7be02da8accb6a0a36eebcd88f85e0b92faf68a}{Quick\+Stop\+Active} = 0x0007
+ \}
+\item 
+enum \hyperlink{class_c_a_nopen_1_1_driver_af4031601d8ef94250316995e8339903a}{Control} \+: uint16\+\_\+t \{ \newline
+\hyperlink{class_c_a_nopen_1_1_driver_af4031601d8ef94250316995e8339903aa6ccc4c2738c634abe2fd21cbe93f9fdb}{Shutdown} = 0x0006, 
+\hyperlink{class_c_a_nopen_1_1_driver_af4031601d8ef94250316995e8339903aae98ed55dcd60bdd15d179ec32f651b8d}{Switch\+ON} = 0x0007, 
+\hyperlink{class_c_a_nopen_1_1_driver_af4031601d8ef94250316995e8339903aa81c0fb39e9e145721e1cf45a52f8786f}{Disable\+Voltage} = 0x0000, 
+\hyperlink{class_c_a_nopen_1_1_driver_af4031601d8ef94250316995e8339903aa6e8fc43d0b5f1ef14ac7ba475572c9b6}{Quick\+Stop} = 0x0002, 
+\newline
+\hyperlink{class_c_a_nopen_1_1_driver_af4031601d8ef94250316995e8339903aaa366dac5dbc508501f36112bf5472572}{Disable\+Operation} = 0x0007, 
+\hyperlink{class_c_a_nopen_1_1_driver_af4031601d8ef94250316995e8339903aaff77b9045071e916120fc49e159d2f77}{Enable\+Operation} = 0x000f, 
+\hyperlink{class_c_a_nopen_1_1_driver_af4031601d8ef94250316995e8339903aaa433113dfe71a54d4333344a339a9bbf}{Fault\+Resest} = 0x0080
+ \}
+\item 
+enum \hyperlink{class_c_a_nopen_1_1_driver_af1538f81dbeb9dcafee3ff1a71c95be4}{P\+D\+O\+Function\+Code} \+: uint32\+\_\+t \{ \newline
+\hyperlink{class_c_a_nopen_1_1_driver_af1538f81dbeb9dcafee3ff1a71c95be4aa31dc9b14e225c25d304e6d8d9b886ed}{P\+D\+O1\+Transmit} = Message\+:\+:P\+D\+O1\+Transmit, 
+\hyperlink{class_c_a_nopen_1_1_driver_af1538f81dbeb9dcafee3ff1a71c95be4aa97a14880dee29baad7ee8201721c585}{P\+D\+O1\+Receive} = Message\+:\+:P\+D\+O1\+Receive, 
+\hyperlink{class_c_a_nopen_1_1_driver_af1538f81dbeb9dcafee3ff1a71c95be4a013baa4e40e72d67279f8e5b5d9b4035}{P\+D\+O2\+Transmit} = Message\+:\+:P\+D\+O2\+Transmit, 
+\hyperlink{class_c_a_nopen_1_1_driver_af1538f81dbeb9dcafee3ff1a71c95be4a9e3e5d76b75896fade4e2537f2e6e2f7}{P\+D\+O2\+Receive} = Message\+:\+:P\+D\+O2\+Receive, 
+\newline
+\hyperlink{class_c_a_nopen_1_1_driver_af1538f81dbeb9dcafee3ff1a71c95be4ae5889c8e1d945aa150ba4213617681d5}{P\+D\+O3\+Transmit} = Message\+:\+:P\+D\+O3\+Transmit, 
+\hyperlink{class_c_a_nopen_1_1_driver_af1538f81dbeb9dcafee3ff1a71c95be4ad6ff06a6427b5f68ecea8552f1a01ef9}{P\+D\+O3\+Receive} = Message\+:\+:P\+D\+O3\+Receive, 
+\hyperlink{class_c_a_nopen_1_1_driver_af1538f81dbeb9dcafee3ff1a71c95be4ae5f1f938d9d8b8833be74c805268e9ca}{P\+D\+O4\+Transmit} = Message\+:\+:P\+D\+O4\+Transmit, 
+\hyperlink{class_c_a_nopen_1_1_driver_af1538f81dbeb9dcafee3ff1a71c95be4a6e9b86ade5180f6dcca330b94d1fd4da}{P\+D\+O4\+Receive} = Message\+:\+:P\+D\+O4\+Receive
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_c_a_nopen_1_1_driver_a353dee2678e6049c216805dead97abfc}{Driver} (const char $\ast$ifname, uint16\+\_\+t can\+\_\+id, bool verbose=false)
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+bool \hyperlink{class_c_a_nopen_1_1_driver_a249f11262c9264cf53486c247d004b99}{is\+\_\+available} ()
+\begin{DoxyCompactList}\small\item\em return true if the can interface is available \end{DoxyCompactList}\item 
+void \hyperlink{class_c_a_nopen_1_1_driver_af549ce9c0b8c8125f8ddf26fab6810cf}{set\+\_\+\+P\+DO} (uint8\+\_\+t node\+\_\+id, \hyperlink{class_c_a_nopen_1_1_driver_af1538f81dbeb9dcafee3ff1a71c95be4}{P\+D\+O\+Function\+Code} fn)
+\item 
+void \hyperlink{class_c_a_nopen_1_1_driver_abd7d88699d02c007d5f23e608d8f0a0a}{stop} ()
+\item 
+void \hyperlink{class_c_a_nopen_1_1_driver_a35e035da9a3f9d6771f3e8b54ac80e73}{set\+\_\+mode} (int8\+\_\+t mode)
+\item 
+{\footnotesize template$<$typename T $>$ }\\void \hyperlink{class_c_a_nopen_1_1_driver_a66b64a600d9a0cdada81071b8cb412c8}{set} (\hyperlink{class_c_a_nopen_1_1_driver_a9504ce08c5bec248880fe4e6803565f7}{Register} reg, T param)
+\item 
+void \hyperlink{class_c_a_nopen_1_1_driver_ad82b69bd6c10c53ce4c7f766259ce804}{send\+\_\+\+P\+DO} (\hyperlink{class_c_a_nopen_1_1_driver_af1538f81dbeb9dcafee3ff1a71c95be4}{P\+D\+O\+Function\+Code} pdo, \hyperlink{class_c_a_nopen_1_1_payload}{Payload} payload)
+\item 
+void \hyperlink{class_c_a_nopen_1_1_driver_a2aab98740682098ccbfee1b8d3476c7a}{print\+\_\+status} ()
+\item 
+void \hyperlink{class_c_a_nopen_1_1_driver_a9bddeea1ccb9854c2b775248778903b5}{print\+\_\+control} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 41 of file C\+A\+Nopen\+\_\+driver.\+h.
+
+
+
+\subsection{Member Enumeration Documentation}
+\mbox{\Hypertarget{class_c_a_nopen_1_1_driver_af4031601d8ef94250316995e8339903a}\label{class_c_a_nopen_1_1_driver_af4031601d8ef94250316995e8339903a}} 
+\index{C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}!Control@{Control}}
+\index{Control@{Control}!C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}}
+\subsubsection{\texorpdfstring{Control}{Control}}
+{\footnotesize\ttfamily enum \hyperlink{class_c_a_nopen_1_1_driver_af4031601d8ef94250316995e8339903a}{C\+A\+Nopen\+::\+Driver\+::\+Control} \+: uint16\+\_\+t}
+
+Possible Control commands \begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Shutdown@{Shutdown}!C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}}\index{C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}!Shutdown@{Shutdown}}}\mbox{\Hypertarget{class_c_a_nopen_1_1_driver_af4031601d8ef94250316995e8339903aa6ccc4c2738c634abe2fd21cbe93f9fdb}\label{class_c_a_nopen_1_1_driver_af4031601d8ef94250316995e8339903aa6ccc4c2738c634abe2fd21cbe93f9fdb}} 
+Shutdown&goto Ready\+Switch\+ON \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Switch\+ON@{Switch\+ON}!C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}}\index{C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}!Switch\+ON@{Switch\+ON}}}\mbox{\Hypertarget{class_c_a_nopen_1_1_driver_af4031601d8ef94250316995e8339903aae98ed55dcd60bdd15d179ec32f651b8d}\label{class_c_a_nopen_1_1_driver_af4031601d8ef94250316995e8339903aae98ed55dcd60bdd15d179ec32f651b8d}} 
+Switch\+ON&goto Switched\+ON \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Disable\+Voltage@{Disable\+Voltage}!C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}}\index{C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}!Disable\+Voltage@{Disable\+Voltage}}}\mbox{\Hypertarget{class_c_a_nopen_1_1_driver_af4031601d8ef94250316995e8339903aa81c0fb39e9e145721e1cf45a52f8786f}\label{class_c_a_nopen_1_1_driver_af4031601d8ef94250316995e8339903aa81c0fb39e9e145721e1cf45a52f8786f}} 
+Disable\+Voltage&goto Switch\+O\+N\+Disabled \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Quick\+Stop@{Quick\+Stop}!C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}}\index{C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}!Quick\+Stop@{Quick\+Stop}}}\mbox{\Hypertarget{class_c_a_nopen_1_1_driver_af4031601d8ef94250316995e8339903aa6e8fc43d0b5f1ef14ac7ba475572c9b6}\label{class_c_a_nopen_1_1_driver_af4031601d8ef94250316995e8339903aa6e8fc43d0b5f1ef14ac7ba475572c9b6}} 
+Quick\+Stop&goto Quick\+Stop\+Activ \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Disable\+Operation@{Disable\+Operation}!C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}}\index{C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}!Disable\+Operation@{Disable\+Operation}}}\mbox{\Hypertarget{class_c_a_nopen_1_1_driver_af4031601d8ef94250316995e8339903aaa366dac5dbc508501f36112bf5472572}\label{class_c_a_nopen_1_1_driver_af4031601d8ef94250316995e8339903aaa366dac5dbc508501f36112bf5472572}} 
+Disable\+Operation&goto Switched\+ON \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Enable\+Operation@{Enable\+Operation}!C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}}\index{C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}!Enable\+Operation@{Enable\+Operation}}}\mbox{\Hypertarget{class_c_a_nopen_1_1_driver_af4031601d8ef94250316995e8339903aaff77b9045071e916120fc49e159d2f77}\label{class_c_a_nopen_1_1_driver_af4031601d8ef94250316995e8339903aaff77b9045071e916120fc49e159d2f77}} 
+Enable\+Operation&goto Operation\+Enabled \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Fault\+Resest@{Fault\+Resest}!C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}}\index{C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}!Fault\+Resest@{Fault\+Resest}}}\mbox{\Hypertarget{class_c_a_nopen_1_1_driver_af4031601d8ef94250316995e8339903aaa433113dfe71a54d4333344a339a9bbf}\label{class_c_a_nopen_1_1_driver_af4031601d8ef94250316995e8339903aaa433113dfe71a54d4333344a339a9bbf}} 
+Fault\+Resest&goto Switch\+O\+N\+Disabled \\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line 75 of file C\+A\+Nopen\+\_\+driver.\+h.
+
+\mbox{\Hypertarget{class_c_a_nopen_1_1_driver_af29fc14b8ec3ed982247a5129088a40f}\label{class_c_a_nopen_1_1_driver_af29fc14b8ec3ed982247a5129088a40f}} 
+\index{C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}!O\+Pmode@{O\+Pmode}}
+\index{O\+Pmode@{O\+Pmode}!C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}}
+\subsubsection{\texorpdfstring{O\+Pmode}{OPmode}}
+{\footnotesize\ttfamily enum \hyperlink{class_c_a_nopen_1_1_driver_af29fc14b8ec3ed982247a5129088a40f}{C\+A\+Nopen\+::\+Driver\+::\+O\+Pmode} \+: uint8\+\_\+t}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Profile\+Position@{Profile\+Position}!C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}}\index{C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}!Profile\+Position@{Profile\+Position}}}\mbox{\Hypertarget{class_c_a_nopen_1_1_driver_af29fc14b8ec3ed982247a5129088a40fa3502834b10b8f0201a628b9a0e227425}\label{class_c_a_nopen_1_1_driver_af29fc14b8ec3ed982247a5129088a40fa3502834b10b8f0201a628b9a0e227425}} 
+Profile\+Position&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Profile\+Velocity@{Profile\+Velocity}!C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}}\index{C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}!Profile\+Velocity@{Profile\+Velocity}}}\mbox{\Hypertarget{class_c_a_nopen_1_1_driver_af29fc14b8ec3ed982247a5129088a40fadb9f0017145112261254a48699a41961}\label{class_c_a_nopen_1_1_driver_af29fc14b8ec3ed982247a5129088a40fadb9f0017145112261254a48699a41961}} 
+Profile\+Velocity&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line 53 of file C\+A\+Nopen\+\_\+driver.\+h.
+
+\mbox{\Hypertarget{class_c_a_nopen_1_1_driver_af1538f81dbeb9dcafee3ff1a71c95be4}\label{class_c_a_nopen_1_1_driver_af1538f81dbeb9dcafee3ff1a71c95be4}} 
+\index{C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}!P\+D\+O\+Function\+Code@{P\+D\+O\+Function\+Code}}
+\index{P\+D\+O\+Function\+Code@{P\+D\+O\+Function\+Code}!C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}}
+\subsubsection{\texorpdfstring{P\+D\+O\+Function\+Code}{PDOFunctionCode}}
+{\footnotesize\ttfamily enum \hyperlink{class_c_a_nopen_1_1_driver_af1538f81dbeb9dcafee3ff1a71c95be4}{C\+A\+Nopen\+::\+Driver\+::\+P\+D\+O\+Function\+Code} \+: uint32\+\_\+t}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{P\+D\+O1\+Transmit@{P\+D\+O1\+Transmit}!C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}}\index{C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}!P\+D\+O1\+Transmit@{P\+D\+O1\+Transmit}}}\mbox{\Hypertarget{class_c_a_nopen_1_1_driver_af1538f81dbeb9dcafee3ff1a71c95be4aa31dc9b14e225c25d304e6d8d9b886ed}\label{class_c_a_nopen_1_1_driver_af1538f81dbeb9dcafee3ff1a71c95be4aa31dc9b14e225c25d304e6d8d9b886ed}} 
+P\+D\+O1\+Transmit&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{P\+D\+O1\+Receive@{P\+D\+O1\+Receive}!C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}}\index{C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}!P\+D\+O1\+Receive@{P\+D\+O1\+Receive}}}\mbox{\Hypertarget{class_c_a_nopen_1_1_driver_af1538f81dbeb9dcafee3ff1a71c95be4aa97a14880dee29baad7ee8201721c585}\label{class_c_a_nopen_1_1_driver_af1538f81dbeb9dcafee3ff1a71c95be4aa97a14880dee29baad7ee8201721c585}} 
+P\+D\+O1\+Receive&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{P\+D\+O2\+Transmit@{P\+D\+O2\+Transmit}!C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}}\index{C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}!P\+D\+O2\+Transmit@{P\+D\+O2\+Transmit}}}\mbox{\Hypertarget{class_c_a_nopen_1_1_driver_af1538f81dbeb9dcafee3ff1a71c95be4a013baa4e40e72d67279f8e5b5d9b4035}\label{class_c_a_nopen_1_1_driver_af1538f81dbeb9dcafee3ff1a71c95be4a013baa4e40e72d67279f8e5b5d9b4035}} 
+P\+D\+O2\+Transmit&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{P\+D\+O2\+Receive@{P\+D\+O2\+Receive}!C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}}\index{C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}!P\+D\+O2\+Receive@{P\+D\+O2\+Receive}}}\mbox{\Hypertarget{class_c_a_nopen_1_1_driver_af1538f81dbeb9dcafee3ff1a71c95be4a9e3e5d76b75896fade4e2537f2e6e2f7}\label{class_c_a_nopen_1_1_driver_af1538f81dbeb9dcafee3ff1a71c95be4a9e3e5d76b75896fade4e2537f2e6e2f7}} 
+P\+D\+O2\+Receive&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{P\+D\+O3\+Transmit@{P\+D\+O3\+Transmit}!C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}}\index{C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}!P\+D\+O3\+Transmit@{P\+D\+O3\+Transmit}}}\mbox{\Hypertarget{class_c_a_nopen_1_1_driver_af1538f81dbeb9dcafee3ff1a71c95be4ae5889c8e1d945aa150ba4213617681d5}\label{class_c_a_nopen_1_1_driver_af1538f81dbeb9dcafee3ff1a71c95be4ae5889c8e1d945aa150ba4213617681d5}} 
+P\+D\+O3\+Transmit&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{P\+D\+O3\+Receive@{P\+D\+O3\+Receive}!C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}}\index{C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}!P\+D\+O3\+Receive@{P\+D\+O3\+Receive}}}\mbox{\Hypertarget{class_c_a_nopen_1_1_driver_af1538f81dbeb9dcafee3ff1a71c95be4ad6ff06a6427b5f68ecea8552f1a01ef9}\label{class_c_a_nopen_1_1_driver_af1538f81dbeb9dcafee3ff1a71c95be4ad6ff06a6427b5f68ecea8552f1a01ef9}} 
+P\+D\+O3\+Receive&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{P\+D\+O4\+Transmit@{P\+D\+O4\+Transmit}!C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}}\index{C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}!P\+D\+O4\+Transmit@{P\+D\+O4\+Transmit}}}\mbox{\Hypertarget{class_c_a_nopen_1_1_driver_af1538f81dbeb9dcafee3ff1a71c95be4ae5f1f938d9d8b8833be74c805268e9ca}\label{class_c_a_nopen_1_1_driver_af1538f81dbeb9dcafee3ff1a71c95be4ae5f1f938d9d8b8833be74c805268e9ca}} 
+P\+D\+O4\+Transmit&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{P\+D\+O4\+Receive@{P\+D\+O4\+Receive}!C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}}\index{C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}!P\+D\+O4\+Receive@{P\+D\+O4\+Receive}}}\mbox{\Hypertarget{class_c_a_nopen_1_1_driver_af1538f81dbeb9dcafee3ff1a71c95be4a6e9b86ade5180f6dcca330b94d1fd4da}\label{class_c_a_nopen_1_1_driver_af1538f81dbeb9dcafee3ff1a71c95be4a6e9b86ade5180f6dcca330b94d1fd4da}} 
+P\+D\+O4\+Receive&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line 85 of file C\+A\+Nopen\+\_\+driver.\+h.
+
+\mbox{\Hypertarget{class_c_a_nopen_1_1_driver_a9504ce08c5bec248880fe4e6803565f7}\label{class_c_a_nopen_1_1_driver_a9504ce08c5bec248880fe4e6803565f7}} 
+\index{C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}!Register@{Register}}
+\index{Register@{Register}!C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}}
+\subsubsection{\texorpdfstring{Register}{Register}}
+{\footnotesize\ttfamily enum \hyperlink{class_c_a_nopen_1_1_driver_a9504ce08c5bec248880fe4e6803565f7}{C\+A\+Nopen\+::\+Driver\+::\+Register} \+: uint32\+\_\+t}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Status\+Word@{Status\+Word}!C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}}\index{C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}!Status\+Word@{Status\+Word}}}\mbox{\Hypertarget{class_c_a_nopen_1_1_driver_a9504ce08c5bec248880fe4e6803565f7a42423874643f633363c2ae56cac6f9b6}\label{class_c_a_nopen_1_1_driver_a9504ce08c5bec248880fe4e6803565f7a42423874643f633363c2ae56cac6f9b6}} 
+Status\+Word&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Control\+Word@{Control\+Word}!C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}}\index{C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}!Control\+Word@{Control\+Word}}}\mbox{\Hypertarget{class_c_a_nopen_1_1_driver_a9504ce08c5bec248880fe4e6803565f7ae4950e20abee18ade1ac2a03cb7da315}\label{class_c_a_nopen_1_1_driver_a9504ce08c5bec248880fe4e6803565f7ae4950e20abee18ade1ac2a03cb7da315}} 
+Control\+Word&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Op\+Mode@{Op\+Mode}!C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}}\index{C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}!Op\+Mode@{Op\+Mode}}}\mbox{\Hypertarget{class_c_a_nopen_1_1_driver_a9504ce08c5bec248880fe4e6803565f7a3999e1eaed36f6474242552c151d4053}\label{class_c_a_nopen_1_1_driver_a9504ce08c5bec248880fe4e6803565f7a3999e1eaed36f6474242552c151d4053}} 
+Op\+Mode&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{P\+Pp\+\_\+target@{P\+Pp\+\_\+target}!C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}}\index{C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}!P\+Pp\+\_\+target@{P\+Pp\+\_\+target}}}\mbox{\Hypertarget{class_c_a_nopen_1_1_driver_a9504ce08c5bec248880fe4e6803565f7a9388c18e3ec79d918b872aab89a47387}\label{class_c_a_nopen_1_1_driver_a9504ce08c5bec248880fe4e6803565f7a9388c18e3ec79d918b872aab89a47387}} 
+P\+Pp\+\_\+target&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{P\+Pv\+\_\+target@{P\+Pv\+\_\+target}!C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}}\index{C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}!P\+Pv\+\_\+target@{P\+Pv\+\_\+target}}}\mbox{\Hypertarget{class_c_a_nopen_1_1_driver_a9504ce08c5bec248880fe4e6803565f7a97069ba1c67700d01ba84c05f2a31adb}\label{class_c_a_nopen_1_1_driver_a9504ce08c5bec248880fe4e6803565f7a97069ba1c67700d01ba84c05f2a31adb}} 
+P\+Pv\+\_\+target&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{R\+A\+M\+P\+\_\+v\+\_\+acc@{R\+A\+M\+P\+\_\+v\+\_\+acc}!C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}}\index{C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}!R\+A\+M\+P\+\_\+v\+\_\+acc@{R\+A\+M\+P\+\_\+v\+\_\+acc}}}\mbox{\Hypertarget{class_c_a_nopen_1_1_driver_a9504ce08c5bec248880fe4e6803565f7ae34a009131bb4956dbb9a5c9e76b1c5a}\label{class_c_a_nopen_1_1_driver_a9504ce08c5bec248880fe4e6803565f7ae34a009131bb4956dbb9a5c9e76b1c5a}} 
+R\+A\+M\+P\+\_\+v\+\_\+acc&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{R\+A\+M\+P\+\_\+v\+\_\+dec@{R\+A\+M\+P\+\_\+v\+\_\+dec}!C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}}\index{C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}!R\+A\+M\+P\+\_\+v\+\_\+dec@{R\+A\+M\+P\+\_\+v\+\_\+dec}}}\mbox{\Hypertarget{class_c_a_nopen_1_1_driver_a9504ce08c5bec248880fe4e6803565f7a6f355b7bef6158931cc8cf5e4b1f9c83}\label{class_c_a_nopen_1_1_driver_a9504ce08c5bec248880fe4e6803565f7a6f355b7bef6158931cc8cf5e4b1f9c83}} 
+R\+A\+M\+P\+\_\+v\+\_\+dec&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line 43 of file C\+A\+Nopen\+\_\+driver.\+h.
+
+\mbox{\Hypertarget{class_c_a_nopen_1_1_driver_a16a451fc3593c0f174911e969a7be02d}\label{class_c_a_nopen_1_1_driver_a16a451fc3593c0f174911e969a7be02d}} 
+\index{C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}!State@{State}}
+\index{State@{State}!C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}}
+\subsubsection{\texorpdfstring{State}{State}}
+{\footnotesize\ttfamily enum \hyperlink{class_c_a_nopen_1_1_driver_a16a451fc3593c0f174911e969a7be02d}{C\+A\+Nopen\+::\+Driver\+::\+State} \+: uint16\+\_\+t}
+
+Possible States \begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Not\+Ready\+To\+Switcht\+ON@{Not\+Ready\+To\+Switcht\+ON}!C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}}\index{C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}!Not\+Ready\+To\+Switcht\+ON@{Not\+Ready\+To\+Switcht\+ON}}}\mbox{\Hypertarget{class_c_a_nopen_1_1_driver_a16a451fc3593c0f174911e969a7be02da94d00ab583965d1d22f48674f7aefa7a}\label{class_c_a_nopen_1_1_driver_a16a451fc3593c0f174911e969a7be02da94d00ab583965d1d22f48674f7aefa7a}} 
+Not\+Ready\+To\+Switcht\+ON&Not Ready to Switch ON\+:
+\begin{DoxyItemize}
+\item Low level Power (e.\+g. 15V, 5V) has been applied to the drive.
+\item The drive is being initialized or is running self test.
+\item A brake, if present, has to be applied in this state.
+\item The drive function is disabled. 
+\end{DoxyItemize}\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Switch\+On\+Disabled@{Switch\+On\+Disabled}!C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}}\index{C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}!Switch\+On\+Disabled@{Switch\+On\+Disabled}}}\mbox{\Hypertarget{class_c_a_nopen_1_1_driver_a16a451fc3593c0f174911e969a7be02da868b030749591aa7b6afd1eade00edf7}\label{class_c_a_nopen_1_1_driver_a16a451fc3593c0f174911e969a7be02da868b030749591aa7b6afd1eade00edf7}} 
+Switch\+On\+Disabled&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Ready\+To\+Switch\+ON@{Ready\+To\+Switch\+ON}!C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}}\index{C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}!Ready\+To\+Switch\+ON@{Ready\+To\+Switch\+ON}}}\mbox{\Hypertarget{class_c_a_nopen_1_1_driver_a16a451fc3593c0f174911e969a7be02dafa947edce547a30b314910e6931235a4}\label{class_c_a_nopen_1_1_driver_a16a451fc3593c0f174911e969a7be02dafa947edce547a30b314910e6931235a4}} 
+Ready\+To\+Switch\+ON&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Switched\+ON@{Switched\+ON}!C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}}\index{C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}!Switched\+ON@{Switched\+ON}}}\mbox{\Hypertarget{class_c_a_nopen_1_1_driver_a16a451fc3593c0f174911e969a7be02dac2e13098b6500cdcde217d2a9cc9ebb6}\label{class_c_a_nopen_1_1_driver_a16a451fc3593c0f174911e969a7be02dac2e13098b6500cdcde217d2a9cc9ebb6}} 
+Switched\+ON&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Operation\+Enabled@{Operation\+Enabled}!C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}}\index{C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}!Operation\+Enabled@{Operation\+Enabled}}}\mbox{\Hypertarget{class_c_a_nopen_1_1_driver_a16a451fc3593c0f174911e969a7be02da1692c431e1cf20446dbf23a53913af0c}\label{class_c_a_nopen_1_1_driver_a16a451fc3593c0f174911e969a7be02da1692c431e1cf20446dbf23a53913af0c}} 
+Operation\+Enabled&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Fault@{Fault}!C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}}\index{C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}!Fault@{Fault}}}\mbox{\Hypertarget{class_c_a_nopen_1_1_driver_a16a451fc3593c0f174911e969a7be02da9028b5332c8352a087606c2cc79e9517}\label{class_c_a_nopen_1_1_driver_a16a451fc3593c0f174911e969a7be02da9028b5332c8352a087606c2cc79e9517}} 
+Fault&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Fault\+Reaction\+Active@{Fault\+Reaction\+Active}!C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}}\index{C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}!Fault\+Reaction\+Active@{Fault\+Reaction\+Active}}}\mbox{\Hypertarget{class_c_a_nopen_1_1_driver_a16a451fc3593c0f174911e969a7be02dabafb33b6c4f43661a3257ca5b7569372}\label{class_c_a_nopen_1_1_driver_a16a451fc3593c0f174911e969a7be02dabafb33b6c4f43661a3257ca5b7569372}} 
+Fault\+Reaction\+Active&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Quick\+Stop\+Active@{Quick\+Stop\+Active}!C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}}\index{C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}!Quick\+Stop\+Active@{Quick\+Stop\+Active}}}\mbox{\Hypertarget{class_c_a_nopen_1_1_driver_a16a451fc3593c0f174911e969a7be02da8accb6a0a36eebcd88f85e0b92faf68a}\label{class_c_a_nopen_1_1_driver_a16a451fc3593c0f174911e969a7be02da8accb6a0a36eebcd88f85e0b92faf68a}} 
+Quick\+Stop\+Active&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line 59 of file C\+A\+Nopen\+\_\+driver.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_c_a_nopen_1_1_driver_a353dee2678e6049c216805dead97abfc}\label{class_c_a_nopen_1_1_driver_a353dee2678e6049c216805dead97abfc}} 
+\index{C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}!Driver@{Driver}}
+\index{Driver@{Driver}!C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}}
+\subsubsection{\texorpdfstring{Driver()}{Driver()}}
+{\footnotesize\ttfamily C\+A\+Nopen\+::\+Driver\+::\+Driver (\begin{DoxyParamCaption}\item[{const char $\ast$}]{ifname,  }\item[{uint16\+\_\+t}]{can\+\_\+id,  }\item[{bool}]{verbose = {\ttfamily false} }\end{DoxyParamCaption})}
+
+
+
+Constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ifname} & \+: Name of the C\+AN interface. \\
+\hline
+{\em can\+\_\+id} & \+: Node C\+AN ID of the driver. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 3 of file C\+A\+Nopen\+\_\+driver.\+cpp.
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_c_a_nopen_1_1_driver_a249f11262c9264cf53486c247d004b99}\label{class_c_a_nopen_1_1_driver_a249f11262c9264cf53486c247d004b99}} 
+\index{C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}!is\+\_\+available@{is\+\_\+available}}
+\index{is\+\_\+available@{is\+\_\+available}!C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}}
+\subsubsection{\texorpdfstring{is\+\_\+available()}{is\_available()}}
+{\footnotesize\ttfamily bool C\+A\+Nopen\+::\+Driver\+::is\+\_\+available (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+return true if the can interface is available 
+
+
+
+Definition at line 106 of file C\+A\+Nopen\+\_\+driver.\+h.
+
+\mbox{\Hypertarget{class_c_a_nopen_1_1_driver_a9bddeea1ccb9854c2b775248778903b5}\label{class_c_a_nopen_1_1_driver_a9bddeea1ccb9854c2b775248778903b5}} 
+\index{C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}!print\+\_\+control@{print\+\_\+control}}
+\index{print\+\_\+control@{print\+\_\+control}!C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}}
+\subsubsection{\texorpdfstring{print\+\_\+control()}{print\_control()}}
+{\footnotesize\ttfamily void C\+A\+Nopen\+::\+Driver\+::print\+\_\+control (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 109 of file C\+A\+Nopen\+\_\+driver.\+cpp.
+
+\mbox{\Hypertarget{class_c_a_nopen_1_1_driver_a2aab98740682098ccbfee1b8d3476c7a}\label{class_c_a_nopen_1_1_driver_a2aab98740682098ccbfee1b8d3476c7a}} 
+\index{C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}!print\+\_\+status@{print\+\_\+status}}
+\index{print\+\_\+status@{print\+\_\+status}!C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}}
+\subsubsection{\texorpdfstring{print\+\_\+status()}{print\_status()}}
+{\footnotesize\ttfamily void C\+A\+Nopen\+::\+Driver\+::print\+\_\+status (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 52 of file C\+A\+Nopen\+\_\+driver.\+cpp.
+
+\mbox{\Hypertarget{class_c_a_nopen_1_1_driver_ad82b69bd6c10c53ce4c7f766259ce804}\label{class_c_a_nopen_1_1_driver_ad82b69bd6c10c53ce4c7f766259ce804}} 
+\index{C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}!send\+\_\+\+P\+DO@{send\+\_\+\+P\+DO}}
+\index{send\+\_\+\+P\+DO@{send\+\_\+\+P\+DO}!C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}}
+\subsubsection{\texorpdfstring{send\+\_\+\+P\+D\+O()}{send\_PDO()}}
+{\footnotesize\ttfamily void C\+A\+Nopen\+::\+Driver\+::send\+\_\+\+P\+DO (\begin{DoxyParamCaption}\item[{\hyperlink{class_c_a_nopen_1_1_driver_af1538f81dbeb9dcafee3ff1a71c95be4}{P\+D\+O\+Function\+Code}}]{pdo,  }\item[{\hyperlink{class_c_a_nopen_1_1_payload}{Payload}}]{payload }\end{DoxyParamCaption})}
+
+
+
+Definition at line 36 of file C\+A\+Nopen\+\_\+driver.\+cpp.
+
+\mbox{\Hypertarget{class_c_a_nopen_1_1_driver_a66b64a600d9a0cdada81071b8cb412c8}\label{class_c_a_nopen_1_1_driver_a66b64a600d9a0cdada81071b8cb412c8}} 
+\index{C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}!set@{set}}
+\index{set@{set}!C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}}
+\subsubsection{\texorpdfstring{set()}{set()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+void C\+A\+Nopen\+::\+Driver\+::set (\begin{DoxyParamCaption}\item[{\hyperlink{class_c_a_nopen_1_1_driver_a9504ce08c5bec248880fe4e6803565f7}{Register}}]{reg,  }\item[{T}]{param }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line 122 of file C\+A\+Nopen\+\_\+driver.\+h.
+
+\mbox{\Hypertarget{class_c_a_nopen_1_1_driver_a35e035da9a3f9d6771f3e8b54ac80e73}\label{class_c_a_nopen_1_1_driver_a35e035da9a3f9d6771f3e8b54ac80e73}} 
+\index{C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}!set\+\_\+mode@{set\+\_\+mode}}
+\index{set\+\_\+mode@{set\+\_\+mode}!C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}}
+\subsubsection{\texorpdfstring{set\+\_\+mode()}{set\_mode()}}
+{\footnotesize\ttfamily void C\+A\+Nopen\+::\+Driver\+::set\+\_\+mode (\begin{DoxyParamCaption}\item[{int8\+\_\+t}]{mode }\end{DoxyParamCaption})}
+
+
+
+Definition at line 43 of file C\+A\+Nopen\+\_\+driver.\+cpp.
+
+\mbox{\Hypertarget{class_c_a_nopen_1_1_driver_af549ce9c0b8c8125f8ddf26fab6810cf}\label{class_c_a_nopen_1_1_driver_af549ce9c0b8c8125f8ddf26fab6810cf}} 
+\index{C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}!set\+\_\+\+P\+DO@{set\+\_\+\+P\+DO}}
+\index{set\+\_\+\+P\+DO@{set\+\_\+\+P\+DO}!C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}}
+\subsubsection{\texorpdfstring{set\+\_\+\+P\+D\+O()}{set\_PDO()}}
+{\footnotesize\ttfamily void C\+A\+Nopen\+::\+Driver\+::set\+\_\+\+P\+DO (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{node\+\_\+id,  }\item[{\hyperlink{class_c_a_nopen_1_1_driver_af1538f81dbeb9dcafee3ff1a71c95be4}{P\+D\+O\+Function\+Code}}]{fn }\end{DoxyParamCaption})}
+
+
+
+Definition at line 12 of file C\+A\+Nopen\+\_\+driver.\+cpp.
+
+\mbox{\Hypertarget{class_c_a_nopen_1_1_driver_abd7d88699d02c007d5f23e608d8f0a0a}\label{class_c_a_nopen_1_1_driver_abd7d88699d02c007d5f23e608d8f0a0a}} 
+\index{C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}!stop@{stop}}
+\index{stop@{stop}!C\+A\+Nopen\+::\+Driver@{C\+A\+Nopen\+::\+Driver}}
+\subsubsection{\texorpdfstring{stop()}{stop()}}
+{\footnotesize\ttfamily void C\+A\+Nopen\+::\+Driver\+::stop (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 27 of file C\+A\+Nopen\+\_\+driver.\+cpp.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/adev/\+Documents/\+S\+T\+E\+C\+H/lxm32/include/\hyperlink{_c_a_nopen__driver_8h}{C\+A\+Nopen\+\_\+driver.\+h}\item 
+/home/adev/\+Documents/\+S\+T\+E\+C\+H/lxm32/src/\hyperlink{_c_a_nopen__driver_8cpp}{C\+A\+Nopen\+\_\+driver.\+cpp}\end{DoxyCompactItemize}

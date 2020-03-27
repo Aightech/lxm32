@@ -1,0 +1,73 @@
+\hypertarget{_c_a_nopen__socket_8h}{}\section{/home/adev/\+Documents/\+S\+T\+E\+C\+H/lxm32/lib/canopen/include/\+C\+A\+Nopen\+\_\+socket.h File Reference}
+\label{_c_a_nopen__socket_8h}\index{/home/adev/\+Documents/\+S\+T\+E\+C\+H/lxm32/lib/canopen/include/\+C\+A\+Nopen\+\_\+socket.\+h@{/home/adev/\+Documents/\+S\+T\+E\+C\+H/lxm32/lib/canopen/include/\+C\+A\+Nopen\+\_\+socket.\+h}}
+
+
+Canopen object able to send command through a C\+AN interface using the U\+N\+IX socket.  
+
+
+{\ttfamily \#include $<$memory$>$}\newline
+{\ttfamily \#include $<$string$>$}\newline
+{\ttfamily \#include \char`\"{}message.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}payload.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}sdo.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}pdo.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}nmt.\+h\char`\"{}}\newline
+Include dependency graph for C\+A\+Nopen\+\_\+socket.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_c_a_nopen__socket_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_c_a_nopen__socket_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{class_c_a_nopen_1_1_socket}{C\+A\+Nopen\+::\+Socket}
+\begin{DoxyCompactList}\small\item\em Canopen object able to send command through a C\+AN interface using U\+N\+IX sockets. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+ \hyperlink{namespace_c_a_nopen}{C\+A\+Nopen}
+\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_c_a_nopen__socket_8h_a86e649743184cb6251a418049d8988f2}{I\+F\+\_\+\+V\+E\+R\+B\+O\+SE}(lvl,  cmd)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Canopen object able to send command through a C\+AN interface using the U\+N\+IX socket. 
+
+\begin{DoxyAuthor}{Author}
+Alexis Devillard 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+1.\+0 
+\end{DoxyVersion}
+
+
+\subsection{Macro Definition Documentation}
+\mbox{\Hypertarget{_c_a_nopen__socket_8h_a86e649743184cb6251a418049d8988f2}\label{_c_a_nopen__socket_8h_a86e649743184cb6251a418049d8988f2}} 
+\index{C\+A\+Nopen\+\_\+socket.\+h@{C\+A\+Nopen\+\_\+socket.\+h}!I\+F\+\_\+\+V\+E\+R\+B\+O\+SE@{I\+F\+\_\+\+V\+E\+R\+B\+O\+SE}}
+\index{I\+F\+\_\+\+V\+E\+R\+B\+O\+SE@{I\+F\+\_\+\+V\+E\+R\+B\+O\+SE}!C\+A\+Nopen\+\_\+socket.\+h@{C\+A\+Nopen\+\_\+socket.\+h}}
+\subsubsection{\texorpdfstring{I\+F\+\_\+\+V\+E\+R\+B\+O\+SE}{IF\_VERBOSE}}
+{\footnotesize\ttfamily \#define I\+F\+\_\+\+V\+E\+R\+B\+O\+SE(\begin{DoxyParamCaption}\item[{}]{lvl,  }\item[{}]{cmd }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}
+\textcolor{keywordflow}{if} (m\_verbose\_level >= lvl) \{ \(\backslash\)
+        cmd;                      \(\backslash\)
+    \}
+\end{DoxyCode}
+
+
+Definition at line 20 of file C\+A\+Nopen\+\_\+socket.\+h.
+

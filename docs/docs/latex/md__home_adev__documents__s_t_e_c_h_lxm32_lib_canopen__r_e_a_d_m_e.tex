@@ -1,0 +1,78 @@
+\subsection*{Information}
+
+
+\begin{DoxyItemize}
+\item {\bfseries Brief}\+: Canopen object able to send command through a C\+AN interface using the U\+N\+IX socket.
+\item {\bfseries Languages}\+: C++
+\item {\bfseries Libraries}\+:
+\item {\bfseries Note}\+: /
+\item {\bfseries Compatibility}\+:
+\end{DoxyItemize}
+
+\tabulinesep=1mm
+\begin{longtabu} spread 0pt [c]{*{3}{|X[-1]}|}
+\hline
+\rowcolor{\tableheadbgcolor}\PBS\centering \textbf{ Ubuntu }&\PBS\centering \textbf{ Window10 }&\PBS\centering \textbf{ Mac\+OS  }\\\cline{1-3}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\rowcolor{\tableheadbgcolor}\PBS\centering \textbf{ Ubuntu }&\PBS\centering \textbf{ Window10 }&\PBS\centering \textbf{ Mac\+OS  }\\\cline{1-3}
+\endhead
+\PBS\centering \+:heavy\+\_\+check\+\_\+mark\+:&\PBS\centering \+:grey\+\_\+question\+:&\PBS\centering \+:grey\+\_\+question\+: \\\cline{1-3}
+\end{longtabu}
+
+
+\subsection*{Building}
+
+\subsubsection*{Ubuntu}
+
+\paragraph*{Steps}
+
+
+\begin{DoxyItemize}
+\item Clone the repository and go inside. 
+\begin{DoxyCode}
+git clone https://gitlab-dev.isir.upmc.fr/devillard/canopen.git && cd canpen
+\end{DoxyCode}
+
+\item Create a build directory and go inside.
+\item Configure the project.
+\item Build the project. 
+\begin{DoxyCode}
+mkdir build && cd build && cmake .. && cmake --build .
+\end{DoxyCode}
+
+\end{DoxyItemize}
+
+\paragraph*{Testing}
+
+\#\#\#\#\# Install can tools 
+\begin{DoxyCode}
+sudo apt install can-utilis
+\end{DoxyCode}
+
+
+\#\#\#\#\# Setup a virtual C\+AN bus 
+\begin{DoxyCode}
+sudo ip link add dev vcan0 type vcan && ip link set up vcan0
+\end{DoxyCode}
+
+
+\#\#\#\#\# Listen to the C\+AN bus 
+\begin{DoxyCode}
+candump vcan0
+\end{DoxyCode}
+
+
+\subsection*{Canopen program}
+
+The executable file canopen enable you to send S\+DO message to a C\+AN bus. \subsubsection*{usage\+:}
+
+./canopen ifname 0xindex 0xsub \mbox{[} size base data \mbox{]}
+
+Arg\+: ifname \+: C\+AN interface name 0xindex \+: Object register index 0xsub \+: Object register subindex size \+: Data size (number of bytes) base \+: Numerical base of the value passed. data \+: Value to write.
+
+Ex\+: To read register 0x1000\+:2 of node 4 on \char`\"{}can0\char`\"{}\+: ./canopen can0 4 1000 2
+
+To write in register 0x2000\+:F of node 3 the value 0x1234 on \char`\"{}can0\char`\"{}\+: ./canopen can0 3 2000 F 2 x 1234 

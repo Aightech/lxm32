@@ -1,0 +1,225 @@
+\hypertarget{class_c_a_nopen_1_1_message}{}\section{C\+A\+Nopen\+:\+:Message Class Reference}
+\label{class_c_a_nopen_1_1_message}\index{C\+A\+Nopen\+::\+Message@{C\+A\+Nopen\+::\+Message}}
+
+
+{\ttfamily \#include $<$message.\+h$>$}
+
+
+
+Inheritance diagram for C\+A\+Nopen\+:\+:Message\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_c_a_nopen_1_1_message__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for C\+A\+Nopen\+:\+:Message\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=185pt]{class_c_a_nopen_1_1_message__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{class_c_a_nopen_1_1_message_a0f8f95e4ea1284011cd122629edc5468}{Function\+Code} \+: uint32\+\_\+t \{ \newline
+\hyperlink{class_c_a_nopen_1_1_message_a0f8f95e4ea1284011cd122629edc5468a9772de90d6832671c05553ecc93168ce}{N\+MT} = 0, 
+\hyperlink{class_c_a_nopen_1_1_message_a0f8f95e4ea1284011cd122629edc5468acf827d4fddf4af5908ff22d480ec3f9f}{Emergency} = 0x80, 
+\hyperlink{class_c_a_nopen_1_1_message_a0f8f95e4ea1284011cd122629edc5468a439fca8488e446232afad47ea72326f4}{Sync} = 0x80, 
+\hyperlink{class_c_a_nopen_1_1_message_a0f8f95e4ea1284011cd122629edc5468a4cce8d38cc9a387ac2553c97082934c7}{Time\+Stamp} = 0x100, 
+\newline
+\hyperlink{class_c_a_nopen_1_1_message_a0f8f95e4ea1284011cd122629edc5468aea8753e3c4fecde547db28a4a01f4fea}{P\+D\+O1\+Transmit} = 0x180, 
+\hyperlink{class_c_a_nopen_1_1_message_a0f8f95e4ea1284011cd122629edc5468a289816747eb21454c97a2c0de54bd7bd}{P\+D\+O1\+Receive} = 0x200, 
+\hyperlink{class_c_a_nopen_1_1_message_a0f8f95e4ea1284011cd122629edc5468a644cdb60cf2ec10f6f509c6dac09c7e7}{P\+D\+O2\+Transmit} = 0x280, 
+\hyperlink{class_c_a_nopen_1_1_message_a0f8f95e4ea1284011cd122629edc5468ae19e8c5160acfaab1c140c21789138e3}{P\+D\+O2\+Receive} = 0x300, 
+\newline
+\hyperlink{class_c_a_nopen_1_1_message_a0f8f95e4ea1284011cd122629edc5468ac15c2cbe07eac4f1fdc102927deadcdc}{P\+D\+O3\+Transmit} = 0x380, 
+\hyperlink{class_c_a_nopen_1_1_message_a0f8f95e4ea1284011cd122629edc5468ab059d1f4ab6ed9bb993e5d37aea6eba1}{P\+D\+O3\+Receive} = 0x400, 
+\hyperlink{class_c_a_nopen_1_1_message_a0f8f95e4ea1284011cd122629edc5468a46d53ca55e462afcab565303b212656c}{P\+D\+O4\+Transmit} = 0x480, 
+\hyperlink{class_c_a_nopen_1_1_message_a0f8f95e4ea1284011cd122629edc5468a45f4fc29142533ab1395bd971c12be9b}{P\+D\+O4\+Receive} = 0x500, 
+\newline
+\hyperlink{class_c_a_nopen_1_1_message_a0f8f95e4ea1284011cd122629edc5468ab54b9a53105e0549e5fc07ef1ee6b91a}{S\+D\+O\+Transmit} = 0x580, 
+\hyperlink{class_c_a_nopen_1_1_message_a0f8f95e4ea1284011cd122629edc5468a720fb5202eef37017f7f58ac195c5949}{S\+D\+O\+Receive} = 0x600, 
+\hyperlink{class_c_a_nopen_1_1_message_a0f8f95e4ea1284011cd122629edc5468aea5e380d61d7dbbbb5f4655e3fbdc65c}{Heartbeat} = 0x700
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_c_a_nopen_1_1_message_a90dac1b216099b2a29f7b4deb3ccced8}{Message} ()=default
+\item 
+\hyperlink{class_c_a_nopen_1_1_message_a77a8c09ad0711fa4b574a8b88d983441}{Message} (const can\+\_\+frame \&other)
+\item 
+\hyperlink{class_c_a_nopen_1_1_message_ace3b5218ab769fb1e642b82b2d3fc7d3}{Message} (uint32\+\_\+t cob\+\_\+id, \hyperlink{class_c_a_nopen_1_1_payload}{Payload} \hyperlink{class_c_a_nopen_1_1_message_a65be4f77771803bed521cbbf2316271b}{payload})
+\item 
+\hyperlink{class_c_a_nopen_1_1_message_a0f8f95e4ea1284011cd122629edc5468}{Function\+Code} \hyperlink{class_c_a_nopen_1_1_message_a83d9901bbd77dcca9b44d68fd1e604b8}{function\+\_\+code} ()
+\item 
+uint8\+\_\+t \hyperlink{class_c_a_nopen_1_1_message_a845fe0c7682bd6eeef0a5dd87b5e3c63}{node\+\_\+id} ()
+\item 
+\hyperlink{class_c_a_nopen_1_1_payload}{Payload} \hyperlink{class_c_a_nopen_1_1_message_a65be4f77771803bed521cbbf2316271b}{payload} ()
+\item 
+std\+::string \hyperlink{class_c_a_nopen_1_1_message_a0d3aade9268f612f1918d64e8c6057b7}{to\+\_\+string} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 10 of file message.\+h.
+
+
+
+\subsection{Member Enumeration Documentation}
+\mbox{\Hypertarget{class_c_a_nopen_1_1_message_a0f8f95e4ea1284011cd122629edc5468}\label{class_c_a_nopen_1_1_message_a0f8f95e4ea1284011cd122629edc5468}} 
+\index{C\+A\+Nopen\+::\+Message@{C\+A\+Nopen\+::\+Message}!Function\+Code@{Function\+Code}}
+\index{Function\+Code@{Function\+Code}!C\+A\+Nopen\+::\+Message@{C\+A\+Nopen\+::\+Message}}
+\subsubsection{\texorpdfstring{Function\+Code}{FunctionCode}}
+{\footnotesize\ttfamily enum \hyperlink{class_c_a_nopen_1_1_message_a0f8f95e4ea1284011cd122629edc5468}{C\+A\+Nopen\+::\+Message\+::\+Function\+Code} \+: uint32\+\_\+t}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{N\+MT@{N\+MT}!C\+A\+Nopen\+::\+Message@{C\+A\+Nopen\+::\+Message}}\index{C\+A\+Nopen\+::\+Message@{C\+A\+Nopen\+::\+Message}!N\+MT@{N\+MT}}}\mbox{\Hypertarget{class_c_a_nopen_1_1_message_a0f8f95e4ea1284011cd122629edc5468a9772de90d6832671c05553ecc93168ce}\label{class_c_a_nopen_1_1_message_a0f8f95e4ea1284011cd122629edc5468a9772de90d6832671c05553ecc93168ce}} 
+N\+MT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Emergency@{Emergency}!C\+A\+Nopen\+::\+Message@{C\+A\+Nopen\+::\+Message}}\index{C\+A\+Nopen\+::\+Message@{C\+A\+Nopen\+::\+Message}!Emergency@{Emergency}}}\mbox{\Hypertarget{class_c_a_nopen_1_1_message_a0f8f95e4ea1284011cd122629edc5468acf827d4fddf4af5908ff22d480ec3f9f}\label{class_c_a_nopen_1_1_message_a0f8f95e4ea1284011cd122629edc5468acf827d4fddf4af5908ff22d480ec3f9f}} 
+Emergency&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Sync@{Sync}!C\+A\+Nopen\+::\+Message@{C\+A\+Nopen\+::\+Message}}\index{C\+A\+Nopen\+::\+Message@{C\+A\+Nopen\+::\+Message}!Sync@{Sync}}}\mbox{\Hypertarget{class_c_a_nopen_1_1_message_a0f8f95e4ea1284011cd122629edc5468a439fca8488e446232afad47ea72326f4}\label{class_c_a_nopen_1_1_message_a0f8f95e4ea1284011cd122629edc5468a439fca8488e446232afad47ea72326f4}} 
+Sync&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Time\+Stamp@{Time\+Stamp}!C\+A\+Nopen\+::\+Message@{C\+A\+Nopen\+::\+Message}}\index{C\+A\+Nopen\+::\+Message@{C\+A\+Nopen\+::\+Message}!Time\+Stamp@{Time\+Stamp}}}\mbox{\Hypertarget{class_c_a_nopen_1_1_message_a0f8f95e4ea1284011cd122629edc5468a4cce8d38cc9a387ac2553c97082934c7}\label{class_c_a_nopen_1_1_message_a0f8f95e4ea1284011cd122629edc5468a4cce8d38cc9a387ac2553c97082934c7}} 
+Time\+Stamp&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{P\+D\+O1\+Transmit@{P\+D\+O1\+Transmit}!C\+A\+Nopen\+::\+Message@{C\+A\+Nopen\+::\+Message}}\index{C\+A\+Nopen\+::\+Message@{C\+A\+Nopen\+::\+Message}!P\+D\+O1\+Transmit@{P\+D\+O1\+Transmit}}}\mbox{\Hypertarget{class_c_a_nopen_1_1_message_a0f8f95e4ea1284011cd122629edc5468aea8753e3c4fecde547db28a4a01f4fea}\label{class_c_a_nopen_1_1_message_a0f8f95e4ea1284011cd122629edc5468aea8753e3c4fecde547db28a4a01f4fea}} 
+P\+D\+O1\+Transmit&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{P\+D\+O1\+Receive@{P\+D\+O1\+Receive}!C\+A\+Nopen\+::\+Message@{C\+A\+Nopen\+::\+Message}}\index{C\+A\+Nopen\+::\+Message@{C\+A\+Nopen\+::\+Message}!P\+D\+O1\+Receive@{P\+D\+O1\+Receive}}}\mbox{\Hypertarget{class_c_a_nopen_1_1_message_a0f8f95e4ea1284011cd122629edc5468a289816747eb21454c97a2c0de54bd7bd}\label{class_c_a_nopen_1_1_message_a0f8f95e4ea1284011cd122629edc5468a289816747eb21454c97a2c0de54bd7bd}} 
+P\+D\+O1\+Receive&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{P\+D\+O2\+Transmit@{P\+D\+O2\+Transmit}!C\+A\+Nopen\+::\+Message@{C\+A\+Nopen\+::\+Message}}\index{C\+A\+Nopen\+::\+Message@{C\+A\+Nopen\+::\+Message}!P\+D\+O2\+Transmit@{P\+D\+O2\+Transmit}}}\mbox{\Hypertarget{class_c_a_nopen_1_1_message_a0f8f95e4ea1284011cd122629edc5468a644cdb60cf2ec10f6f509c6dac09c7e7}\label{class_c_a_nopen_1_1_message_a0f8f95e4ea1284011cd122629edc5468a644cdb60cf2ec10f6f509c6dac09c7e7}} 
+P\+D\+O2\+Transmit&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{P\+D\+O2\+Receive@{P\+D\+O2\+Receive}!C\+A\+Nopen\+::\+Message@{C\+A\+Nopen\+::\+Message}}\index{C\+A\+Nopen\+::\+Message@{C\+A\+Nopen\+::\+Message}!P\+D\+O2\+Receive@{P\+D\+O2\+Receive}}}\mbox{\Hypertarget{class_c_a_nopen_1_1_message_a0f8f95e4ea1284011cd122629edc5468ae19e8c5160acfaab1c140c21789138e3}\label{class_c_a_nopen_1_1_message_a0f8f95e4ea1284011cd122629edc5468ae19e8c5160acfaab1c140c21789138e3}} 
+P\+D\+O2\+Receive&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{P\+D\+O3\+Transmit@{P\+D\+O3\+Transmit}!C\+A\+Nopen\+::\+Message@{C\+A\+Nopen\+::\+Message}}\index{C\+A\+Nopen\+::\+Message@{C\+A\+Nopen\+::\+Message}!P\+D\+O3\+Transmit@{P\+D\+O3\+Transmit}}}\mbox{\Hypertarget{class_c_a_nopen_1_1_message_a0f8f95e4ea1284011cd122629edc5468ac15c2cbe07eac4f1fdc102927deadcdc}\label{class_c_a_nopen_1_1_message_a0f8f95e4ea1284011cd122629edc5468ac15c2cbe07eac4f1fdc102927deadcdc}} 
+P\+D\+O3\+Transmit&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{P\+D\+O3\+Receive@{P\+D\+O3\+Receive}!C\+A\+Nopen\+::\+Message@{C\+A\+Nopen\+::\+Message}}\index{C\+A\+Nopen\+::\+Message@{C\+A\+Nopen\+::\+Message}!P\+D\+O3\+Receive@{P\+D\+O3\+Receive}}}\mbox{\Hypertarget{class_c_a_nopen_1_1_message_a0f8f95e4ea1284011cd122629edc5468ab059d1f4ab6ed9bb993e5d37aea6eba1}\label{class_c_a_nopen_1_1_message_a0f8f95e4ea1284011cd122629edc5468ab059d1f4ab6ed9bb993e5d37aea6eba1}} 
+P\+D\+O3\+Receive&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{P\+D\+O4\+Transmit@{P\+D\+O4\+Transmit}!C\+A\+Nopen\+::\+Message@{C\+A\+Nopen\+::\+Message}}\index{C\+A\+Nopen\+::\+Message@{C\+A\+Nopen\+::\+Message}!P\+D\+O4\+Transmit@{P\+D\+O4\+Transmit}}}\mbox{\Hypertarget{class_c_a_nopen_1_1_message_a0f8f95e4ea1284011cd122629edc5468a46d53ca55e462afcab565303b212656c}\label{class_c_a_nopen_1_1_message_a0f8f95e4ea1284011cd122629edc5468a46d53ca55e462afcab565303b212656c}} 
+P\+D\+O4\+Transmit&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{P\+D\+O4\+Receive@{P\+D\+O4\+Receive}!C\+A\+Nopen\+::\+Message@{C\+A\+Nopen\+::\+Message}}\index{C\+A\+Nopen\+::\+Message@{C\+A\+Nopen\+::\+Message}!P\+D\+O4\+Receive@{P\+D\+O4\+Receive}}}\mbox{\Hypertarget{class_c_a_nopen_1_1_message_a0f8f95e4ea1284011cd122629edc5468a45f4fc29142533ab1395bd971c12be9b}\label{class_c_a_nopen_1_1_message_a0f8f95e4ea1284011cd122629edc5468a45f4fc29142533ab1395bd971c12be9b}} 
+P\+D\+O4\+Receive&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{S\+D\+O\+Transmit@{S\+D\+O\+Transmit}!C\+A\+Nopen\+::\+Message@{C\+A\+Nopen\+::\+Message}}\index{C\+A\+Nopen\+::\+Message@{C\+A\+Nopen\+::\+Message}!S\+D\+O\+Transmit@{S\+D\+O\+Transmit}}}\mbox{\Hypertarget{class_c_a_nopen_1_1_message_a0f8f95e4ea1284011cd122629edc5468ab54b9a53105e0549e5fc07ef1ee6b91a}\label{class_c_a_nopen_1_1_message_a0f8f95e4ea1284011cd122629edc5468ab54b9a53105e0549e5fc07ef1ee6b91a}} 
+S\+D\+O\+Transmit&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{S\+D\+O\+Receive@{S\+D\+O\+Receive}!C\+A\+Nopen\+::\+Message@{C\+A\+Nopen\+::\+Message}}\index{C\+A\+Nopen\+::\+Message@{C\+A\+Nopen\+::\+Message}!S\+D\+O\+Receive@{S\+D\+O\+Receive}}}\mbox{\Hypertarget{class_c_a_nopen_1_1_message_a0f8f95e4ea1284011cd122629edc5468a720fb5202eef37017f7f58ac195c5949}\label{class_c_a_nopen_1_1_message_a0f8f95e4ea1284011cd122629edc5468a720fb5202eef37017f7f58ac195c5949}} 
+S\+D\+O\+Receive&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Heartbeat@{Heartbeat}!C\+A\+Nopen\+::\+Message@{C\+A\+Nopen\+::\+Message}}\index{C\+A\+Nopen\+::\+Message@{C\+A\+Nopen\+::\+Message}!Heartbeat@{Heartbeat}}}\mbox{\Hypertarget{class_c_a_nopen_1_1_message_a0f8f95e4ea1284011cd122629edc5468aea5e380d61d7dbbbb5f4655e3fbdc65c}\label{class_c_a_nopen_1_1_message_a0f8f95e4ea1284011cd122629edc5468aea5e380d61d7dbbbb5f4655e3fbdc65c}} 
+Heartbeat&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line 12 of file message.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_c_a_nopen_1_1_message_a90dac1b216099b2a29f7b4deb3ccced8}\label{class_c_a_nopen_1_1_message_a90dac1b216099b2a29f7b4deb3ccced8}} 
+\index{C\+A\+Nopen\+::\+Message@{C\+A\+Nopen\+::\+Message}!Message@{Message}}
+\index{Message@{Message}!C\+A\+Nopen\+::\+Message@{C\+A\+Nopen\+::\+Message}}
+\subsubsection{\texorpdfstring{Message()}{Message()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily C\+A\+Nopen\+::\+Message\+::\+Message (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+\mbox{\Hypertarget{class_c_a_nopen_1_1_message_a77a8c09ad0711fa4b574a8b88d983441}\label{class_c_a_nopen_1_1_message_a77a8c09ad0711fa4b574a8b88d983441}} 
+\index{C\+A\+Nopen\+::\+Message@{C\+A\+Nopen\+::\+Message}!Message@{Message}}
+\index{Message@{Message}!C\+A\+Nopen\+::\+Message@{C\+A\+Nopen\+::\+Message}}
+\subsubsection{\texorpdfstring{Message()}{Message()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily C\+A\+Nopen\+::\+Message\+::\+Message (\begin{DoxyParamCaption}\item[{const can\+\_\+frame \&}]{other }\end{DoxyParamCaption})}
+
+
+
+Definition at line 13 of file message.\+cpp.
+
+\mbox{\Hypertarget{class_c_a_nopen_1_1_message_ace3b5218ab769fb1e642b82b2d3fc7d3}\label{class_c_a_nopen_1_1_message_ace3b5218ab769fb1e642b82b2d3fc7d3}} 
+\index{C\+A\+Nopen\+::\+Message@{C\+A\+Nopen\+::\+Message}!Message@{Message}}
+\index{Message@{Message}!C\+A\+Nopen\+::\+Message@{C\+A\+Nopen\+::\+Message}}
+\subsubsection{\texorpdfstring{Message()}{Message()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily C\+A\+Nopen\+::\+Message\+::\+Message (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{cob\+\_\+id,  }\item[{\hyperlink{class_c_a_nopen_1_1_payload}{Payload}}]{payload }\end{DoxyParamCaption})}
+
+
+
+Definition at line 6 of file message.\+cpp.
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_c_a_nopen_1_1_message_a83d9901bbd77dcca9b44d68fd1e604b8}\label{class_c_a_nopen_1_1_message_a83d9901bbd77dcca9b44d68fd1e604b8}} 
+\index{C\+A\+Nopen\+::\+Message@{C\+A\+Nopen\+::\+Message}!function\+\_\+code@{function\+\_\+code}}
+\index{function\+\_\+code@{function\+\_\+code}!C\+A\+Nopen\+::\+Message@{C\+A\+Nopen\+::\+Message}}
+\subsubsection{\texorpdfstring{function\+\_\+code()}{function\_code()}}
+{\footnotesize\ttfamily \hyperlink{class_c_a_nopen_1_1_message_a0f8f95e4ea1284011cd122629edc5468}{Message\+::\+Function\+Code} C\+A\+Nopen\+::\+Message\+::function\+\_\+code (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 18 of file message.\+cpp.
+
+\mbox{\Hypertarget{class_c_a_nopen_1_1_message_a845fe0c7682bd6eeef0a5dd87b5e3c63}\label{class_c_a_nopen_1_1_message_a845fe0c7682bd6eeef0a5dd87b5e3c63}} 
+\index{C\+A\+Nopen\+::\+Message@{C\+A\+Nopen\+::\+Message}!node\+\_\+id@{node\+\_\+id}}
+\index{node\+\_\+id@{node\+\_\+id}!C\+A\+Nopen\+::\+Message@{C\+A\+Nopen\+::\+Message}}
+\subsubsection{\texorpdfstring{node\+\_\+id()}{node\_id()}}
+{\footnotesize\ttfamily uint8\+\_\+t C\+A\+Nopen\+::\+Message\+::node\+\_\+id (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 23 of file message.\+cpp.
+
+\mbox{\Hypertarget{class_c_a_nopen_1_1_message_a65be4f77771803bed521cbbf2316271b}\label{class_c_a_nopen_1_1_message_a65be4f77771803bed521cbbf2316271b}} 
+\index{C\+A\+Nopen\+::\+Message@{C\+A\+Nopen\+::\+Message}!payload@{payload}}
+\index{payload@{payload}!C\+A\+Nopen\+::\+Message@{C\+A\+Nopen\+::\+Message}}
+\subsubsection{\texorpdfstring{payload()}{payload()}}
+{\footnotesize\ttfamily \hyperlink{class_c_a_nopen_1_1_payload}{Payload} C\+A\+Nopen\+::\+Message\+::payload (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 28 of file message.\+cpp.
+
+\mbox{\Hypertarget{class_c_a_nopen_1_1_message_a0d3aade9268f612f1918d64e8c6057b7}\label{class_c_a_nopen_1_1_message_a0d3aade9268f612f1918d64e8c6057b7}} 
+\index{C\+A\+Nopen\+::\+Message@{C\+A\+Nopen\+::\+Message}!to\+\_\+string@{to\+\_\+string}}
+\index{to\+\_\+string@{to\+\_\+string}!C\+A\+Nopen\+::\+Message@{C\+A\+Nopen\+::\+Message}}
+\subsubsection{\texorpdfstring{to\+\_\+string()}{to\_string()}}
+{\footnotesize\ttfamily std\+::string C\+A\+Nopen\+::\+Message\+::to\+\_\+string (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 33 of file message.\+cpp.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/adev/\+Documents/\+S\+T\+E\+C\+H/lxm32/lib/canopen/include/\hyperlink{message_8h}{message.\+h}\item 
+/home/adev/\+Documents/\+S\+T\+E\+C\+H/lxm32/lib/canopen/src/\hyperlink{message_8cpp}{message.\+cpp}\end{DoxyCompactItemize}

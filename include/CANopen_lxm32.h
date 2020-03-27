@@ -5,15 +5,11 @@
 //#include "LXM32A_CANopen_register.h"
 #include <string>
 #include <unistd.h>
+#include  <iostream>
 
 namespace CANopen {
-class LXM32 : Driver {
+class LXM32 : public Driver {
     public:
-    enum OPmode : uint8_t {
-        ProfilePosition = 1,
-        ProfileVelocity = 2
-
-    };
     /*!
      *  \brief Constructor
      *  \param ifname : Name of the CAN interface.
@@ -21,17 +17,14 @@ class LXM32 : Driver {
      */
     LXM32(const char *ifname, uint16_t can_id, bool verbose = false);
 
-    int32_t
-    init();
-
     void
-    get_param();
+    print_manufacturer_status(){};
 
-    void
-    print_status();
+    void test()
+  {
+    std::cout << "hey derived" << std::endl;
+  };
 
-    void
-    print_control();
 };
 } // namespace CANopen
 
