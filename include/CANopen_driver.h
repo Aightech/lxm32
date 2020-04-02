@@ -10,6 +10,10 @@
 
 namespace CANopen {
 class Driver {
+    static constexpr int MAX_PDO_SLOT = 2;
+    using s8_t = uint8_t;
+    using s16_t = uint16_t;
+    using s32_t = uint32_t;
     public:
     enum Register : uint32_t {
         StatusWord = 0x60410000,
