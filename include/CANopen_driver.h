@@ -213,17 +213,29 @@ class Driver {
     };
 
     protected:
+    void
+    T_PDO_socket();
+    std::thread *m_pdo_socket_thread;
+    std::mutex m_ro_mutex;
+
     const char *m_ifname;
     bool m_verbose;
     bool m_available;
 
     CANopen::Socket m_socket;
 
-    bool activated_PDO[8] = {0};
+    void *m_T_PDO_mapping[4][2];
+    size_t m_T_PDO_mapping_t[4][2];
 
     uint8_t m_node_id;
     uint16_t m_can_baud;
+
+    //read only
     uint16_t m_status;
+    int32_t m_current_position;
+    int32_t m_current_velocity;
+    int32_t m_current_torque;
+
     State m_state;
     OperationMode m_opMode;
 };
