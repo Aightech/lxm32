@@ -2,8 +2,7 @@
 #define _CANOPEN_DRIVER_H_
 
 #include "CANopen_socket.h"
-//#include "LXM32A_CANopen_register.h"
-#include <cstdarg>
+
 #include <iostream>
 #include <mutex>
 #include <string>
@@ -11,10 +10,12 @@
 
 namespace CANopen {
 class Driver {
+
     static constexpr int MAX_PDO_SLOT = 2;
     using s8_t = uint8_t;
     using s16_t = uint16_t;
     using s32_t = uint32_t;
+
     public:
     enum Register : uint32_t {
         StatusWord = 0x60410000,
@@ -138,18 +139,19 @@ class Driver {
         m_T_PDO_mapping_t[pdo_n][slot] = sizeof(T);
     };
 
-    bool
-    set_state(Control ctrl);
-
-    State
-    get_state();
-
+    /*!
+     *  \brief Sends a SDO message to activate the specified PDO.
+     *  \param ifname : N
+     *  \param can_id : Node CAN ID of the driver.
+     */
     void
-    activate_PDO(uint8_t node_id, PDOFunctionCode fn, bool set = true);
+    activate_PDO(PDOFunctionCode fn, bool set = true);
 
-    void
-    set_mode(OperationMode mode);
-
+    /*!
+     *  \brief Enables to store value in specified registers
+     *  \param reg : The register to set in the format 0x|REGISTER:2bytes|00:1byte|SUB:1byte|.
+     *  \param can_id : The value to store in the register.
+     */
     template <typename T>
     void
     set(Register reg, T param) {
@@ -157,11 +159,41 @@ class Driver {
             m_socket.send(CANopen::SDOOutboundWrite(m_node_id, reg, param));
     }
 
-  
-    void
-
+    /*!
+     *  \brief Sends a PDO message with a specified payload.
+     *  \param pdo : The COB-ID of the PDO.
+     *  \param payload : The payload to send.
+     */
     void
     send_PDO(PDOFunctionCode pdo, Payload payload);
+
+    /*!
+     *  \brief Sends transition states order. 
+     *  \param ctrl : Control to send.
+     */
+    bool
+    set_state(Control ctrl);
+
+    /*!
+     *  \brief Returns the current state of the driver by reading the status word.
+     */
+    State
+    get_state();
+
+    /*!
+     *  \brief Set the operationanl mode of the driver.
+     *  \param mode : Mode to set.
+     */
+    void
+    set_mode(OperationMode mode);
+
+
+  
+    void
+    set_target(uint32_t target, bool byPDO = true);
+
+    void
+    homing();
 
     void
     print_status();
