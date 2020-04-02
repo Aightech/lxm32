@@ -36,7 +36,7 @@ CANopen::Driver::set_state(Control control) {
 }
 
 void
-CANopen::Driver::activate_PDO(uint8_t node_id, PDOFunctionCode fn, bool set) {
+CANopen::Driver::activate_PDO(PDOFunctionCode fn, bool set) {
     uint16_t index = 0;
     if((fn & 0x80) == 0x00) //T_PDO
     {
@@ -44,7 +44,7 @@ CANopen::Driver::activate_PDO(uint8_t node_id, PDOFunctionCode fn, bool set) {
     } else {
         index = (0x1800 + (fn >> 8) - 1);
     }
-    m_socket.send(CANopen::SDOOutboundWrite(node_id, index, 1, (set ? 0x04000000 : 0x80000000) + fn + node_id));
+    m_socket.send(CANopen::SDOOutboundWrite(m_node_id, index, 1, (set ? 0x04000000 : 0x80000000) + fn + m_node_id));
     //TODO: if set a T_PDO, run a thread to read incoming PDO
 }
 
