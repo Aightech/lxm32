@@ -22,6 +22,17 @@ int
 main(int argc, char** argv)
 {
 
+  uint8_t v1 = 123;
+  int16_t v2 = -5;
+  void* arr[2][2];
+  arr[0][0] = &v1;
+  arr[0][1] = &v2;
+
+  *((uint8_t*)arr[0][0]) = (uint8_t) 134;
+  *((uint16_t*)arr[0][1]) = (uint16_t)(-134);
+  
+
+  std::cout << "v1: " << (int) v1 << "\tv2: " << v2 << std::endl;
 
   std::vector<CANopen::LXM32*> motors;
   int32_t m_motor_pos[6];
@@ -36,7 +47,7 @@ main(int argc, char** argv)
       motors.push_back(new CANopen::LXM32("vcan0", i+1,false));
       int a = 1;
       int b = 2;
-      motors.back()->pdo_watchdog(CANopen::Driver::PDOFunctionCode::PDO1Receive,&a);
+      //    motors.back()->pdo_watchdog(CANopen::Driver::PDOFunctionCode::PDO1Receive,&a);
 
       std::cout << a << " " << b << std::endl;
       //motors.back()->start(MODE_ProfilePosition, PPctrl_RELATIVE| PPctrl_ON_DIRECT);
