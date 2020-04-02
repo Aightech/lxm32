@@ -5,6 +5,7 @@
 //#include "LXM32A_CANopen_register.h"
 #include <cstdarg>
 #include <iostream>
+#include <mutex>
 #include <string>
 #include <thread>
 
@@ -124,9 +125,17 @@ class Driver {
      */
     Driver(const char *ifname, uint16_t can_id, bool verbose = false);
 
+    /*!
+     *  \brief Enables to map the different parameters of the driver to the Transmit PDO. When a PDO is received in the T_PDO_socket() thread, the value of the pdo will be stored in the mapped parameter.
+     *  \param pdo_n : Numero of the PDO.
+     *  \param can_id : Position in the PDO payload.(eg.: pdo2: |status:slot0|current_pos:slot1|)
+     *  \param param : address of the parameter to map
+     */
+    template <typename T>
     void
-    test() {
-        std::cout << "hey base" << std::endl;
+    map_PDO(int pdo_n, int slot, T *param) {
+        m_T_PDO_mapping[pdo_n][slot] = param;
+        m_T_PDO_mapping_t[pdo_n][slot] = sizeof(T);
     };
 
     bool
@@ -148,22 +157,8 @@ class Driver {
             m_socket.send(CANopen::SDOOutboundWrite(m_node_id, reg, param));
     }
 
-    template <typename T, typename S = uint8_t>
+  
     void
-    pdo_watchdog(PDOFunctionCode pdo, T *p1, S *p2 = nullptr) {
-        std::cout << m_ifname << std::endl;
-        Socket socket(m_ifname, m_verbose);//TODO: add mask
-        socket.bind();
-	std::shared_ptr<Message> msg;
-	Payload p;
-        while(1) {
-	  msg = socket.receive();
-	  p = msg->payload();
-	  *p1 = p.value<T>();
-            if(p2 != nullptr)
-                *p2 = p.value<T>(sizeof(T));
-        }
-    }
 
     void
     send_PDO(PDOFunctionCode pdo, Payload payload);

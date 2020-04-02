@@ -1,12 +1,30 @@
 #include "CANopen_driver.h"
 
 CANopen::Driver::Driver(const char *ifname, uint16_t can_id, bool verbose)
-  : m_ifname(ifname), m_verbose(verbose), m_available(true), m_socket(ifname, verbose), m_node_id(can_id) {
+    : m_ifname(ifname), m_verbose(verbose), m_available(true), m_socket(ifname, verbose), m_node_id(can_id) {
 
     if(!m_socket.bind())
         m_available = false;
 
-    activated_PDO[0] = true;
+    for(int i = 0; i < 4; i++)
+        for(int j = 0; j < MAX_PDO_SLOT; j++) {
+            m_T_PDO_mapping[i][j] = nullptr;
+            m_T_PDO_mapping_t[i][j] = 0;
+        }
+
+    // Map the 4 different PDO with default mapping
+    map_PDO(0, 0, &m_status);
+
+    map_PDO(1, 0, &m_status);
+    map_PDO(1, 1, &m_current_position);
+
+    map_PDO(2, 0, &m_status);
+    map_PDO(2, 1, &m_current_velocity);
+
+    map_PDO(3, 0, &m_status);
+    map_PDO(3, 1, &m_current_torque);
+
+    m_pdo_socket_thread = new std::thread(&Driver::T_PDO_socket, this);
 }
 
 bool
@@ -42,6 +60,62 @@ CANopen::Driver::set_mode(OperationMode mode) {
     if(m_available) {
         m_opMode = mode;
         set(Register::OpMode, mode);
+    }
+}
+
+void
+CANopen::Driver::T_PDO_socket() {
+  //create a socket dedicated to the incomming pdo (T_PDO)
+    Socket socket(m_ifname, m_verbose);
+    //set the filter to only receive T_PDO messages
+    socket.add_filter(4,
+                      PDO1Transmit + m_node_id,
+                      PDO2Transmit + m_node_id,
+                      PDO3Transmit + m_node_id,
+                      PDO4Transmit + m_node_id);
+    socket.bind();
+   
+    std::shared_ptr<Message> msg;
+    Payload p;
+    int pdo_n, slot, index;
+    size_t size;
+    while(1) {
+      //try to receive pdo
+        msg = socket.receive();	
+        if(msg.get() != nullptr) {//if pdo received
+            p = msg->payload();
+            pdo_n = (msg->function_code() >> 8) - 1;//pdo number
+            slot = 0;
+            index = 0;
+            size = m_T_PDO_mapping_t[pdo_n][0];//get the size of the parameter mapped for this pdo
+            while(size != 0) {//while a parameter is mapped in the following slot.
+	      if(index + size <= p.size()) {//ensure the payload contain the data.
+		  switch(size) {//store the received value in the coresponding parameter (with the right size) 
+                    case 0:
+                        break;
+                    case 1:
+                        m_ro_mutex.lock();
+                        *((s8_t *)m_T_PDO_mapping[pdo_n][slot]) = p.value<s8_t>(index);
+                        m_ro_mutex.unlock();
+                        break;
+                    case 2:
+                        m_ro_mutex.lock();
+                        *((s16_t *)m_T_PDO_mapping[pdo_n][slot]) = p.value<s16_t>(index);
+                        m_ro_mutex.unlock();
+                        break;
+                    case 4:
+                        m_ro_mutex.lock();
+                        *((s32_t *)m_T_PDO_mapping[pdo_n][slot]) = p.value<s32_t>(index);
+                        m_ro_mutex.unlock();
+                        break;
+                    }
+                    index += size;
+                    size = (slot < MAX_PDO_SLOT) ? m_T_PDO_mapping_t[pdo_n][++slot] : 0;
+
+                } else
+                    throw std::runtime_error(std::string("Error: Wrong PDO mapping"));
+            }
+        }
     }
 }
 
