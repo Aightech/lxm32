@@ -11,6 +11,7 @@
 namespace CANopen {
 class Driver {
 
+    static constexpr int NB_PDO = 4;
     static constexpr int MAX_PDO_SLOT = 2;
     using s8_t = uint8_t;
     using s16_t = uint16_t;
@@ -152,12 +153,8 @@ class Driver {
      *  \param reg : The register to set in the format 0x|REGISTER:2bytes|00:1byte|SUB:1byte|.
      *  \param can_id : The value to store in the register.
      */
-    template <typename T>
     void
-    set(Register reg, T param) {
-        if(m_available)
-            m_socket.send(CANopen::SDOOutboundWrite(m_node_id, reg, param));
-    }
+    set(Register reg, Payload param);
 
     /*!
      *  \brief Sends a PDO message with a specified payload.
@@ -187,10 +184,15 @@ class Driver {
     void
     set_mode(OperationMode mode);
 
-
-  
     void
-    set_target(uint32_t target, bool byPDO = true);
+    set_target(uint32_t target, bool byPDO = false, PDOFunctionCode pdo = PDO1Receive);
+
+    virtual void
+    set_position(int32_t target);
+    virtual void
+    set_velocity(int32_t target);
+    virtual void
+    set_torque(int32_t target);
 
     void
     homing();
@@ -224,20 +226,22 @@ class Driver {
 
     CANopen::Socket m_socket;
 
-    void *m_T_PDO_mapping[4][2];
-    size_t m_T_PDO_mapping_t[4][2];
+    void *m_T_PDO_mapping[NB_PDO][MAX_PDO_SLOT];
+    size_t m_T_PDO_mapping_t[NB_PDO][MAX_PDO_SLOT];
+    PDOFunctionCode m_T_PDO_mapping_rev[NB_PDO][MAX_PDO_SLOT];
 
     uint8_t m_node_id;
     uint16_t m_can_baud;
 
     //read only
-    uint16_t m_status;
+    uint16_t m_statusWord;
     int32_t m_current_position;
     int32_t m_current_velocity;
     int32_t m_current_torque;
 
     State m_state;
     OperationMode m_opMode;
+    Control m_controlWord;
 };
 
 } // namespace CANopen
