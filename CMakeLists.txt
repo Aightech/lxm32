@@ -73,7 +73,7 @@ if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/lib")
   subdirlist(LIBS "${CMAKE_CURRENT_SOURCE_DIR}/lib/")
   foreach(subdir ${LIBS})
     #git submodules init
-    execute_process(COMMAND git submodule update --init -- "lib/${subdir}"
+    execute_process(COMMAND git submodule update --remote --merge --init -- "lib/${subdir}"
                     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
     add_subdirectory("lib/${subdir}")
     #get the version

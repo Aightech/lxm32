@@ -187,11 +187,11 @@ class Driver {
     void
     set_target(uint32_t target, bool byPDO = false, PDOFunctionCode pdo = PDO1Receive);
 
-    virtual void
+    void
     set_position(int32_t target);
-    virtual void
+    void
     set_velocity(int32_t target);
-    virtual void
+    void
     set_torque(int32_t target);
 
     void

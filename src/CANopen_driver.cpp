@@ -71,12 +71,13 @@ CANopen::Driver::set(Register reg, Payload param) {
 
 void
 CANopen::Driver::set_target(uint32_t target, bool byPDO, PDOFunctionCode pdo) {
-  if(pdo)
-    send_PDO(pdo, target);
-  else
-     
-
+    if(pdo)
+        send_PDO(pdo, target);
+    //TODOelse
 }
+
+void
+CANopen::Driver::set_position(int32_t target){};
 
 void
 CANopen::Driver::T_PDO_socket() {

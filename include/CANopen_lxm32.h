@@ -2,7 +2,7 @@
 #define _LEXIUM32A_CANOPEN_H_
 
 #include "CANopen_driver.h"
-//#include "LXM32A_CANopen_register.h"
+
 #include <string>
 #include <unistd.h>
 #include  <iostream>
