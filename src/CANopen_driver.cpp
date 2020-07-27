@@ -6,33 +6,45 @@ CANopen::Driver::Driver(const char *ifname, uint16_t can_id, bool verbose)
     if(!m_socket.bind())
         m_available = false;
 
-    for(int i = 0; i < NB_PDO; i++)
-        for(int j = 0; j < MAX_PDO_SLOT; j++) {
-            m_T_PDO_mapping[i][j] = nullptr;
-            m_T_PDO_mapping_t[i][j] = 0;
-        }
+    m_parameters[_DCOMstatus] = new Parameter("_DCOMstatus", (s8_t)0, _DCOMstatus);
+    m_parameters[DCOMcontrol] = new Parameter("DCOMcontrol", (s16_t)0, DCOMcontrol);
+    m_parameters[DCOMopmode] = new Parameter("DCOMopmode", (s8_t)0, DCOMopmode);
+    m_parameters[PPp_target] = new Parameter("PPp_target", (s32_t)0, PPp_target);
+    m_parameters[PPv_target] = new Parameter("PPv_target", (s32_t)0, PPv_target);
+    m_parameters[RAMP_v_acc] = new Parameter("RAMP_v_acc", (s32_t)0, RAMP_v_acc);
+    m_parameters[RAMP_v_dec] = new Parameter("RAMP_v_dec", (s32_t)0, RAMP_v_dec);
+
+    m_parameters[_p_act] = new Parameter("_p_act", (s32_t)0, _p_act);
+    m_parameters[_v_act] = new Parameter("_v_act", (s32_t)0, _p_act);
+    m_parameters[_tq_act] = new Parameter("_tq_act", (s32_t)0, _p_act);
 
     // Map the 4 different PDO with default mapping
-    map_PDO(0, 0, &m_statusWord);
+    map_PDO(PDO1Transmit, m_parameters[_DCOMstatus], 0);
 
-    map_PDO(2, 0, &m_statusWord);
-    map_PDO(2, 1, &m_current_position);
+    map_PDO(PDO2Transmit, m_parameters[_DCOMstatus], 0);
+    map_PDO(PDO2Transmit, m_parameters[_p_act], m_parameters[_DCOMstatus]->size);
 
-    map_PDO(3, 0, &m_statusWord);
-    map_PDO(3, 1, &m_current_velocity);
+    map_PDO(PDO3Transmit, m_parameters[_DCOMstatus], 0);
+    map_PDO(PDO3Transmit, m_parameters[_v_act], m_parameters[_DCOMstatus]->size);
 
-    map_PDO(4, 0, &m_statusWord);
-    map_PDO(4, 1, &m_current_torque);
+    map_PDO(PDO4Transmit, m_parameters[_DCOMstatus], 0);
+    map_PDO(PDO4Transmit, m_parameters[_tq_act], m_parameters[_DCOMstatus]->size);
 
-    m_pdo_socket_thread = new std::thread(&Driver::T_PDO_socket, this);
+
+    map_PDO(PDO2Receive , m_parameters[DCOMcontrol], 0);
+    map_PDO(PDO2Receive, m_parameters[PPp_target], m_parameters[DCOMcontrol]->size);
+
+    m_t_socket_thread = new std::thread(&Driver::T_socket, this);
+    m_rpdo_socket_thread = new std::thread(&Driver::RPDO_socket, this);
 }
 
-bool
-CANopen::Driver::set_state(Control control) {
-    if(m_available)
-        m_socket.send(CANopen::PDOMessage((CANopen::PDOMessage::PDOFunctionCode)PDO1Receive, m_node_id, control));
-    //TODO: make some test to ensure the change of state
-    return true;
+void
+CANopen::Driver::map_PDO(PDOFunctionCode fn, Parameter *param, int slot) {
+    if(std::find(m_PDO_map[fn].begin(), m_PDO_map[fn].end(), param) == m_PDO_map[fn].end()) {
+        param->link_to_pdo((Parameter::PDOFunctionCode)fn, slot);
+        m_PDO_map[fn].push_back(param);
+        activate_PDO(fn, true);
+    }
 }
 
 void
@@ -45,93 +57,91 @@ CANopen::Driver::activate_PDO(PDOFunctionCode fn, bool set) {
         index = (0x1800 + (fn >> 8) - 1);
     }
     m_socket.send(CANopen::SDOOutboundWrite(m_node_id, index, 1, (set ? 0x04000000 : 0x80000000) + fn + m_node_id));
-    //TODO: if set a T_PDO, run a thread to read incoming PDO
 }
 
 void
-CANopen::Driver::send_PDO(PDOFunctionCode pdo, Payload payload) {
+CANopen::Driver::send(Parameter *param) {
     if(m_available)
-        m_socket.send(CANopen::PDOMessage((PDOMessage::PDOFunctionCode)pdo, m_node_id, payload));
+        m_socket.send(CANopen::SDOOutboundWrite(m_node_id, param->index, param->subindex, param->payload()));
 }
 
 void
-CANopen::Driver::set_mode(OperationMode mode) {
-
-    if(m_available) {
-        m_opMode = mode;
-        set(Register::OpMode, mode);
-    }
-}
-
-void
-CANopen::Driver::set(Register reg, Payload param) {
+CANopen::Driver::update(Parameter *param) {
     if(m_available)
-        m_socket.send(CANopen::SDOOutboundWrite(m_node_id, reg, param));
+        m_socket.send(CANopen::SDOOutboundRead(m_node_id, param->index, param->subindex));
 }
 
 void
-CANopen::Driver::set_target(uint32_t target, bool byPDO, PDOFunctionCode pdo) {
-    if(pdo)
-        send_PDO(pdo, target);
-    //TODOelse
-}
-
-void
-CANopen::Driver::set_position(int32_t target){};
-
-void
-CANopen::Driver::T_PDO_socket() {
+CANopen::Driver::T_socket() {
     //create a socket dedicated to the incomming pdo (T_PDO)
     Socket socket(m_ifname, m_verbose);
     //set the filter to only receive T_PDO messages
-    socket.add_filter(4,
-                      PDO1Transmit + m_node_id,
-                      PDO2Transmit + m_node_id,
-                      PDO3Transmit + m_node_id,
-                      PDO4Transmit + m_node_id);
+    socket.add_filter(1, 0xF80 + m_node_id); //all message with the right node id
     socket.bind();
 
     std::shared_ptr<Message> msg;
     Payload p;
-    int pdo_n, slot, index;
-    size_t size;
+    Message::FunctionCode fn;
     while(1) {
         //try to receive pdo
         msg = socket.receive();
         if(msg.get() != nullptr) { //if pdo received
+            fn = msg->function_code();
             p = msg->payload();
-            pdo_n = (msg->function_code() >> 8) - 1; //pdo number
-            slot = 0;
-            index = 0;
-            size = m_T_PDO_mapping_t[pdo_n][0]; //get the size of the parameter mapped for this pdo
-            while(size != 0) {                  //while a parameter is mapped in the following slot.
-                if(index + size <= p.size()) {  //ensure the payload contain the data.
-                    switch(size) {              //store the received value in the coresponding parameter (with the right size)
-                    case 0:
-                        break;
-                    case 1:
-                        m_ro_mutex.lock();
-                        *((s8_t *)m_T_PDO_mapping[pdo_n][slot]) = p.value<s8_t>(index);
-                        m_ro_mutex.unlock();
-                        break;
-                    case 2:
-                        m_ro_mutex.lock();
-                        *((s16_t *)m_T_PDO_mapping[pdo_n][slot]) = p.value<s16_t>(index);
-                        m_ro_mutex.unlock();
-                        break;
-                    case 4:
-                        m_ro_mutex.lock();
-                        *((s32_t *)m_T_PDO_mapping[pdo_n][slot]) = p.value<s32_t>(index);
-                        m_ro_mutex.unlock();
-                        break;
-                    }
-                    index += size;
-                    size = (slot < MAX_PDO_SLOT) ? m_T_PDO_mapping_t[pdo_n][++slot] : 0;
-
-                } else
-                    throw std::runtime_error(std::string("Error: Wrong PDO mapping"));
+            switch(fn) {
+            case CANopen::Message::TimeStamp:
+                break;
+            case CANopen::Message::PDO1Transmit:
+            case CANopen::Message::PDO2Transmit:
+            case CANopen::Message::PDO3Transmit:
+            case CANopen::Message::PDO4Transmit:
+                if(m_PDO_map.count((PDOFunctionCode)fn)) {
+                    for(auto param : m_PDO_map[(PDOFunctionCode)fn])
+                        param->from_payload(p, true);
+                }
+                break;
+            case CANopen::Message::SDOReceive:
+                m_parameters[(Register)msg->id()]->from_payload(p);
+                break;
+            default:
+                break;
             }
         }
+    }
+}
+
+void
+CANopen::Driver::RPDO_socket() {
+    //create a socket dedicated to the incomming pdo (T_PDO)
+    Socket socket(m_ifname, m_verbose);
+    socket.bind();
+    PDOFunctionCode RPDO_fn_list[] = {PDO1Receive, PDO2Receive, PDO3Receive, PDO4Receive};
+
+    for(auto fn : RPDO_fn_list) {
+        if(m_PDO_map.count(fn)) {
+            bool dont_update = true;
+            Parameter *order[4] = {nullptr, nullptr, nullptr, nullptr};
+            Payload payload;
+            for(auto p : m_PDO_map[fn]) {
+                dont_update *= p->is_updated.test_and_set();
+                order[p->pdo_slot] = p;
+            }
+            if(!dont_update) {
+                for(auto p : order) {
+                    if(p != nullptr)
+                        payload << p->payload();
+                }
+                socket.send(PDOMessage((PDOMessage::PDOFunctionCode) fn, m_node_id, payload));
+            }
+        }
+    }
+}
+
+void
+CANopen::Driver::set_mode(OperationMode mode) {
+    if(m_available) {
+        m_parameters[DCOMopmode]->set(mode);
+        send(m_parameters[DCOMopmode]);
     }
 }
 
@@ -143,7 +153,7 @@ CANopen::Driver::print_status() {
         printf("\t>> Operating State info:\n");
 
         printf("\t\t>>> State     :");
-        switch(m_state & State::mask) {
+        switch(get_state() & State::mask) {
         case NotReadyToSwitchtON:
             printf("Not Ready to Switch ON");
             break;
@@ -167,31 +177,31 @@ CANopen::Driver::print_status() {
             break;
         }
         printf("\n");
+        s16_t s = get_state();
+        printf("\t\t>>> Voltage   : %s\n", (s & StatusBits::Voltage_disable) ? "OFF" : "ON");
+        printf("\t\t>>> Quick Stop: %s\n", (s & StatusBits::Quick_stop) ? "Inactive" : "Active");
+        printf("\t\t>>> Warning   : %s\n", (s & StatusBits::Warning) ? "Present" : "None");
+        printf("\t\t>>> Remote         : %s\n", (s & StatusBits::Quick_stop) ? "ON" : "OFF");
+        printf("\t\t>>> Target    : %s\n", (s & StatusBits::Quick_stop) ? "Reached" : "Not reached");
+        printf("\t\t>>> Int.Limit : %s\n", (s & StatusBits::Quick_stop) ? "Active" : "Inactive");
 
-        printf("\t\t>>> Voltage   : %s\n", (m_statusWord & StatusBits::Voltage_disable) ? "OFF" : "ON");
-        printf("\t\t>>> Quick Stop: %s\n", (m_statusWord & StatusBits::Quick_stop) ? "Inactive" : "Active");
-        printf("\t\t>>> Warning   : %s\n", (m_statusWord & StatusBits::Warning) ? "Present" : "None");
-        printf("\t\t>>> Remote         : %s\n", (m_statusWord & StatusBits::Quick_stop) ? "ON" : "OFF");
-        printf("\t\t>>> Target    : %s\n", (m_statusWord & StatusBits::Quick_stop) ? "Reached" : "Not reached");
-        printf("\t\t>>> Int.Limit : %s\n", (m_statusWord & StatusBits::Quick_stop) ? "Active" : "Inactive");
-
-        switch(m_opMode) {
+        switch(get_mode()) {
         case ProfilePosition:
-            printf("\t\t>>> Setpoint   : %s\n", ((m_statusWord & StatusBits::Operation_Mode) == 0x1000) ? "Aknowledged" : "Not Aknowledged");
-            printf("\t\t>>> Folowing   : %s\n", ((m_statusWord & StatusBits::Operation_Mode) == 0x2000) ? "Error" : "OK");
+            printf("\t\t>>> Setpoint   : %s\n", ((s & StatusBits::Operation_Mode) == 0x1000) ? "Aknowledged" : "Not Aknowledged");
+            printf("\t\t>>> Folowing   : %s\n", ((s & StatusBits::Operation_Mode) == 0x2000) ? "Error" : "OK");
             break;
         case Velocity:
             break;
         case ProfileVelocity:
 
-            printf("\t\t>>> Speed      : %s\n", ((m_statusWord & StatusBits::Operation_Mode) == 0x1000) ? "Zero" : "Not Zero");
-            printf("\t\t>>> Max slip.  : %s\n", ((m_statusWord & StatusBits::Operation_Mode) == 0x2000) ? "Error" : "OK");
+            printf("\t\t>>> Speed      : %s\n", ((s & StatusBits::Operation_Mode) == 0x1000) ? "Zero" : "Not Zero");
+            printf("\t\t>>> Max slip.  : %s\n", ((s & StatusBits::Operation_Mode) == 0x2000) ? "Error" : "OK");
             break;
         case ProfileTorque:
             break;
         case Homing:
 
-            printf("\t\t>>> Homing     : %s\n", ((m_statusWord & StatusBits::Operation_Mode) == 0x1000) ? "Attained" : ((m_statusWord & StatusBits::Operation_Mode) == 0x2000) ? "Error" : "Progress");
+            printf("\t\t>>> Homing     : %s\n", ((s & StatusBits::Operation_Mode) == 0x1000) ? "Attained" : ((s & StatusBits::Operation_Mode) == 0x2000) ? "Error" : "Progress");
             break;
         case InterpolatedPosition:
             break;

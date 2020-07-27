@@ -2,8 +2,11 @@
 #define _CANOPEN_DRIVER_H_
 
 #include "CANopen_socket.h"
+#include "parameter.h"
 
+#include <algorithm>
 #include <iostream>
+#include <map>
 #include <mutex>
 #include <string>
 #include <thread>
@@ -19,13 +22,18 @@ class Driver {
 
     public:
     enum Register : uint32_t {
-        StatusWord = 0x60410000,
-        ControlWord = 0x60400000,
-        OpMode = 0x60600000,
+        _DCOMstatus = 0x60410000,
+        DCOMcontrol = 0x60400000,
+        DCOMopmode = 0x60600000,
         PPp_target = 0x607A0000,
         PPv_target = 0x60810000,
+        PVv_target = 0x60FF0000,
+        PTtq_target = 0x60710000,
         RAMP_v_acc = 0x60830000,
-        RAMP_v_dec = 0x60840000
+        RAMP_v_dec = 0x60840000,
+        _p_act = 0x60640000,
+        _v_act = 0x606C0000,
+        _tq_act = 0x60770000
     };
 
     enum OperationMode : int8_t {
@@ -127,18 +135,36 @@ class Driver {
      */
     Driver(const char *ifname, uint16_t can_id, bool verbose = false);
 
+    void
+    send(Parameter *param);
+
+    void
+    update(Parameter *param);
+
+    /*!
+     *  \brief Enables to store value in specified registers
+     *  \param reg : The register to set in the format 0x|REGISTER:2bytes|00:1byte|SUB:1byte|.
+     *  \param can_id : The value to store in the register.
+     */
+    template <typename T>
+    void
+    set(Register reg, T val, bool force_sdo=false) {
+
+        if(m_available) {
+            m_parameters[DCOMopmode]->set(val);
+	    if(m_parameters[DCOMopmode]->pdo_slot==-1 || force_sdo)
+	      send(m_parameters[reg]);
+        }
+    }
+
     /*!
      *  \brief Enables to map the different parameters of the driver to the Transmit PDO. When a PDO is received in the T_PDO_socket() thread, the value of the pdo will be stored in the mapped parameter.
      *  \param pdo_n : Numero of the PDO.
      *  \param can_id : Position in the PDO payload.(eg.: pdo2: |status:slot0|current_pos:slot1|)
      *  \param param : address of the parameter to map
      */
-    template <typename T>
     void
-    map_PDO(int pdo_n, int slot, T *param) {
-        m_T_PDO_mapping[pdo_n][slot] = param;
-        m_T_PDO_mapping_t[pdo_n][slot] = sizeof(T);
-    };
+    map_PDO(PDOFunctionCode fn, Parameter *param, int slot);
 
     /*!
      *  \brief Sends a SDO message to activate the specified PDO.
@@ -149,33 +175,17 @@ class Driver {
     activate_PDO(PDOFunctionCode fn, bool set = true);
 
     /*!
-     *  \brief Enables to store value in specified registers
-     *  \param reg : The register to set in the format 0x|REGISTER:2bytes|00:1byte|SUB:1byte|.
-     *  \param can_id : The value to store in the register.
-     */
-    void
-    set(Register reg, Payload param);
-
-    /*!
-     *  \brief Sends a PDO message with a specified payload.
-     *  \param pdo : The COB-ID of the PDO.
-     *  \param payload : The payload to send.
-     */
-    void
-    send_PDO(PDOFunctionCode pdo, Payload payload);
-
-    /*!
      *  \brief Sends transition states order. 
      *  \param ctrl : Control to send.
      */
-    bool
-    set_state(Control ctrl);
+    void
+    set_state(Control ctrl) { m_parameters[_DCOMstatus]->set(ctrl); };
 
     /*!
      *  \brief Returns the current state of the driver by reading the status word.
      */
     State
-    get_state();
+    get_state() { return m_parameters[_DCOMstatus]->get<State>(); };
 
     /*!
      *  \brief Set the operationanl mode of the driver.
@@ -184,8 +194,8 @@ class Driver {
     void
     set_mode(OperationMode mode);
 
-    void
-    set_target(uint32_t target, bool byPDO = false, PDOFunctionCode pdo = PDO1Receive);
+    OperationMode
+    get_mode() { return m_parameters[DCOMopmode]->get<OperationMode>(); };
 
     void
     set_position(int32_t target);
@@ -216,9 +226,12 @@ class Driver {
 
     protected:
     void
-    T_PDO_socket();
-    std::thread *m_pdo_socket_thread;
-    std::mutex m_ro_mutex;
+    T_socket();
+
+  void
+    RPDO_socket();
+    std::thread *m_rpdo_socket_thread;
+  std::thread *m_t_socket_thread;
 
     const char *m_ifname;
     bool m_verbose;
@@ -226,22 +239,11 @@ class Driver {
 
     CANopen::Socket m_socket;
 
-    void *m_T_PDO_mapping[NB_PDO][MAX_PDO_SLOT];
-    size_t m_T_PDO_mapping_t[NB_PDO][MAX_PDO_SLOT];
-    PDOFunctionCode m_T_PDO_mapping_rev[NB_PDO][MAX_PDO_SLOT];
+    std::map<PDOFunctionCode, std::vector<Parameter *>> m_PDO_map;
+    std::map<Register, Parameter *> m_parameters;
 
     uint8_t m_node_id;
     uint16_t m_can_baud;
-
-    //read only
-    uint16_t m_statusWord;
-    int32_t m_current_position;
-    int32_t m_current_velocity;
-    int32_t m_current_torque;
-
-    State m_state;
-    OperationMode m_opMode;
-    Control m_controlWord;
 };
 
 } // namespace CANopen
