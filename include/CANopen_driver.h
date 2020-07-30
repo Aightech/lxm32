@@ -151,8 +151,8 @@ class Driver {
     set(Register reg, T val, bool force_sdo=false) {
 
         if(m_available) {
-            m_parameters[DCOMopmode]->set(val);
-	    if(m_parameters[DCOMopmode]->pdo_slot==-1 || force_sdo)
+            m_parameters[reg]->set(val);
+	    if(m_parameters[reg]->pdo_slot==-1 || force_sdo)
 	      send(m_parameters[reg]);
         }
     }
@@ -179,7 +179,9 @@ class Driver {
      *  \param ctrl : Control to send.
      */
     void
-    set_state(Control ctrl) { m_parameters[_DCOMstatus]->set(ctrl); };
+    set_state(Control ctrl) { 
+    //while(!m_parameters[DCOMcontrol]->is_updated.test());
+    m_parameters[DCOMcontrol]->set(ctrl); };
 
     /*!
      *  \brief Returns the current state of the driver by reading the status word.
@@ -209,6 +211,8 @@ class Driver {
 
     void
     print_status();
+    
+    Parameter* get_param(Register reg){return m_parameters[reg];};
 
     virtual void
     print_manufacturer_status() = 0;

@@ -34,6 +34,7 @@ struct Parameter {
         var = new T;
         *(T *)var = (T)val;
         is_updated.test_and_set();
+        size = sizeof(T);
     };
 
     template <typename T>
@@ -55,6 +56,7 @@ struct Parameter {
             *(T *)var = (T)val;
             mutex.unlock();
             is_updated.clear();
+            std::cout << name << " hoy\n";
         }
     }
 

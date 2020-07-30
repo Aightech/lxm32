@@ -2,7 +2,7 @@
 
 void
 CANopen::Parameter::link_to_pdo(PDOFunctionCode fn, int8_t slot) {
-    if(pdo_slot != -1) {
+    if(pdo_slot == -1) {
         pdo_fn = fn;
         pdo_slot = slot;
     }

@@ -3,10 +3,8 @@
 CANopen::Driver::Driver(const char *ifname, uint16_t can_id, bool verbose)
     : m_ifname(ifname), m_verbose(verbose), m_available(true), m_socket(ifname, verbose), m_node_id(can_id) {
 
-    if(!m_socket.bind())
-        m_available = false;
 
-    m_parameters[_DCOMstatus] = new Parameter("_DCOMstatus", (s8_t)0, _DCOMstatus);
+    m_parameters[_DCOMstatus] = new Parameter("_DCOMstatus", (s16_t)0, _DCOMstatus);
     m_parameters[DCOMcontrol] = new Parameter("DCOMcontrol", (s16_t)0, DCOMcontrol);
     m_parameters[DCOMopmode] = new Parameter("DCOMopmode", (s8_t)0, DCOMopmode);
     m_parameters[PPp_target] = new Parameter("PPp_target", (s32_t)0, PPp_target);
@@ -24,11 +22,11 @@ CANopen::Driver::Driver(const char *ifname, uint16_t can_id, bool verbose)
     map_PDO(PDO2Transmit, m_parameters[_DCOMstatus], 0);
     map_PDO(PDO2Transmit, m_parameters[_p_act], m_parameters[_DCOMstatus]->size);
 
-    map_PDO(PDO3Transmit, m_parameters[_DCOMstatus], 0);
-    map_PDO(PDO3Transmit, m_parameters[_v_act], m_parameters[_DCOMstatus]->size);
+//    map_PDO(PDO3Transmit, m_parameters[_DCOMstatus], 0);
+//    map_PDO(PDO3Transmit, m_parameters[_v_act], m_parameters[_DCOMstatus]->size);
 
-    map_PDO(PDO4Transmit, m_parameters[_DCOMstatus], 0);
-    map_PDO(PDO4Transmit, m_parameters[_tq_act], m_parameters[_DCOMstatus]->size);
+//    map_PDO(PDO4Transmit, m_parameters[_DCOMstatus], 0);
+//    map_PDO(PDO4Transmit, m_parameters[_tq_act], m_parameters[_DCOMstatus]->size);
 
 
     map_PDO(PDO2Receive , m_parameters[DCOMcontrol], 0);
@@ -36,6 +34,8 @@ CANopen::Driver::Driver(const char *ifname, uint16_t can_id, bool verbose)
 
     m_t_socket_thread = new std::thread(&Driver::T_socket, this);
     m_rpdo_socket_thread = new std::thread(&Driver::RPDO_socket, this);
+    
+    m_socket.send(CANopen::NMTMessage(CANopen::NMTMessage::GoToOperational,0));
 }
 
 void
@@ -76,8 +76,7 @@ CANopen::Driver::T_socket() {
     //create a socket dedicated to the incomming pdo (T_PDO)
     Socket socket(m_ifname, m_verbose);
     //set the filter to only receive T_PDO messages
-    socket.add_filter(1, 0xF80 + m_node_id); //all message with the right node id
-    socket.bind();
+    socket.add_filter({{m_node_id,0x07f}}); //all message with the right node id
 
     std::shared_ptr<Message> msg;
     Payload p;
@@ -96,6 +95,7 @@ CANopen::Driver::T_socket() {
             case CANopen::Message::PDO3Transmit:
             case CANopen::Message::PDO4Transmit:
                 if(m_PDO_map.count((PDOFunctionCode)fn)) {
+                
                     for(auto param : m_PDO_map[(PDOFunctionCode)fn])
                         param->from_payload(p, true);
                 }
@@ -114,7 +114,6 @@ void
 CANopen::Driver::RPDO_socket() {
     //create a socket dedicated to the incomming pdo (T_PDO)
     Socket socket(m_ifname, m_verbose);
-    socket.bind();
     PDOFunctionCode RPDO_fn_list[] = {PDO1Receive, PDO2Receive, PDO3Receive, PDO4Receive};
 
     for(auto fn : RPDO_fn_list) {
@@ -131,6 +130,7 @@ CANopen::Driver::RPDO_socket() {
                     if(p != nullptr)
                         payload << p->payload();
                 }
+                std::cout << payload << "\n";
                 socket.send(PDOMessage((PDOMessage::PDOFunctionCode) fn, m_node_id, payload));
             }
         }
