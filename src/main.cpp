@@ -22,12 +22,22 @@ main(int argc, char** argv)
 	CANopen::LXM32 motor("can0", 6, true);
 	motor.set_state(CANopen::Driver::DisableVoltage);
 	motor.set_state(CANopen::Driver::Shutdown);
-	motor.set_state(CANopen::Driver::SwitchON);
-	motor.set_mode(CANopen::Driver::ProfilePosition);
+	motor.set_state(CANopen::Driver::EnableOperation);
+	motor.wait_state(CANopen::Driver::OperationEnabled,0x0037);
+	
+	motor.set_mode(CANopen::Driver::Homing);
+	while(motor.get_mode()!=CANopen::Driver::Homing)
+	std::cout << "hey\n";
+	//motor.wait_state(CANopen::Driver::OperationEnabled,0x37);
+	motor.set(CANopen::Driver::HMmethod,(uint8_t)17,true,false);
+	//motor.set_state((CANopen::Driver::Control)(CANopen::Driver::EnableOperation|0x0010));
+
 	for(;;)
 	{
-		int32_t pos = motor.get_param(CANopen::Driver::_p_act)->get<int32_t>();
-		//std::cout << pos << "\n";
+		int32_t pos = motor.get_position(),npos;
+		std::cout << pos << "\n";
+//		std::cin >> npos;
+//		motor.set_position(npos);
 	}
 	
 }

@@ -16,13 +16,13 @@ CANopen::Parameter::from_payload(Payload &p, bool from_pdo) {
         case 0:
             break;
         case 1:
-            set(p.value<s8_t>(i));
+            set(p.value<uint8_t>(i));
             break;
         case 2:
-            set(p.value<s16_t>(i));
+            set(p.value<uint16_t>(i));
             break;
         case 4:
-            set(p.value<s32_t>(i));
+            set(p.value<uint32_t>(i));
             break;
         }
     }
@@ -30,5 +30,8 @@ CANopen::Parameter::from_payload(Payload &p, bool from_pdo) {
 
 CANopen::Payload
 CANopen::Parameter::payload() {
-    return std::vector<uint8_t>((uint8_t *)var, (uint8_t *)var + size);
+    mutex.lock();
+    CANopen::Payload p = std::vector<uint8_t>((uint8_t *)var, (uint8_t *)var + size);
+    mutex.unlock();
+    return p;
 };

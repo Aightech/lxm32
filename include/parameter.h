@@ -12,9 +12,6 @@
 
 namespace CANopen {
 struct Parameter {
-    using s8_t = uint8_t;
-    using s16_t = uint16_t;
-    using s32_t = uint32_t;
 
     enum PDOFunctionCode : uint32_t {
         PDO1Transmit = Message::PDO1Transmit,
@@ -27,7 +24,7 @@ struct Parameter {
         PDO4Receive = Message::PDO4Receive,
     };
 
-    Parameter() { var = new s32_t; };
+    Parameter() { var = new int32_t; };
 
     template <typename T>
     Parameter(std::string name_, T val, uint16_t index_, uint8_t subindex_) : name(name_), index(index_), subindex(subindex_) {
@@ -41,24 +38,37 @@ struct Parameter {
     Parameter(std::string name_, T val, uint32_t index__sub) : Parameter(name_, val, (uint16_t)(index__sub >> 16), (uint8_t)index__sub){};
 
     ~Parameter() {
-        delete(s32_t *)var;
+        delete(int32_t *)var;
     }
 
     void
     link_to_pdo(PDOFunctionCode fn, int8_t slot);
 
     template <typename T>
-    void
-    set(T val) {
-
+    bool
+    set(T val, bool force_update=true) {
+    	//std::cout << name << " " << std::hex << val << "\n";
+	bool was_updated;
         if(sizeof(T) == size) {
             mutex.lock();
-            *(T *)var = (T)val;
+            was_updated=is_updated.test_and_set(); // get if the parameter is waiting to been sent (true:sent / false:not yet)
+            if(force_update || was_updated)//if force update (even if the previous value was not sent yet) or value already update
+            	*(T *)var = (T)val;
+            is_updated.clear();//in any case set the flag to ensure the parameter will be sent.
             mutex.unlock();
-            is_updated.clear();
-            std::cout << name << " hoy\n";
+            return (force_update || was_updated);
         }
+        return false;
     }
+
+    bool operator=(int8_t val){return this->set<int8_t>(val, false);}//return fakse if the assignement didn't succeed (wrong type size, not updated yet)
+    bool operator=(int16_t val){return this->set<int16_t>(val, false);}//return fakse if the assignement didn't succeed (wrong type size, not updated yet)
+    bool operator=(int32_t val){return this->set<int32_t>(val, false);}//return fakse if the assignement didn't succeed (wrong type size, not updated yet)
+    bool operator=(uint8_t val){return this->set<uint8_t>(val, false);}//return fakse if the assignement didn't succeed (wrong type size, not updated yet)
+    bool operator=(uint16_t val){return this->set<uint16_t>(val, false);}//return fakse if the assignement didn't succeed (wrong type size, not updated yet)
+    bool operator=(uint32_t val){return this->set<uint32_t>(val, false);}//return fakse if the assignement didn't succeed (wrong type size, not updated yet)
+    
+
 
     template <typename T>
     T
@@ -71,6 +81,13 @@ struct Parameter {
         }
         return val;
     }
+    
+    operator int8_t(){ return this->get<int8_t>();}; 
+    operator int16_t(){ return this->get<int16_t>();}; 
+    operator int32_t(){ return this->get<int32_t>();}; 
+    operator uint8_t(){ return this->get<uint8_t>();}; 
+    operator uint16_t(){ return this->get<uint16_t>();}; 
+    operator uint32_t(){ return this->get<uint32_t>();}; 
 
     void
     from_payload(Payload &p, bool from_pdo = false);
@@ -88,6 +105,7 @@ struct Parameter {
     int8_t pdo_slot = -1;
 
     std::atomic_flag is_updated;
+    std::atomic_flag sdo_flag;
 
     private:
     std::mutex mutex;

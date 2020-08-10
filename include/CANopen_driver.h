@@ -16,9 +16,6 @@ class Driver {
 
     static constexpr int NB_PDO = 4;
     static constexpr int MAX_PDO_SLOT = 2;
-    using s8_t = uint8_t;
-    using s16_t = uint16_t;
-    using s32_t = uint32_t;
 
     public:
     enum Register : uint32_t {
@@ -33,7 +30,8 @@ class Driver {
         RAMP_v_dec = 0x60840000,
         _p_act = 0x60640000,
         _v_act = 0x606C0000,
-        _tq_act = 0x60770000
+        _tq_act = 0x60770000,
+        HMmethod = 0x60980000
     };
 
     enum OperationMode : int8_t {
@@ -72,7 +70,7 @@ class Driver {
 				      * - The drive parameters may be changed.
 				      * - The drive function is disabled. */
 
-        OperationEnabled = 0x0027, /*!< Operation Enabled:
+        OperationEnabled = 0x0037, /*!< Operation Enabled:
 				      * - No faults have been detected.
 				      * - The drive function is enabled and power is applied to the motor.
 				      * - The drive parameters may be changed.(This corresponds to normal operation of the drive.) */
@@ -103,7 +101,8 @@ class Driver {
         Remote = 0x0200,
         Target_reached = 0x0400,
         Internal_limit_reached = 0x0800,
-        Operation_Mode = 0x3000
+        Operation_Mode = 0x3000,
+        Operation_mode_start = 0x4000
     };
 
     /*! Possible Control commands */
@@ -148,14 +147,39 @@ class Driver {
      */
     template <typename T>
     void
-    set(Register reg, T val, bool force_sdo=false) {
+    set(Register reg, T val, bool force_sdo=false, bool wait=false) {
 
         if(m_available) {
             m_parameters[reg]->set(val);
 	    if(m_parameters[reg]->pdo_slot==-1 || force_sdo)
-	      send(m_parameters[reg]);
+	    {
+	    	m_parameters[reg]->sdo_flag.test_and_set();
+	      	send(m_parameters[reg]);
+	    }
+	    if(wait)
+	    {
+    		while(m_parameters[reg]->sdo_flag.test_and_set());
+	    }
         }
     }
+    
+     /*!
+     *  \brief Enables to store value in specified registers
+     *  \param reg : The register to set in the format 0x|REGISTER:2bytes|00:1byte|SUB:1byte|.
+     *  \param can_id : The value to store in the register.
+     */
+    template <typename T>
+    T
+    get(Register reg, bool force_sdo=false) {
+
+	    if(force_sdo && m_available)
+	    {
+	    	m_parameters[reg]->sdo_flag.test_and_set();
+	      	update(m_parameters[reg]);
+	      	while(m_parameters[reg]->sdo_flag.test_and_set());
+	    }
+	    return m_parameters[reg]->get<T>();
+    };
 
     /*!
      *  \brief Enables to map the different parameters of the driver to the Transmit PDO. When a PDO is received in the T_PDO_socket() thread, the value of the pdo will be stored in the mapped parameter.
@@ -181,7 +205,10 @@ class Driver {
     void
     set_state(Control ctrl) { 
     //while(!m_parameters[DCOMcontrol]->is_updated.test());
-    m_parameters[DCOMcontrol]->set(ctrl); };
+    	std::cout << "Setting mode: " << ctrl_to_str(ctrl);
+    	while(!m_parameters[DCOMcontrol]->set(ctrl, false)); 
+    	std::cout << "\xdMode: " << ctrl_to_str(ctrl) << " Activated.\n";
+                    	};
 
     /*!
      *  \brief Returns the current state of the driver by reading the status word.
@@ -197,14 +224,31 @@ class Driver {
     set_mode(OperationMode mode);
 
     OperationMode
-    get_mode() { return m_parameters[DCOMopmode]->get<OperationMode>(); };
+    get_mode() { 
+    return this->get<OperationMode>(DCOMopmode,true); 
+    };
 
-    void
+    bool
     set_position(int32_t target);
-    void
+    bool
     set_velocity(int32_t target);
-    void
+    bool
     set_torque(int32_t target);
+    
+    int32_t
+    get_position(){return m_parameters[_p_act]->get<int32_t>();};
+    int32_t
+    get_velocity(){return m_parameters[_v_act]->get<int32_t>();};
+    int32_t
+    get_torque(){return m_parameters[_tq_act]->get<int32_t>();};
+    
+    void 
+    wait_state(State state, uint16_t mask)
+    {
+    	while((get_state()&mask) != (state&mask))
+    		 std::cout << std::hex << (get_state()&mask) << " " << (state&mask) << "\n";
+    	std::cout << std::hex << (get_state()&mask) << " " << (state&mask) << "\n";
+    }
 
     void
     homing();
@@ -217,8 +261,8 @@ class Driver {
     virtual void
     print_manufacturer_status() = 0;
 
-    void
-    print_control(Control control);
+    std::string
+    ctrl_to_str(Control control);
 
     /*!
      *  \brief return true if the can interface is available
@@ -235,7 +279,9 @@ class Driver {
   void
     RPDO_socket();
     std::thread *m_rpdo_socket_thread;
-  std::thread *m_t_socket_thread;
+    std::atomic_flag rpdo_socket_flag;
+    std::thread *m_t_socket_thread;
+    std::atomic_flag t_socket_flag;
 
     const char *m_ifname;
     bool m_verbose;
