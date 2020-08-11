@@ -1,12 +1,15 @@
 #include "CANopen_driver.h"
 
-CANopen::Driver::Driver(const char *ifname, uint16_t can_id, bool verbose)
-    : m_ifname(ifname), m_verbose(verbose), m_available(true), m_socket(ifname, verbose), m_node_id(can_id) {
+ 
+CANopen::Driver::Driver(const char *ifname, uint16_t can_id, int verbose_lvl)
+    : m_ifname(ifname), m_verbose_level(verbose_lvl), m_available(true), m_socket(ifname, verbose_lvl), m_node_id(can_id) {
 
 
-    m_parameters[_DCOMstatus] = new Parameter("_DCOMstatus", (uint16_t)0, _DCOMstatus);
+    m_parameters[_DCOMstatus] = new Parameter("_DCOMstatus", (uint16_t)0, _DCOMstatus, &print_status);
     m_parameters[DCOMcontrol] = new Parameter("DCOMcontrol", (uint16_t)0, DCOMcontrol);
     m_parameters[DCOMopmode] = new Parameter("DCOMopmode", (uint8_t)0, DCOMopmode);
+    m_parameters[_DCOMopmd_act] = new Parameter("_DCOMopmd_act", (uint8_t)0, _DCOMopmd_act);
+    
     m_parameters[PPp_target] = new Parameter("PPp_target", (int32_t)0x365b539, PPp_target);
     m_parameters[PPv_target] = new Parameter("PPv_target", (int32_t)0, PPv_target);
     m_parameters[RAMP_v_acc] = new Parameter("RAMP_v_acc", (int32_t)0, RAMP_v_acc);
@@ -17,6 +20,8 @@ CANopen::Driver::Driver(const char *ifname, uint16_t can_id, bool verbose)
     m_parameters[_tq_act] = new Parameter("_tq_act", (int32_t)0, _p_act);
     
     m_parameters[HMmethod] = new Parameter("HMmethod", (int8_t)0, HMmethod);
+    m_parameters[HMv] = new Parameter("HMv", (int32_t)100, HMv);
+    m_parameters[HMv_out] = new Parameter("HMv_out", (uint32_t)10, HMv_out);
     
     
     
@@ -83,19 +88,18 @@ CANopen::Driver::activate_PDO(PDOFunctionCode fn, bool set) {
     {
     	m_parameters[reg] = new Parameter(reg_name, val, index, 1);
     	this->send(m_parameters[reg]);
-    	m_parameters[reg]->sdo_flag.test_and_set();
-    	std::cout << "Setting " + reg_name;
     	while(m_parameters[reg]->sdo_flag.test_and_set());
-    	std::cout << "\xd" +reg_name << " " << ((set)?"activated":"desactivated") <<  "\n";
+    	
+    	IF_VERBOSE(1, std::cout <<  reg_name << " " << ((set)?"activated":"desactivated") <<  "\n", m_verbose_level)
+    	
     }
     else if((int32_t)*m_parameters[reg] != val)
     {
     	*m_parameters[reg] = val;
     	this->send(m_parameters[reg]);
-    	m_parameters[reg]->sdo_flag.test_and_set();
-    	std::cout << "Setting " + reg_name;
     	while(m_parameters[reg]->sdo_flag.test_and_set());
-    	std::cout << "\xd" +reg_name << " " << ((set)?"activated":"desactivated") << "\n";
+    	
+    	IF_VERBOSE(1, std::cout <<  reg_name << " " << ((set)?"activated":"desactivated") <<  "\n", m_verbose_level)
     }
     
     //m_socket.send(CANopen::SDOOutboundWrite(m_node_id, index, 1, (set ? 0x04000000 : 0x80000000) + fn + m_node_id));
@@ -113,7 +117,10 @@ CANopen::Driver::send(Parameter *param) {
 void
 CANopen::Driver::update(Parameter *param) {
     if(m_available)
+    {
+    	param->sdo_flag.test_and_set();
         m_socket.send(CANopen::SDOOutboundRead(m_node_id, param->index, param->subindex));
+    }
 }
 
 void
@@ -126,8 +133,10 @@ CANopen::Driver::T_socket() {
     std::shared_ptr<Message> msg;
     Payload p;
     Message::FunctionCode fn;
-    if(m_verbose)
-    	std::cout << "Receiving socket thread ready.\n";
+    
+    IF_VERBOSE(1, std::cout << "Receiving socket thread ready.\n";, m_verbose_level)
+    
+    
     t_socket_flag.clear();
     while(1) {
         //try to receive pdo
@@ -145,7 +154,12 @@ CANopen::Driver::T_socket() {
                 if(m_PDO_map.count((PDOFunctionCode)fn)) {
                 	
                     for(auto param : m_PDO_map[(PDOFunctionCode)fn])
-                        param->from_payload(p, true);
+                    {
+                        if(param->from_payload(p, param->pdo_slot))
+                        	param->callback();
+                        //if(param == m_parameters[DCOMcontrol]) 
+                        	//std::cout << param->name << ": "<< std::hex << (uint16_t)*param << " " << p << "\n";
+                    }
                 }
                 break;
             case CANopen::Message::SDOTransmit:
@@ -170,62 +184,53 @@ CANopen::Driver::RPDO_socket() {
     Socket socket(m_ifname, false);
     PDOFunctionCode RPDO_fn_list[] = {PDO1Receive, PDO2Receive, PDO3Receive, PDO4Receive};
 
-	if(m_verbose)
-		std::cout << "Sending PDO socket thread ready.\n";
+	
+	IF_VERBOSE(1, std::cout << "Sending PDO socket thread ready.\n";, m_verbose_level)
+	
 	rpdo_socket_flag.clear();
     while(1)
     {
 		for(auto fn : RPDO_fn_list) {
 		    if(m_PDO_map.count(fn)) {
-		        bool dont_update = true;
-		        Payload order[4];
+				bool should_update=false, should_update_PDO1=false;
 		        Payload payload;
-		        
-		        
-		        if(fn==PDO1Receive && m_PDO_map[fn].size()>0)
-		        {
-		        	payload << m_PDO_map[fn][0]->payload();//save the actual value at the right sending posit
-		            if(!m_PDO_map[fn][0]->is_updated.test_and_set())
-		            	socket.send(PDOMessage((PDOMessage::PDOFunctionCode) fn, m_node_id, payload));
-		        }
-		        else
-		        {
-		        	for(auto p : m_PDO_map[fn]) {
-				    	order[p->pdo_slot] << p->payload();//save the actual value at the right sending position
-				    	if(p != m_parameters[DCOMcontrol])//update only if the other parameter has to be update
-				        	dont_update *= p->is_updated.test_and_set(); // test if update was requsted
-				    }
-				    if(!dont_update) {//if at least one of the parameter had to be update then send the PDO
-				        for(auto pay : order)
-				        	if(pay.size()>0)
-				        		payload << (Payload &&)pay;
-				    	socket.send(PDOMessage((PDOMessage::PDOFunctionCode) fn, m_node_id, payload));
-				    }
-		        }
+
+	        	for(auto p : m_PDO_map[fn])// for each parameter mapped on the pdo, get the payload and store it at the right positon + get if the data has to be updated.
+			    	payload.store_at(p->payload(((p != m_parameters[DCOMcontrol])?&should_update:&should_update_PDO1)), p->pdo_slot);
+			    	
+			    if(should_update) 
+			    {
+			    	socket.send(PDOMessage((PDOMessage::PDOFunctionCode) fn, m_node_id, payload));
+			    }
+			    else if(should_update_PDO1) 
+			    {
+			    	payload.resize(m_parameters[DCOMcontrol]->size);
+			    	socket.send(PDOMessage((PDOMessage::PDOFunctionCode) PDO1Receive, m_node_id, payload));
+			    }
 		        
 		    }
 		}
 	}
 }
 
-void
-CANopen::Driver::set_mode(OperationMode mode) {
-    if(m_available) {
-        m_parameters[DCOMopmode]->set(mode);
-        send(m_parameters[DCOMopmode]);
-    }
-}
+
 
 bool
-CANopen::Driver::set_position(int32_t target)
+CANopen::Driver::set_position(int32_t target, bool absolute)
 {
-	switch(get_mode())
+	switch(get_mode(false))
 	{
-		case ProfilePosition:
-			if((*m_parameters[PPp_target] = target))
+		case ProfilePosition: 	
+			
+			    	//std::cout << std::dec << target << " dd\n";
+			if(m_parameters[PPp_target]->set(target,true))
 			{
-				set_state((Control)(EnableOperation|0x0050));
 				set_state((Control)(EnableOperation));
+				if(absolute)
+					set_state((Control)(EnableOperation|0x0010));
+				else
+					set_state((Control)(EnableOperation|0x0050));
+				
 				return true;
 			}
 			return false;
@@ -261,69 +266,61 @@ CANopen::Driver::set_torque(int32_t target)
 };
 
 void
-CANopen::Driver::print_status() {
-
-    if(m_available) {
-        printf("> Driver Status\n");
-        printf("\t>> Operating State info:\n");
-
-        printf("\t\t>>> State     :");
-        switch(get_state() & State::mask) {
-        case NotReadyToSwitchtON:
-            printf("Not Ready to Switch ON");
+CANopen::print_status(CANopen::Parameter* param) {
+    
+    g_verbose_mutex.lock();
+	int16_t s = param->get<int16_t>();
+        std::cout << "> Driver Status [0x" << std::hex << s << "] State: [ ";
+        switch(s & CANopen::Driver::State::mask) {
+        case CANopen::Driver::NotReadyToSwitchtON& CANopen::Driver::State::mask:
+            std::cout << "Not Ready to Switch ON ]\n";
             break;
-        case SwitchONDisabled:
-            printf("Switch ON Disabled");
+        case CANopen::Driver::SwitchONDisabled& CANopen::Driver::State::mask:
+            std::cout << "Switch ON Disabled ]\n";
             break;
-        case ReadyToSwitchON:
-            printf("Ready To Switch ON");
+        case CANopen::Driver::ReadyToSwitchON& CANopen::Driver::State::mask:
+            std::cout << "Ready To Switch ON ]\n";
             break;
-        case SwitchedON:
-            printf("Switch ON");
+        case CANopen::Driver::SwitchedON& CANopen::Driver::State::mask:
+            std::cout << "Switch ON ]\n";
             break;
-        case OperationEnabled:
-            printf("Operation Enabled");
+        case CANopen::Driver::OperationEnabled& CANopen::Driver::State::mask:
+            std::cout << "Operation Enabled ]\n";
             break;
-        case Fault:
-            printf("Fault");
+        case CANopen::Driver::Fault& CANopen::Driver::State::mask:
+            std::cout << "Fault ]\n";
             break;
-        case QuickStop:
-            printf("Quick Stop");
+        case CANopen::Driver::QuickStop& CANopen::Driver::State::mask:
+            std::cout << "Quick Stop ]\n";
             break;
-        }
-        printf("\n");
-        int16_t s = get_state();
-        printf("\t\t>>> Voltage   : %s\n", (s & StatusBits::Voltage_disable) ? "OFF" : "ON");
-        printf("\t\t>>> Quick Stop: %s\n", (s & StatusBits::Quick_stop) ? "Inactive" : "Active");
-        printf("\t\t>>> Warning   : %s\n", (s & StatusBits::Warning) ? "Present" : "None");
-        printf("\t\t>>> Remote         : %s\n", (s & StatusBits::Quick_stop) ? "ON" : "OFF");
-        printf("\t\t>>> Target    : %s\n", (s & StatusBits::Quick_stop) ? "Reached" : "Not reached");
-        printf("\t\t>>> Int.Limit : %s\n", (s & StatusBits::Quick_stop) ? "Active" : "Inactive");
-
-        switch(get_mode()) {
-        case ProfilePosition:
-            printf("\t\t>>> Setpoint   : %s\n", ((s & StatusBits::Operation_Mode) == 0x1000) ? "Aknowledged" : "Not Aknowledged");
-            printf("\t\t>>> Folowing   : %s\n", ((s & StatusBits::Operation_Mode) == 0x2000) ? "Error" : "OK");
-            break;
-        case Velocity:
-            break;
-        case ProfileVelocity:
-
-            printf("\t\t>>> Speed      : %s\n", ((s & StatusBits::Operation_Mode) == 0x1000) ? "Zero" : "Not Zero");
-            printf("\t\t>>> Max slip.  : %s\n", ((s & StatusBits::Operation_Mode) == 0x2000) ? "Error" : "OK");
-            break;
-        case ProfileTorque:
-            break;
-        case Homing:
-
-            printf("\t\t>>> Homing     : %s\n", ((s & StatusBits::Operation_Mode) == 0x1000) ? "Attained" : ((s & StatusBits::Operation_Mode) == 0x2000) ? "Error" : "Progress");
-            break;
-        case InterpolatedPosition:
+        default:
+            std::cout << "Unknown ]\n";
             break;
         }
+        std::string bits_names[16] = {"Ready To SwitchOn",
+									"Switched On",
+									"Operation Enabled",
+									"Fault",
+									"Voltage Enabled",
+									"QuickStop Disabled",
+									"Switch ON Disabled",
+									"Error0",
+									"Halt Request",
+									"Remote",
+									"Target Reached",
+									"Internal Limit Reached",
+									"Operation Mode",
+									"Blocking Error",
+									"Operation Mode Not Started",
+									"Valid Zero Point"};
+        
+        for(int i =0; i<16; i++)
+        {
+        	std::cout << (((s&(0x0001<<i))==0)?"0":"1") << " [" << i << "] " << bits_names[i] << "\n";
+        }
+        std::cout << "\n\n";
+	g_verbose_mutex.unlock();
 
-        print_manufacturer_status();
-    }
 }
 
 std::string
@@ -339,3 +336,23 @@ CANopen::Driver::ctrl_to_str(Control control) {
 	}
 	return "unknown control";
 }
+
+
+void
+CANopen::Driver::set_mode(OperationMode mode, bool wait) {
+    if(m_available) {
+        m_parameters[DCOMopmode]->set(mode);
+        send(m_parameters[DCOMopmode]);
+        if(wait)
+        	while(get_mode()!=mode);
+    }
+}
+
+void
+CANopen::Driver::set_state(Control ctrl) { 
+    	m_parameters[DCOMcontrol]->set(ctrl, true);
+    	while(!m_parameters[DCOMcontrol]->has_been_sent()); 
+    	
+    	IF_VERBOSE(1, std::cout << "Mode: " << ctrl_to_str(ctrl) << " Activated.\n";, m_verbose_level)
+                    	}
+

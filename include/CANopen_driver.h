@@ -12,6 +12,8 @@
 #include <thread>
 
 namespace CANopen {
+void
+    print_status(Parameter*);
 class Driver {
 
     static constexpr int NB_PDO = 4;
@@ -22,6 +24,7 @@ class Driver {
         _DCOMstatus = 0x60410000,
         DCOMcontrol = 0x60400000,
         DCOMopmode = 0x60600000,
+        _DCOMopmd_act = 0x60610000,
         PPp_target = 0x607A0000,
         PPv_target = 0x60810000,
         PVv_target = 0x60FF0000,
@@ -31,7 +34,9 @@ class Driver {
         _p_act = 0x60640000,
         _v_act = 0x606C0000,
         _tq_act = 0x60770000,
-        HMmethod = 0x60980000
+        HMmethod = 0x60980000,
+        HMv = 0x60990001,
+        HMv_out = 0x60990002
     };
 
     enum OperationMode : int8_t {
@@ -94,15 +99,22 @@ class Driver {
 				      * with  the  command‘Enable Operation’*/
     };
     enum StatusBits : uint16_t {
-        Voltage_disable = 0x0010,
-        Quick_stop = 0x0020,
-        Warning = 0x0080,
-        Manufacterer = 0xC100,
-        Remote = 0x0200,
-        Target_reached = 0x0400,
-        Internal_limit_reached = 0x0800,
-        Operation_Mode = 0x3000,
-        Operation_mode_start = 0x4000
+        ReadyToSwitchOn_bit =0x0001,
+        SwitchedOn_bit = 0x0002,
+        OperationEnabled_bit = 0x0004,
+        Fault_bit = 0x0008,
+        VoltageEnabled_bit = 0x0010,
+        QuickStop_bit = 0x0020,
+        SwitchONDisabled_bit = 0x0040,
+        Error0_bit = 0x0080,
+        HaltRequest_bit = 0x0100,
+        Remote_bit = 0x0200,
+        TargetReached_bit = 0x0400,
+        InternalLimitReached_bit = 0x0800,
+        OperationMode_bit = 0x1000,
+        BlockingError_bit = 0x2000,
+        OperationModeStart_bit = 0x4000,
+        ValidRef_bit = 0x8000
     };
 
     /*! Possible Control commands */
@@ -132,18 +144,14 @@ class Driver {
      *  \param ifname : Name of the CAN interface.
      *  \param can_id : Node CAN ID of the driver.
      */
-    Driver(const char *ifname, uint16_t can_id, bool verbose = false);
-
-    void
-    send(Parameter *param);
-
-    void
-    update(Parameter *param);
+    Driver(const char *ifname, uint16_t can_id, int verbose_lvl = 0);
 
     /*!
-     *  \brief Enables to store value in specified registers
-     *  \param reg : The register to set in the format 0x|REGISTER:2bytes|00:1byte|SUB:1byte|.
-     *  \param can_id : The value to store in the register.
+     *  \brief Enables to store a value in a specified registers.
+     *  \param reg : The register to set. (In the format ind__sub)
+     *  \param val : The value to store in the register.
+     *  \param force_sdo : If true, the parameter will  be send to the driver via a SDO. Else the parametr will be sent via PDO if it was mapped to an activated RPDO.
+     *  \param wait : If set, the function is blocking and wait for the parameter to be sent via SDO.
      */
     template <typename T>
     void
@@ -151,22 +159,17 @@ class Driver {
 
         if(m_available) {
             m_parameters[reg]->set(val);
-	    if(m_parameters[reg]->pdo_slot==-1 || force_sdo)
-	    {
-	    	m_parameters[reg]->sdo_flag.test_and_set();
+	    if(m_parameters[reg]->pdo_slot==-1 || force_sdo || wait)
 	      	send(m_parameters[reg]);
-	    }
 	    if(wait)
-	    {
     		while(m_parameters[reg]->sdo_flag.test_and_set());
-	    }
         }
     }
     
      /*!
-     *  \brief Enables to store value in specified registers
-     *  \param reg : The register to set in the format 0x|REGISTER:2bytes|00:1byte|SUB:1byte|.
-     *  \param can_id : The value to store in the register.
+     *  \brief Enables to get value of a specified registers.
+     *  \param reg : The register to get. (In the format ind__sub)
+     *  \param force_sdo : If true, the parameter will  be updated via a  reading SDO.
      */
     template <typename T>
     T
@@ -174,62 +177,41 @@ class Driver {
 
 	    if(force_sdo && m_available)
 	    {
-	    	m_parameters[reg]->sdo_flag.test_and_set();
 	      	update(m_parameters[reg]);
 	      	while(m_parameters[reg]->sdo_flag.test_and_set());
 	    }
 	    return m_parameters[reg]->get<T>();
     };
 
-    /*!
-     *  \brief Enables to map the different parameters of the driver to the Transmit PDO. When a PDO is received in the T_PDO_socket() thread, the value of the pdo will be stored in the mapped parameter.
-     *  \param pdo_n : Numero of the PDO.
-     *  \param can_id : Position in the PDO payload.(eg.: pdo2: |status:slot0|current_pos:slot1|)
-     *  \param param : address of the parameter to map
-     */
-    void
-    map_PDO(PDOFunctionCode fn, Parameter *param, int slot);
-
-    /*!
-     *  \brief Sends a SDO message to activate the specified PDO.
-     *  \param ifname : N
-     *  \param can_id : Node CAN ID of the driver.
-     */
-    void
-    activate_PDO(PDOFunctionCode fn, bool set = true);
 
     /*!
      *  \brief Sends transition states order. 
      *  \param ctrl : Control to send.
      */
     void
-    set_state(Control ctrl) { 
-    //while(!m_parameters[DCOMcontrol]->is_updated.test());
-    	std::cout << "Setting mode: " << ctrl_to_str(ctrl);
-    	while(!m_parameters[DCOMcontrol]->set(ctrl, false)); 
-    	std::cout << "\xdMode: " << ctrl_to_str(ctrl) << " Activated.\n";
-                    	};
+    set_state(Control ctrl);
 
     /*!
      *  \brief Returns the current state of the driver by reading the status word.
      */
     State
     get_state() { return m_parameters[_DCOMstatus]->get<State>(); };
+    
+    void 
+    wait_state(State state, uint16_t mask){while((get_state()&mask) != (state&mask));}
 
     /*!
      *  \brief Set the operationanl mode of the driver.
      *  \param mode : Mode to set.
      */
     void
-    set_mode(OperationMode mode);
+    set_mode(OperationMode mode, bool wait=false);
 
     OperationMode
-    get_mode() { 
-    return this->get<OperationMode>(DCOMopmode,true); 
-    };
+    get_mode(bool force_sdo=true) { return this->get<OperationMode>(_DCOMopmd_act,force_sdo);};
 
     bool
-    set_position(int32_t target);
+    set_position(int32_t target,bool absolute=true);
     bool
     set_velocity(int32_t target);
     bool
@@ -242,19 +224,12 @@ class Driver {
     int32_t
     get_torque(){return m_parameters[_tq_act]->get<int32_t>();};
     
-    void 
-    wait_state(State state, uint16_t mask)
-    {
-    	while((get_state()&mask) != (state&mask))
-    		 std::cout << std::hex << (get_state()&mask) << " " << (state&mask) << "\n";
-    	std::cout << std::hex << (get_state()&mask) << " " << (state&mask) << "\n";
-    }
+    
 
     void
     homing();
 
-    void
-    print_status();
+    
     
     Parameter* get_param(Register reg){return m_parameters[reg];};
 
@@ -268,11 +243,43 @@ class Driver {
      *  \brief return true if the can interface is available
      */
     bool
-    is_available() {
-        return m_available;
-    };
+    is_available() {return m_available;};
 
     protected:
+    
+    /*!
+     *  \brief send the parameter via a Writting SDO message to the driver
+     *  \param param Parameter to send.
+     */
+    void
+    send(Parameter *param);
+
+    /*!
+     *  \brief Request an update of the parameter via a Reading SDO message. (the parameter has been updated when param->sdo_flag is down.
+     *  \param param Parameter to update.
+     */
+    void
+    update(Parameter *param);
+    
+    
+    /*!
+     *  \brief Enables to map the different parameters of the driver to the Transmit PDO. When a PDO is received in the T_PDO_socket() thread, the value of the pdo will be stored in the mapped parameter.
+     *  \param fn : Function code of the PDO.
+     *  \param param : Parameter to map.
+     *  \param slot : Slot of the parameter in the PDO message.
+     */
+    void
+    map_PDO(PDOFunctionCode fn, Parameter *param, int slot);
+
+    /*!
+     *  \brief Sends a SDO message to activate the specified PDO.
+     *  \param ifname : N
+     *  \param can_id : Node CAN ID of the driver.
+     */
+    void
+    activate_PDO(PDOFunctionCode fn, bool set = true);
+    
+    
     void
     T_socket();
 
@@ -284,7 +291,7 @@ class Driver {
     std::atomic_flag t_socket_flag;
 
     const char *m_ifname;
-    bool m_verbose;
+    int m_verbose_level;
     bool m_available;
 
     CANopen::Socket m_socket;
@@ -294,6 +301,8 @@ class Driver {
 
     uint8_t m_node_id;
     uint16_t m_can_baud;
+    
+    
 };
 
 } // namespace CANopen

@@ -16,28 +16,49 @@
 
 #include "joystick.h"
 
+
+
 int
 main(int argc, char** argv)
 {
-	CANopen::LXM32 motor("can0", 6, true);
+	CANopen::LXM32 motor("can0", 6, 1);
 	motor.set_state(CANopen::Driver::DisableVoltage);
 	motor.set_state(CANopen::Driver::Shutdown);
 	motor.set_state(CANopen::Driver::EnableOperation);
+	//motor.print_status();
 	motor.wait_state(CANopen::Driver::OperationEnabled,0x0037);
 	
-	motor.set_mode(CANopen::Driver::Homing);
-	while(motor.get_mode()!=CANopen::Driver::Homing)
-	std::cout << "hey\n";
-	//motor.wait_state(CANopen::Driver::OperationEnabled,0x37);
-	motor.set(CANopen::Driver::HMmethod,(uint8_t)17,true,false);
-	//motor.set_state((CANopen::Driver::Control)(CANopen::Driver::EnableOperation|0x0010));
-
+	std::cout << "\n******* OperationEnabled *********\n";
+	
+//	std::cout << "\n******* Homing *********\n";
+//	motor.set(CANopen::Driver::HMv,(uint8_t)100,true,true);
+//	motor.set(CANopen::Driver::HMv_out,(uint8_t)10,true,true);
+//	motor.set_mode(CANopen::Driver::Homing);
+//	while(motor.get_mode()!=CANopen::Driver::Homing);
+//	motor.set(CANopen::Driver::HMmethod,(uint8_t)1,true,true);
+//	motor.set_state((CANopen::Driver::Control)(CANopen::Driver::EnableOperation|0x0010));
+//	for(;;)
+//	{}
+	
+	std::cout << "\n******* ProfilePosition *********\n";
+	motor.set(CANopen::Driver::RAMP_v_acc,2000,true,true);
+	motor.set(CANopen::Driver::RAMP_v_dec,4000,true,true);
+	motor.set(CANopen::Driver::PPv_target,4000,true,true);
+	motor.set_mode(CANopen::Driver::ProfilePosition, true);
+	
+	
 	for(;;)
 	{
 		int32_t pos = motor.get_position(),npos;
-		std::cout << pos << "\n";
-//		std::cin >> npos;
-//		motor.set_position(npos);
+		std::cout << std::dec << pos << "\n";
+		std::cin >> npos;
+		motor.set_position(npos);
+		
+		while(pos!=npos)
+		{
+			pos = motor.get_position();
+			std::cout << std::dec << pos << " " << npos << "\n";
+		}
 	}
 	
 }

@@ -13,6 +13,7 @@
 namespace CANopen {
 struct Parameter {
 
+    typedef void (*param_cb_t) (Parameter*); //type of the parameter callback function
     enum PDOFunctionCode : uint32_t {
         PDO1Transmit = Message::PDO1Transmit,
         PDO1Receive = Message::PDO1Receive,
@@ -27,15 +28,17 @@ struct Parameter {
     Parameter() { var = new int32_t; };
 
     template <typename T>
-    Parameter(std::string name_, T val, uint16_t index_, uint8_t subindex_) : name(name_), index(index_), subindex(subindex_) {
+    Parameter(std::string name_, T val, uint16_t index_, uint8_t subindex_, param_cb_t cb = nullptr) : name(name_), index(index_), subindex(subindex_), _cb(cb) {
+        mutex.lock();
         var = new T;
         *(T *)var = (T)val;
-        is_updated.test_and_set();
+        m_should_be_sent=false;
+        mutex.unlock();
         size = sizeof(T);
     };
 
     template <typename T>
-    Parameter(std::string name_, T val, uint32_t index__sub) : Parameter(name_, val, (uint16_t)(index__sub >> 16), (uint8_t)index__sub){};
+    Parameter(std::string name_, T val, uint32_t index__sub, param_cb_t cb=nullptr) : Parameter(name_, val, (uint16_t)(index__sub >> 16), (uint8_t)index__sub, cb){};
 
     ~Parameter() {
         delete(int32_t *)var;
@@ -46,17 +49,24 @@ struct Parameter {
 
     template <typename T>
     bool
-    set(T val, bool force_update=true) {
+    set(T val, bool force_update=false, bool received_data=false) {
     	//std::cout << name << " " << std::hex << val << "\n";
-	bool was_updated;
+	bool was_updated=false;
         if(sizeof(T) == size) {
             mutex.lock();
-            was_updated=is_updated.test_and_set(); // get if the parameter is waiting to been sent (true:sent / false:not yet)
-            if(force_update || was_updated)//if force update (even if the previous value was not sent yet) or value already update
-            	*(T *)var = (T)val;
-            is_updated.clear();//in any case set the flag to ensure the parameter will be sent.
+            if(!m_should_be_sent || force_update)//if force update (even if the previous value was not sent yet) or value already update
+            {
+            	//std::cout << std::hex << val  << " ll\n";
+            	if(*(T *)var != (T)val)
+            	{
+            	    was_updated = true;
+            	    *(T *)var = (T)val;
+            	}
+            	if(!received_data)
+            	    m_should_be_sent = true;
+            }
             mutex.unlock();
-            return (force_update || was_updated);
+            return was_updated;
         }
         return false;
     }
@@ -88,14 +98,25 @@ struct Parameter {
     operator uint8_t(){ return this->get<uint8_t>();}; 
     operator uint16_t(){ return this->get<uint16_t>();}; 
     operator uint32_t(){ return this->get<uint32_t>();}; 
+    
 
+    bool
+    from_payload(Payload &p, int slot = 0, bool received_data=true);
+    
+    bool has_been_sent()
+    {
+    	const std::lock_guard<std::mutex> lock(mutex);
+    	return !m_should_be_sent;
+    
+    }
+    
     void
-    from_payload(Payload &p, bool from_pdo = false);
+    callback();
 
     Payload
-    payload();
+    payload(bool* should_be_sent=nullptr);
 
-    void *var = nullptr;
+    
     size_t size = 0;
     std::string name;
     uint16_t index = 0;
@@ -104,10 +125,16 @@ struct Parameter {
     PDOFunctionCode pdo_fn;
     int8_t pdo_slot = -1;
 
-    std::atomic_flag is_updated;
     std::atomic_flag sdo_flag;
+    
+    
 
     private:
+    void *var = nullptr;
+    param_cb_t _cb=nullptr;
+    
+    bool m_should_be_sent;
+    std::mutex cb_mutex;
     std::mutex mutex;
 };
 } // namespace CANopen
