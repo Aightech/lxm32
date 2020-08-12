@@ -226,6 +226,18 @@ class Driver {
     
     
 
+    void 
+    start();
+    
+    void 
+    profilePosition_mode();
+    
+    void 
+    profileVelocity_mode();
+    
+    void 
+    profileTorque_mode();
+    
     void
     homing();
 

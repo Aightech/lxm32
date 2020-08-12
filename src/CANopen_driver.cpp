@@ -337,6 +337,34 @@ CANopen::Driver::ctrl_to_str(Control control) {
 	return "unknown control";
 }
 
+void 
+CANopen::Driver::start()
+{
+	this->set_state(DisableVoltage);
+	this->set_state(Shutdown);
+	this->set_state(EnableOperation);
+	this->wait_state(OperationEnabled,0x0037);
+}
+    
+void 
+CANopen::Driver::profilePosition_mode()
+{
+    	this->set(CANopen::Driver::RAMP_v_acc,2000,true,true);
+	this->set(CANopen::Driver::RAMP_v_dec,4000,true,true);
+	this->set(CANopen::Driver::PPv_target,4000,true,true);
+	this->set_mode(CANopen::Driver::ProfilePosition, true);
+}
+ 
+void
+CANopen::Driver::homing()
+{
+	this->set(HMv,(uint8_t)100,true,true);
+	this->set(HMv_out,(uint8_t)10,true,true);
+	this->set_mode(Driver::Homing);
+	this->set(HMmethod,(uint8_t)1,true,true);
+	this->set_state((Control)(EnableOperation|0x0010));
+
+}
 
 void
 CANopen::Driver::set_mode(OperationMode mode, bool wait) {
