@@ -5,7 +5,7 @@ CANopen::Driver::Driver(const char *ifname, uint16_t can_id, int verbose_lvl)
     : m_ifname(ifname), m_verbose_level(verbose_lvl), m_available(true), m_socket(ifname, verbose_lvl), m_node_id(can_id) {
 
 
-    m_parameters[_DCOMstatus] = new Parameter("_DCOMstatus", (uint16_t)0, _DCOMstatus, &print_status);
+    m_parameters[_DCOMstatus] = new Parameter("_DCOMstatus", (uint16_t)0, _DCOMstatus, (verbose_lvl>0)?&print_status:nullptr);
     m_parameters[DCOMcontrol] = new Parameter("DCOMcontrol", (uint16_t)0, DCOMcontrol);
     m_parameters[DCOMopmode] = new Parameter("DCOMopmode", (uint8_t)0, DCOMopmode);
     m_parameters[_DCOMopmd_act] = new Parameter("_DCOMopmd_act", (uint8_t)0, _DCOMopmd_act);
@@ -14,6 +14,9 @@ CANopen::Driver::Driver(const char *ifname, uint16_t can_id, int verbose_lvl)
     m_parameters[PPv_target] = new Parameter("PPv_target", (int32_t)0, PPv_target);
     m_parameters[RAMP_v_acc] = new Parameter("RAMP_v_acc", (int32_t)0, RAMP_v_acc);
     m_parameters[RAMP_v_dec] = new Parameter("RAMP_v_dec", (int32_t)0, RAMP_v_dec);
+    
+    m_parameters[PVv_target] = new Parameter("PVv_target", (int32_t)0, PVv_target);
+    m_parameters[PTtq_target] = new Parameter("PTtq_target", (int16_t)0, PTtq_target);
 
     m_parameters[_p_act] = new Parameter("_p_act", (int32_t)0, _p_act);
     m_parameters[_v_act] = new Parameter("_v_act", (int32_t)0, _p_act);
@@ -28,26 +31,16 @@ CANopen::Driver::Driver(const char *ifname, uint16_t can_id, int verbose_lvl)
     t_socket_flag.test_and_set();
     m_t_socket_thread = new std::thread(&Driver::T_socket, this);
     while(t_socket_flag.test_and_set());
-   
     
 
-    // Map the 4 different PDO with default mapping
+    // Map the different PDO with default mapping
     map_PDO(PDO1Transmit, m_parameters[_DCOMstatus], 0);
-
-    map_PDO(PDO2Transmit, m_parameters[_DCOMstatus], 0);
-    map_PDO(PDO2Transmit, m_parameters[_p_act], m_parameters[_DCOMstatus]->size);
-
-//    map_PDO(PDO3Transmit, m_parameters[_DCOMstatus], 0);
-//    map_PDO(PDO3Transmit, m_parameters[_v_act], m_parameters[_DCOMstatus]->size);
-
-//    map_PDO(PDO4Transmit, m_parameters[_DCOMstatus], 0);
-//    map_PDO(PDO4Transmit, m_parameters[_tq_act], m_parameters[_DCOMstatus]->size);
-
 	map_PDO(PDO1Receive, m_parameters[DCOMcontrol], 0);
-    map_PDO(PDO2Receive , m_parameters[DCOMcontrol], 0);
-    map_PDO(PDO2Receive, m_parameters[PPp_target], m_parameters[DCOMcontrol]->size);
+	
+	
+
     
-   
+
    	
    	rpdo_socket_flag.test_and_set();
     m_rpdo_socket_thread = new std::thread(&Driver::RPDO_socket, this);
@@ -61,8 +54,8 @@ void
 CANopen::Driver::map_PDO(PDOFunctionCode fn, Parameter *param, int slot) {
     if(std::find(m_PDO_map[fn].begin(), m_PDO_map[fn].end(), param) == m_PDO_map[fn].end()) {
         param->link_to_pdo((Parameter::PDOFunctionCode)fn, slot);
-        m_PDO_map[fn].push_back(param);
         activate_PDO(fn, true);
+        m_PDO_map[fn].push_back(param);
     }
 }
 
@@ -110,7 +103,13 @@ CANopen::Driver::send(Parameter *param) {
     if(m_available)
     {
     	param->sdo_flag.test_and_set();
-        m_socket.send(CANopen::SDOOutboundWrite(m_node_id, param->index, param->subindex, param->payload()));
+    	try {
+		m_socket.send(CANopen::SDOOutboundWrite(m_node_id, param->index, param->subindex, param->payload()));
+	}
+	catch (const std::runtime_error& e) {
+		std::cerr << e.what();
+	}
+        
     }
 }
 
@@ -119,7 +118,12 @@ CANopen::Driver::update(Parameter *param) {
     if(m_available)
     {
     	param->sdo_flag.test_and_set();
-        m_socket.send(CANopen::SDOOutboundRead(m_node_id, param->index, param->subindex));
+        try {
+		m_socket.send(CANopen::SDOOutboundRead(m_node_id, param->index, param->subindex));
+	}
+	catch (const std::runtime_error& e) {
+		std::cerr << e.what();
+	}
     }
 }
 
@@ -145,6 +149,12 @@ CANopen::Driver::T_socket() {
             fn = msg->function_code();
             p = msg->payload();
             switch(fn) {
+            case CANopen::Message::Emergency:
+            {
+            	std::shared_ptr<CANopen::EMCYMessage> emcy_msg = std::dynamic_pointer_cast<CANopen::EMCYMessage>(msg);
+            	std::cout <<  "Error {" << (int)emcy_msg->node_id() << "} code: "<< std::hex << (int)emcy_msg->code() << "  reg:" << (int)emcy_msg->reg() << "\n";
+            }
+            	break;
             case CANopen::Message::TimeStamp:
                 break;
             case CANopen::Message::PDO1Transmit:
@@ -196,16 +206,31 @@ CANopen::Driver::RPDO_socket() {
 		        Payload payload;
 
 	        	for(auto p : m_PDO_map[fn])// for each parameter mapped on the pdo, get the payload and store it at the right positon + get if the data has to be updated.
+	        	{
+	        		//std::cout << p->name << "\n";
 			    	payload.store_at(p->payload(((p != m_parameters[DCOMcontrol])?&should_update:&should_update_PDO1)), p->pdo_slot);
+			    }
 			    	
 			    if(should_update) 
 			    {
-			    	socket.send(PDOMessage((PDOMessage::PDOFunctionCode) fn, m_node_id, payload));
+			    	try {
+			    		socket.send(PDOMessage((PDOMessage::PDOFunctionCode) fn, m_node_id, payload));
+					}
+					catch (const std::runtime_error& e) {
+						IF_VERBOSE(1, std::cerr << e.what();, m_verbose_level)
+					}
+			    	
 			    }
 			    else if(should_update_PDO1) 
 			    {
 			    	payload.resize(m_parameters[DCOMcontrol]->size);
-			    	socket.send(PDOMessage((PDOMessage::PDOFunctionCode) PDO1Receive, m_node_id, payload));
+			    	try {
+			    		socket.send(PDOMessage((PDOMessage::PDOFunctionCode) PDO1Receive, m_node_id, payload));
+					}
+					catch (const std::runtime_error& e) {
+						IF_VERBOSE(1, std::cerr << e.what();, m_verbose_level)
+					}
+			    	
 			    }
 		        
 		    }
@@ -223,13 +248,13 @@ CANopen::Driver::set_position(int32_t target, bool absolute)
 		case ProfilePosition: 	
 			
 			    	//std::cout << std::dec << target << " dd\n";
-			if(m_parameters[PPp_target]->set(target,true))
+			if(m_parameters[PPp_target]->set(target+(absolute?m_offset_pos:0),true))
 			{
-				set_state((Control)(EnableOperation));
+				set_control((Control)(EnableOperation));
 				if(absolute)
-					set_state((Control)(EnableOperation|0x0010));
+					set_control((Control)(EnableOperation|0x0030));
 				else
-					set_state((Control)(EnableOperation|0x0050));
+					set_control((Control)(EnableOperation|0x0070));
 				
 				return true;
 			}
@@ -245,21 +270,23 @@ CANopen::Driver::set_velocity(int32_t target)
 	switch(get_mode())
 	{
 		case ProfilePosition:
-			return *m_parameters[PPv_target] = target;
+			//this->set(PPv_target,target,true,true);
+			return true;
 		case ProfileVelocity:
-			return *m_parameters[PVv_target] = target;
+			return m_parameters[PVv_target]->set(target,true);
 		default:
 			return false;
 	}
 };
 
 bool
-CANopen::Driver::set_torque(int32_t target)
+CANopen::Driver::set_torque(int16_t target)
 {
 	switch(get_mode())
 	{
 		case ProfileTorque:
-			return *m_parameters[PTtq_target] = target;
+			this->set(PTtq_target,target,true,true);
+			return true;
 		default:
 			return false;
 	}
@@ -271,26 +298,26 @@ CANopen::print_status(CANopen::Parameter* param) {
     g_verbose_mutex.lock();
 	int16_t s = param->get<int16_t>();
         std::cout << "> Driver Status [0x" << std::hex << s << "] State: [ ";
-        switch(s & CANopen::Driver::State::mask) {
-        case CANopen::Driver::NotReadyToSwitchtON& CANopen::Driver::State::mask:
+        switch(s & Driver::State::mask) {
+        case Driver::NotReadyToSwitchtON& Driver::State::mask:
             std::cout << "Not Ready to Switch ON ]\n";
             break;
-        case CANopen::Driver::SwitchONDisabled& CANopen::Driver::State::mask:
+        case Driver::SwitchONDisabled& Driver::State::mask:
             std::cout << "Switch ON Disabled ]\n";
             break;
-        case CANopen::Driver::ReadyToSwitchON& CANopen::Driver::State::mask:
+        case Driver::ReadyToSwitchON& Driver::State::mask:
             std::cout << "Ready To Switch ON ]\n";
             break;
-        case CANopen::Driver::SwitchedON& CANopen::Driver::State::mask:
+        case Driver::SwitchedON& Driver::State::mask:
             std::cout << "Switch ON ]\n";
             break;
-        case CANopen::Driver::OperationEnabled& CANopen::Driver::State::mask:
+        case Driver::OperationEnabled& Driver::State::mask:
             std::cout << "Operation Enabled ]\n";
             break;
-        case CANopen::Driver::Fault& CANopen::Driver::State::mask:
+        case Driver::Fault& Driver::State::mask:
             std::cout << "Fault ]\n";
             break;
-        case CANopen::Driver::QuickStop& CANopen::Driver::State::mask:
+        case Driver::QuickStop& Driver::State::mask:
             std::cout << "Quick Stop ]\n";
             break;
         default:
@@ -340,19 +367,57 @@ CANopen::Driver::ctrl_to_str(Control control) {
 void 
 CANopen::Driver::start()
 {
-	this->set_state(DisableVoltage);
-	this->set_state(Shutdown);
-	this->set_state(EnableOperation);
-	this->wait_state(OperationEnabled,0x0037);
+    this->set_control(DisableVoltage);
+    this->set_control(Shutdown);
+    this->set_control(EnableOperation);
+    this->wait_state(OperationEnabled);
+}
+
+void 
+CANopen::Driver::pause()
+{
+	this->set_control(DisableOperation);
+	this->wait_state(SwitchedON);
+}
+
+void 
+CANopen::Driver::stop()
+{
+	this->set_control(Shutdown);
+	this->wait_state(ReadyToSwitchON);
 }
     
 void 
 CANopen::Driver::profilePosition_mode()
 {
-    	this->set(CANopen::Driver::RAMP_v_acc,2000,true,true);
-	this->set(CANopen::Driver::RAMP_v_dec,4000,true,true);
-	this->set(CANopen::Driver::PPv_target,4000,true,true);
-	this->set_mode(CANopen::Driver::ProfilePosition, true);
+    map_PDO(PDO2Transmit, m_parameters[_DCOMstatus], 0);
+    map_PDO(PDO2Transmit, m_parameters[_p_act], m_parameters[_DCOMstatus]->size);
+    map_PDO(PDO2Receive , m_parameters[DCOMcontrol], 0);
+    map_PDO(PDO2Receive, m_parameters[PPp_target], m_parameters[DCOMcontrol]->size);
+    this->set(RAMP_v_acc,1000,true,true);
+	this->set(RAMP_v_dec,2000,true,true);
+	this->set(PPv_target,2000,true,true);
+    this->set_mode(ProfilePosition, true);
+}
+
+void 
+CANopen::Driver::profileVelocity_mode()
+{
+    map_PDO(PDO3Transmit, m_parameters[_DCOMstatus], 0);
+    map_PDO(PDO3Transmit, m_parameters[_v_act], m_parameters[_DCOMstatus]->size);
+    map_PDO(PDO3Receive , m_parameters[DCOMcontrol], 0);
+    map_PDO(PDO3Receive, m_parameters[PVv_target], m_parameters[DCOMcontrol]->size);
+    
+    this->set(RAMP_v_acc,1000,true,true);
+	this->set(RAMP_v_dec,1000,true,true);
+	this->set(PPv_target,1000,true,true);
+	this->set_mode(ProfilePosition, true);
+}
+
+void 
+CANopen::Driver::profileTorque_mode()
+{
+	this->set_mode(ProfileTorque, true);
 }
  
 void
@@ -362,14 +427,14 @@ CANopen::Driver::homing()
 	this->set(HMv_out,(uint8_t)10,true,true);
 	this->set_mode(Driver::Homing);
 	this->set(HMmethod,(uint8_t)1,true,true);
-	this->set_state((Control)(EnableOperation|0x0010));
+	this->set_control((Control)(EnableOperation|0x0010));
 
 }
 
 void
 CANopen::Driver::set_mode(OperationMode mode, bool wait) {
     if(m_available) {
-        m_parameters[DCOMopmode]->set(mode);
+        m_parameters[DCOMopmode]->set(mode,true);
         send(m_parameters[DCOMopmode]);
         if(wait)
         	while(get_mode()!=mode);
@@ -377,10 +442,10 @@ CANopen::Driver::set_mode(OperationMode mode, bool wait) {
 }
 
 void
-CANopen::Driver::set_state(Control ctrl) { 
+CANopen::Driver::set_control(Control ctrl) { 
     	m_parameters[DCOMcontrol]->set(ctrl, true);
     	while(!m_parameters[DCOMcontrol]->has_been_sent()); 
     	
-    	IF_VERBOSE(1, std::cout << "Mode: " << ctrl_to_str(ctrl) << " Activated.\n";, m_verbose_level)
+    	IF_VERBOSE(1, std::cout << "Mode: " << ctrl_to_str(ctrl)  << "[" << std::hex << ctrl << "] Activated.\n";, m_verbose_level)
                     	}
 

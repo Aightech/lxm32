@@ -189,7 +189,7 @@ class Driver {
      *  \param ctrl : Control to send.
      */
     void
-    set_state(Control ctrl);
+    set_control(Control ctrl);
 
     /*!
      *  \brief Returns the current state of the driver by reading the status word.
@@ -198,7 +198,7 @@ class Driver {
     get_state() { return m_parameters[_DCOMstatus]->get<State>(); };
     
     void 
-    wait_state(State state, uint16_t mask){while((get_state()&mask) != (state&mask));}
+    wait_state(State state, uint16_t _mask=mask){while((get_state()&mask) != (state&mask));};//std::cout << (get_state()&mask) << " " << (state&mask)<< "\n";}
 
     /*!
      *  \brief Set the operationanl mode of the driver.
@@ -215,26 +215,29 @@ class Driver {
     bool
     set_velocity(int32_t target);
     bool
-    set_torque(int32_t target);
+    set_torque(int16_t target);
     
     int32_t
-    get_position(){return m_parameters[_p_act]->get<int32_t>();};
+    get_position(){return m_parameters[_p_act]->get<int32_t>()-m_offset_pos;};
     int32_t
     get_velocity(){return m_parameters[_v_act]->get<int32_t>();};
     int32_t
     get_torque(){return m_parameters[_tq_act]->get<int32_t>();};
     
+    void set_position_offset(int32_t offset_pos){m_offset_pos=offset_pos;};
     
 
     void 
     start();
+    void 
+    pause();
+    void 
+    stop();
     
     void 
     profilePosition_mode();
-    
     void 
     profileVelocity_mode();
-    
     void 
     profileTorque_mode();
     
@@ -299,6 +302,7 @@ class Driver {
     RPDO_socket();
     std::thread *m_rpdo_socket_thread;
     std::atomic_flag rpdo_socket_flag;
+    std::mutex rpdo_mutex;
     std::thread *m_t_socket_thread;
     std::atomic_flag t_socket_flag;
 
@@ -313,6 +317,7 @@ class Driver {
 
     uint8_t m_node_id;
     uint16_t m_can_baud;
+    int32_t m_offset_pos=0;
     
     
 };

@@ -21,24 +21,26 @@
 int
 main(int argc, char** argv)
 {
-	CANopen::LXM32 motor("can0", 6, 1); 
+	std::cout << std::dec << " node: " << atoi(argv[1]) << "\n";
+	CANopen::LXM32 motor("can0", atoi(argv[1]), 0); 
 	motor.start();
+	motor.set_position_offset(atoi(argv[2]));
 	motor.profilePosition_mode();
 	
-	double pos = motor.get_angle();
+	double pos = motor.get_position();
 	double npos=0;
 	
 	for(;;)
 	{
-		pos = motor.get_angle();
-		std::cout << std::dec << " Current pos: " << pos << "\n";
+		pos = motor.get_position();
+		std::cout << std::dec << "\n Current pos: " << pos << "\n";
 		std::cin >> npos;
-		motor.set_angle(npos);
+		motor.set_position(npos);
 		
 		while(fabs(pos-npos) > 0.001)
 		{
-			pos = motor.get_angle();
-			std::cout << std::dec << pos << " " << npos << "\n";
+			pos = motor.get_position();
+			std::cout << std::dec << pos << " " << npos << "\xd";
 		}
 	}
 	
