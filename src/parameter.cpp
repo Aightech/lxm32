@@ -44,8 +44,6 @@ CANopen::Parameter::callback()
 {
     if(_cb!=nullptr)
     {
-        cb_mutex.lock();
-	_cb(this);
-	cb_mutex.unlock();
+        _cb(this);
     }
 }

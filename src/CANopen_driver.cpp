@@ -255,7 +255,6 @@ CANopen::Driver::set_position(int32_t target, bool absolute)
 					set_control((Control)(EnableOperation|0x0030));
 				else
 					set_control((Control)(EnableOperation|0x0070));
-				
 				return true;
 			}
 			return false;

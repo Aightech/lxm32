@@ -20,32 +20,62 @@ class Driver {
     static constexpr int MAX_PDO_SLOT = 2;
 
     public:
+    /*! CIA 402 CANopen Driver */
     enum Register : uint32_t {
-        _DCOMstatus = 0x60410000,
-        DCOMcontrol = 0x60400000,
-        DCOMopmode = 0x60600000,
-        _DCOMopmd_act = 0x60610000,
-        PPp_target = 0x607A0000,
-        PPv_target = 0x60810000,
-        PVv_target = 0x60FF0000,
-        PTtq_target = 0x60710000,
-        RAMP_v_acc = 0x60830000,
-        RAMP_v_dec = 0x60840000,
-        _p_act = 0x60640000,
-        _v_act = 0x606C0000,
-        _tq_act = 0x60770000,
-        HMmethod = 0x60980000,
-        HMv = 0x60990001,
-        HMv_out = 0x60990002
+        _DCOMstatus = 0x60410000,   /*!< **6041<sub>h</sub>** - The statusword indicates the current state of the drive. No bits are latched. The statusword consist of
+bits for:
+* - the current state of the drive,
+* - the operating state of the mode and
+* - manufacturer specific options. */
+        DCOMcontrol = 0x60400000,   /*!< **6040<sub>h</sub>** - The controlword consist of bits for:
+* - the controlling of the state,
+* - the controlling of operating modes and
+* - manufacturer specific options. */
+        DCOMopmode = 0x60600000,    /*!< **6060<sub>h</sub>** - The parameter modes of operation switches the actually choosen operation mode.*/
+        _DCOMopmd_act = 0x60610000, /*!< **6061<sub>h</sub>** - The modes of operation display shows the current mode of operation. The meaning of the returned
+value corresponds to that of the modes of operation option code*/
+        PPp_target = 0x607A0000,    /*!< **607A<sub>h</sub>** - The target position is the position that the drive should move to in position profile mode using the
+current settings of motion control parameters such as velocity, acceleration, deceleration, motion
+profile type etc. The target position is given in user defined position units. It is converted to position
+increments using the position factor. The target position will be interpreted as
+absolute or relative depending on the ‘abs / rel' flag in the controlword.*/
+        PPv_target = 0x60810000,    /*!< **6081<sub>h</sub>** - The profile velocity is the velocity normally attained at the end of the acceleration ramp during a
+profiled move and is valid for both directions of motion. The profile velocity is given in user defined
+speed units. It is converted to position increments per second using the velocity encoder factor.*/
+        PVv_target = 0x60FF0000,    /*!< **60FF<sub>h</sub>** - The target velocity is the input for the trajectory generator and the value is given in velocity units.*/
+        PTtq_target = 0x60710000,   /*!< **6071<sub>h</sub>** - This parameter is the input value for the torque controller in profile torque mode and the value is given
+per thousand of rated torque.*/
+        RAMP_v_acc = 0x60830000,    /*!< **6083<sub>h</sub>** - The profile acceleration is given in user defined acceleration units. It is converted to position
+increments per second 2 using the normalizing factors.*/
+        RAMP_v_dec = 0x60840000,    /*!< **6084<sub>h</sub>** - The profile deceleration is given in the same units as profile acceleration. If this parameter is not
+supported, then the profile acceleration value is also used for deceleration.*/
+        _p_act = 0x60640000,        /*!< **6064<sub>h</sub>** - This object represents the actual value of the position measurement device in user defined units.*/
+        _v_act = 0x606C0000,        /*!< **606C<sub>h</sub>** - The velocity actual value is also represented in velocity units and is coupled to the velocity used as
+input to the velocity controller.*/
+        _tq_act = 0x60770000,       /*!< **6077<sub>h</sub>** - The torque actual value corresponds to the instantaneous torque in the drive motor. The value is given
+per thousand of rated torque.*/
+        HMmethod = 0x60980000,      /*!< **6098<sub>h</sub>** - The homing method object determines the method that will be used during homing.*/
+        HMv = 0x60990001,           /*!< **6099<sub>h</sub>01** - Speed during search for switch.*/
+        HMv_out = 0x60990002        /*!< **6099<sub>h</sub>02** - Speed during search for zero*/
     };
 
+    /*! Operational modes */
     enum OperationMode : int8_t {
-        ProfilePosition = 1,
-        Velocity = 2,
-        ProfileVelocity = 3,
-        ProfileTorque = 4,
-        Homing = 6,
-        InterpolatedPosition = 7,
+        ProfilePosition = 1,        /*!<  The positioning of the drive is defined in this mode. Speed, position and acceleration can be
+limited and profiled moves using a Trajectory Generator are possible as well.*/
+        Velocity = 2,               /*!< Many frequency inverters use this simple mode to control the velocity of the drive with limits
+and ramp functions. */
+        ProfileVelocity = 3,        /*!<  The Profile Velocity Mode is used to control the velocity of the drive with no special regard of
+the position. It supplies limit functions and Trajectory Generation.*/
+        ProfileTorque = 4,          /*!<  The profile torque mode allows a host (external)
+control system (i.e. closed-loop speed controller, open-loop transmission force controller) to transmit
+the target torque value, which is processed via the trajectory generator. The torque slope and torque
+profile type parameters are required.*/
+        Homing = 6,                 /*!<  Homming mode.*/
+        InterpolatedPosition = 7,   /*!<  The interpolated position mode is used to control multiple coordinated axles or a single axle with the
+need for time-interpolation of set-point data. The interpolated position mode normally uses time
+synchronization mechanisms like the sync object defined in /3/ for a time coordination of the related
+drive units.*/
     };
 
     /*! Possible States */
@@ -143,6 +173,7 @@ class Driver {
      *  \brief Constructor
      *  \param ifname : Name of the CAN interface.
      *  \param can_id : Node CAN ID of the driver.
+     *  \param verbose_lvl : Level of verbosity.
      */
     Driver(const char *ifname, uint16_t can_id, int verbose_lvl = 0);
 
@@ -167,9 +198,10 @@ class Driver {
     }
     
      /*!
-     *  \brief Enables to get value of a specified registers.
+     *  \brief get Gets the value of a specified registers.
      *  \param reg : The register to get. (In the format ind__sub)
      *  \param force_sdo : If true, the parameter will  be updated via a  reading SDO.
+     *  \return The value of the register in the templated format T selected.
      */
     template <typename T>
     T
@@ -185,7 +217,7 @@ class Driver {
 
 
     /*!
-     *  \brief Sends transition states order. 
+     *  \brief set_control : Send transition states order.
      *  \param ctrl : Control to send.
      */
     void
@@ -193,54 +225,119 @@ class Driver {
 
     /*!
      *  \brief Returns the current state of the driver by reading the status word.
+     *  \return The current state.
      */
     State
     get_state() { return m_parameters[_DCOMstatus]->get<State>(); };
     
+    /*!
+     * \brief wait_state loop until the driver state is different from the one passed while(actual_state()&mask) != (state&mask))
+     * \param state State to wait for.
+     * \param _mask Mask to selected specific bits of the state.
+     */
     void 
     wait_state(State state, uint16_t _mask=mask){while((get_state()&mask) != (state&mask));};//std::cout << (get_state()&mask) << " " << (state&mask)<< "\n";}
 
     /*!
-     *  \brief Set the operationanl mode of the driver.
-     *  \param mode : Mode to set.
+     * \brief set_mode Set the desired opereration mode.
+     * \param mode Mode to set.
+     * \param wait Repeatidly test the actual operation mode register until it is eqaual to the selected mode.
      */
     void
     set_mode(OperationMode mode, bool wait=false);
 
+    /*!
+     * \brief get_mode Returns the actual operation mode of the driver.
+     * \param force_sdo If set a sdo read message will be send to get the mode. Set to false to save some communication time.
+     * \return The actual operational mode
+     */
     OperationMode
     get_mode(bool force_sdo=true) { return this->get<OperationMode>(_DCOMopmd_act,force_sdo);};
 
+    /*!
+     * \brief set_position Send the new position to reach. Has to be in ProfilPositon mode to have some effect.
+     * \param target Position to reach (in internal unit)
+     * \param absolute If set the target will be process as an absolute value. Else it will be procecced as a relative (to the current position) value.
+     * \return True if successfully sent.
+     */
     bool
     set_position(int32_t target,bool absolute=true);
+    /*!
+     * \brief set_velocity Send the new velocity to reach. Has to be in ProfilPositon or ProfilVelocity mode to have some effect.
+     * \param target Velocity to reach (in internal unit)
+     * \return True if successfully sent.
+     */
     bool
     set_velocity(int32_t target);
+    /*!
+     * \brief set_torque Send the new torque to reach. Has to be in ProfilTorque mode to have some effect.
+     * \param target Torque to reach (in internal unit)
+     * \return True if successfully sent.
+     */
     bool
     set_torque(int16_t target);
     
+    /*!
+     * \brief get_position Returns the actual postion of the motor.
+     * \return The actual postion of the motor.
+     */
     int32_t
     get_position(){return m_parameters[_p_act]->get<int32_t>()-m_offset_pos;};
+    /*!
+     * \brief get_velocity Returns the actual velocity of the motor.
+     * \return The actual velocity of the motor.
+     */
     int32_t
     get_velocity(){return m_parameters[_v_act]->get<int32_t>();};
+    /*!
+     * \brief get_torque Returns the actual torque of the motor.
+     * \return The actual torque of the motor.
+     */
     int32_t
     get_torque(){return m_parameters[_tq_act]->get<int32_t>();};
     
-    void set_position_offset(int32_t offset_pos){m_offset_pos=offset_pos;};
+    /*!
+     * \brief set_position_offset Set the postion offset of the motor. Rq better to have a large offset to avoid letting the motor switch off in negativ position: it would result in a wrong position when restarting
+     * \param offset_pos Offest of the motor in internal Unit
+     */
+    void
+    set_position_offset(int32_t offset_pos){m_offset_pos=offset_pos;};
     
 
+    /*!
+     * \brief start
+     */
     void 
     start();
+    /*!
+     * \brief pause
+     */
     void 
     pause();
+    /*!
+     * \brief stop
+     */
     void 
     stop();
     
+    /*!
+     * \brief profilePosition_mode
+     */
     void 
     profilePosition_mode();
+    /*!
+     * \brief profileVelocity_mode
+     */
     void 
     profileVelocity_mode();
+    /*!
+     * \brief profileTorque_mode
+     */
     void 
     profileTorque_mode();
-    
+    /*!
+     * \brief homing
+     */
     void
     homing();
 
@@ -298,8 +395,9 @@ class Driver {
     void
     T_socket();
 
-  void
+    void
     RPDO_socket();
+
     std::thread *m_rpdo_socket_thread;
     std::atomic_flag rpdo_socket_flag;
     std::mutex rpdo_mutex;

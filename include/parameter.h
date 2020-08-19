@@ -132,9 +132,7 @@ struct Parameter {
     private:
     void *var = nullptr;
     param_cb_t _cb=nullptr;
-    
     bool m_should_be_sent;
-    std::mutex cb_mutex;
     std::mutex mutex;
 };
 } // namespace CANopen
