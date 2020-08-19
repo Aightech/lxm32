@@ -30,10 +30,7 @@ CANopen::Parameter::payload(bool* should_be_sent) {
     const std::lock_guard<std::mutex> lock(mutex);
     if(should_be_sent!=nullptr)
     {
-   	
-    	*should_be_sent=m_should_be_sent;
-//    	if(m_should_be_sent)
-//    		std::cout << name  << "\n";
+        *should_be_sent=m_should_be_sent;
     	m_should_be_sent = false;
     }
     return std::vector<uint8_t>((uint8_t *)var, (uint8_t *)var + size);

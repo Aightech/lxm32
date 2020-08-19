@@ -37,11 +37,7 @@ CANopen::Driver::Driver(const char *ifname, uint16_t can_id, int verbose_lvl)
     map_PDO(PDO1Transmit, m_parameters[_DCOMstatus], 0);
 	map_PDO(PDO1Receive, m_parameters[DCOMcontrol], 0);
 	
-	
 
-    
-
-   	
    	rpdo_socket_flag.test_and_set();
     m_rpdo_socket_thread = new std::thread(&Driver::RPDO_socket, this);
     while(rpdo_socket_flag.test_and_set());
@@ -63,8 +59,7 @@ void
 CANopen::Driver::activate_PDO(PDOFunctionCode fn, bool set) {
     uint16_t index = 0;
     std::string reg_name;
-    
-    
+
     if((fn & 0x80) == 0x00) //R_PDO
     {
         index = (0x1400 + (fn >> 8) - 2);
@@ -94,8 +89,7 @@ CANopen::Driver::activate_PDO(PDOFunctionCode fn, bool set) {
     	
     	IF_VERBOSE(1, std::cout <<  reg_name << " " << ((set)?"activated":"desactivated") <<  "\n", m_verbose_level)
     }
-    
-    //m_socket.send(CANopen::SDOOutboundWrite(m_node_id, index, 1, (set ? 0x04000000 : 0x80000000) + fn + m_node_id));
+
 }
 
 void
@@ -103,8 +97,9 @@ CANopen::Driver::send(Parameter *param) {
     if(m_available)
     {
     	param->sdo_flag.test_and_set();
+        bool b;
     	try {
-		m_socket.send(CANopen::SDOOutboundWrite(m_node_id, param->index, param->subindex, param->payload()));
+        m_socket.send(CANopen::SDOOutboundWrite(m_node_id, param->index, param->subindex, param->payload(&b)));
 	}
 	catch (const std::runtime_error& e) {
 		std::cerr << e.what();
@@ -246,8 +241,6 @@ CANopen::Driver::set_position(int32_t target, bool absolute)
 	switch(get_mode(false))
 	{
 		case ProfilePosition: 	
-			
-			    	//std::cout << std::dec << target << " dd\n";
 			if(m_parameters[PPp_target]->set(target+(absolute?m_offset_pos:0),true))
 			{
 				set_control((Control)(EnableOperation));
@@ -422,11 +415,13 @@ CANopen::Driver::profileTorque_mode()
 void
 CANopen::Driver::homing()
 {
-	this->set(HMv,(uint8_t)100,true,true);
-	this->set(HMv_out,(uint8_t)10,true,true);
-	this->set_mode(Driver::Homing);
-	this->set(HMmethod,(uint8_t)1,true,true);
-	this->set_control((Control)(EnableOperation|0x0010));
+    set_position(0);
+    while(abs(get_position())>0.001){}
+//	this->set(HMv,(uint8_t)100,true,true);
+//	this->set(HMv_out,(uint8_t)10,true,true);
+//	this->set_mode(Driver::Homing);
+//	this->set(HMmethod,(uint8_t)1,true,true);
+//	this->set_control((Control)(EnableOperation|0x0010));
 
 }
 

@@ -1,6 +1,13 @@
 #ifndef _CANOPEN_DRIVER_H_
 #define _CANOPEN_DRIVER_H_
 
+/*!
+ * \file CANopen_driver.h
+ * \brief  Device Profile Drives and Motion Control.
+ * \author Alexis Devillard
+ * \version 1.0
+ */
+
 #include "CANopen_socket.h"
 #include "parameter.h"
 
@@ -14,6 +21,9 @@
 namespace CANopen {
 void
 print_status(Parameter *);
+/*!
+ * \brief Device Profile Drives and Motion Control.
+ */
 class Driver {
 
     static constexpr int NB_PDO = 4;
