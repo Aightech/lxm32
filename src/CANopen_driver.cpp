@@ -416,7 +416,7 @@ void
 CANopen::Driver::homing()
 {
     set_position(0);
-    while(abs(get_position())>0.001){}
+    while(abs(get_position())>100){}
 //	this->set(HMv,(uint8_t)100,true,true);
 //	this->set(HMv_out,(uint8_t)10,true,true);
 //	this->set_mode(Driver::Homing);
