@@ -35,7 +35,7 @@ CANopen::Driver::Driver(const char *ifname, uint16_t can_id, int verbose_lvl)
 
     // Map the different PDO with default mapping
     map_PDO(PDO1Transmit, m_parameters[_DCOMstatus], 0);
-	map_PDO(PDO1Receive, m_parameters[DCOMcontrol], 0);
+    map_PDO(PDO1Receive, m_parameters[DCOMcontrol], 0, true);
 	
 
    	rpdo_socket_flag.test_and_set();
@@ -46,17 +46,19 @@ CANopen::Driver::Driver(const char *ifname, uint16_t can_id, int verbose_lvl)
     m_socket.send(CANopen::NMTMessage(CANopen::NMTMessage::GoToOperational,0));
 }
 
+
+
 void
-CANopen::Driver::map_PDO(PDOFunctionCode fn, Parameter *param, int slot) {
+CANopen::Driver::map_PDO(PDOFunctionCode fn, Parameter *param, int slot, bool sync) {
     if(std::find(m_PDO_map[fn].begin(), m_PDO_map[fn].end(), param) == m_PDO_map[fn].end()) {
         param->link_to_pdo((Parameter::PDOFunctionCode)fn, slot);
-        activate_PDO(fn, true);
+        activate_PDO(fn, sync,true);
         m_PDO_map[fn].push_back(param);
     }
 }
 
 void
-CANopen::Driver::activate_PDO(PDOFunctionCode fn, bool set) {
+CANopen::Driver::activate_PDO(PDOFunctionCode fn, bool sync, bool set) {
     uint16_t index = 0;
     std::string reg_name;
 
@@ -71,15 +73,18 @@ CANopen::Driver::activate_PDO(PDOFunctionCode fn, bool set) {
     reg_name+="_setting";
     
     Register reg = (Register)( (index<<16) + 0x0001);
-	int32_t val = (set ? 0x04000000 : 0x80000000) + fn + m_node_id;
+    Register reg_sync = (Register)( (index<<16) + 0x0002);
+    int32_t val = (set ? 0x04000000 : 0x80000000) + fn + m_node_id;
+
     if(m_parameters.count(reg)==0)
     {
     	m_parameters[reg] = new Parameter(reg_name, val, index, 1);
+        m_parameters[reg_sync] = new Parameter(reg_name+"sync_mode", (uint8_t)(sync?0xff:0x00), index, 2);
     	this->send(m_parameters[reg]);
     	while(m_parameters[reg]->sdo_flag.test_and_set());
+        this->send(m_parameters[reg_sync]);
     	
-    	IF_VERBOSE(1, std::cout <<  reg_name << " " << ((set)?"activated":"desactivated") <<  "\n", m_verbose_level)
-    	
+        IF_VERBOSE(1, std::cout <<  reg_name << " " << ((set)?"activated":"desactivated") <<  std::endl, m_verbose_level)
     }
     else if((int32_t)*m_parameters[reg] != val)
     {
@@ -89,6 +94,28 @@ CANopen::Driver::activate_PDO(PDOFunctionCode fn, bool set) {
     	
     	IF_VERBOSE(1, std::cout <<  reg_name << " " << ((set)?"activated":"desactivated") <<  "\n", m_verbose_level)
     }
+
+}
+
+void
+CANopen::Driver::sync_PDO(PDOFunctionCode fn, bool sync) {
+    uint16_t index = 0;
+
+    if((fn & 0x80) == 0x00) //R_PDO
+        index = (0x1400 + (fn >> 8) - 2);
+    else
+        index = (0x1800 + (fn >> 8) - 1);
+
+    Register reg_sync = (Register)( (index<<16) + 0x0002);
+    if(m_parameters.count(reg_sync)!=0)
+    {
+        m_parameters[reg_sync]->set<uint8_t>((sync)?0x00:0xff);
+        this->send(m_parameters[reg_sync]);
+        IF_VERBOSE(1, std::cout <<  m_parameters[reg_sync]->name << " " << ((sync)?"sync":"unsync") <<  std::endl, m_verbose_level)
+    }
+    else
+        IF_VERBOSE(1, std::cout << "param uninitialized..."<<  std::endl, m_verbose_level)
+                //m_socket.send(CANopen::NMTMessage(CANopen::NMTMessage::GoToOperational,0));
 
 }
 
@@ -202,18 +229,19 @@ CANopen::Driver::RPDO_socket() {
 
 	        	for(auto p : m_PDO_map[fn])// for each parameter mapped on the pdo, get the payload and store it at the right positon + get if the data has to be updated.
 	        	{
-	        		//std::cout << p->name << "\n";
-			    	payload.store_at(p->payload(((p != m_parameters[DCOMcontrol])?&should_update:&should_update_PDO1)), p->pdo_slot);
+
+                    payload.store_at(p->payload(((p != m_parameters[DCOMcontrol])?&should_update:&should_update_PDO1)), p->pdo_slot);
 			    }
 			    	
 			    if(should_update) 
 			    {
 			    	try {
 			    		socket.send(PDOMessage((PDOMessage::PDOFunctionCode) fn, m_node_id, payload));
-					}
+                        }
 					catch (const std::runtime_error& e) {
 						IF_VERBOSE(1, std::cerr << e.what();, m_verbose_level)
 					}
+
 			    	
 			    }
 			    else if(should_update_PDO1) 
@@ -230,6 +258,7 @@ CANopen::Driver::RPDO_socket() {
 		        
 		    }
 		}
+
 	}
 }
 
@@ -241,8 +270,8 @@ CANopen::Driver::set_position(int32_t target, bool absolute)
 	switch(get_mode(false))
 	{
 		case ProfilePosition: 	
-			if(m_parameters[PPp_target]->set(target+(absolute?m_offset_pos:0),true))
-			{
+            if(m_parameters[PPp_target]->set(target+(absolute?m_offset_pos:0),true))
+            {
 				set_control((Control)(EnableOperation));
 				if(absolute)
 					set_control((Control)(EnableOperation|0x0030));
@@ -378,18 +407,27 @@ CANopen::Driver::stop()
 	this->set_control(Shutdown);
 	this->wait_state(ReadyToSwitchON);
 }
+
+void
+CANopen::Driver::sync()
+{
+    m_socket.send(CANopen::Message(Message::Sync,{}));
+}
     
 void 
-CANopen::Driver::profilePosition_mode()
+CANopen::Driver::profilePosition_mode(bool sync)
 {
     map_PDO(PDO2Transmit, m_parameters[_DCOMstatus], 0);
     map_PDO(PDO2Transmit, m_parameters[_p_act], m_parameters[_DCOMstatus]->size);
     map_PDO(PDO2Receive , m_parameters[DCOMcontrol], 0);
     map_PDO(PDO2Receive, m_parameters[PPp_target], m_parameters[DCOMcontrol]->size);
-    this->set(RAMP_v_acc,1000,true,true);
-	this->set(RAMP_v_dec,2000,true,true);
-	this->set(PPv_target,2000,true,true);
+    this->set(RAMP_v_acc,4000,true,true);
+    this->set(RAMP_v_dec,4000,true,true);
+    this->set(PPv_target,6000,true,true);
     this->set_mode(ProfilePosition, true);
+    this->sync();
+//    if(sync)
+//        sync_PDO(PDO1Receive,true);
 }
 
 void 
@@ -416,7 +454,11 @@ void
 CANopen::Driver::homing()
 {
     set_position(0);
-    while(abs(get_position())>100){}
+
+    while(abs(get_position())>100)
+    {
+    }
+
 //	this->set(HMv,(uint8_t)100,true,true);
 //	this->set(HMv_out,(uint8_t)10,true,true);
 //	this->set_mode(Driver::Homing);
@@ -431,15 +473,20 @@ CANopen::Driver::set_mode(OperationMode mode, bool wait) {
         m_parameters[DCOMopmode]->set(mode,true);
         send(m_parameters[DCOMopmode]);
         if(wait)
+        {
+            this->sync();
         	while(get_mode()!=mode);
+
+        }
     }
 }
 
 void
-CANopen::Driver::set_control(Control ctrl) { 
-    	m_parameters[DCOMcontrol]->set(ctrl, true);
-    	while(!m_parameters[DCOMcontrol]->has_been_sent()); 
+CANopen::Driver::set_control(Control ctrl) {
+        m_parameters[DCOMcontrol]->set(ctrl, true);
+
+        while(!m_parameters[DCOMcontrol]->has_been_sent());
     	
-    	IF_VERBOSE(1, std::cout << "Mode: " << ctrl_to_str(ctrl)  << "[" << std::hex << ctrl << "] Activated.\n";, m_verbose_level)
+        IF_VERBOSE(1, std::cout << "Mode: " << ctrl_to_str(ctrl)  << "[" << std::hex << (uint16_t)ctrl << "] Activated."<< std::endl;, m_verbose_level)
                     	}
 

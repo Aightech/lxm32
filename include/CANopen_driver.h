@@ -246,6 +246,7 @@ class Driver {
      */
     void
     wait_state(State state, uint16_t _mask = mask) {
+        this->sync();
         while((get_state() & mask) != (state & mask))
             ;
     }; //std::cout << (get_state()&mask) << " " << (state&mask)<< "\n";}
@@ -313,7 +314,9 @@ class Driver {
      * \param offset_pos Offest of the motor in internal Unit
      */
     void
-    set_position_offset(int32_t offset_pos) { m_offset_pos = offset_pos; };
+    set_position_offset(int32_t offset_pos) {
+        m_offset_pos = offset_pos;
+    };
 
     /*!
      * \brief start
@@ -335,7 +338,7 @@ class Driver {
      * \brief profilePosition_mode
      */
     void
-    profilePosition_mode();
+    profilePosition_mode(bool sync=false);
     /*!
      * \brief profileVelocity_mode
      */
@@ -367,7 +370,12 @@ class Driver {
     bool
     is_available() { return m_available; };
 
-    protected:
+    /*!
+     * \brief sync Send sync message.
+     */
+    void sync();
+    void sync_PDO(PDOFunctionCode fn, bool sync);
+protected:
     /*!
      *  \brief send the parameter via a Writting SDO message to the driver
      *  \param param Parameter to send.
@@ -389,7 +397,7 @@ class Driver {
      *  \param slot : Slot of the parameter in the PDO message.
      */
     void
-    map_PDO(PDOFunctionCode fn, Parameter *param, int slot);
+    map_PDO(PDOFunctionCode fn, Parameter *param, int slot, bool sync=true);
 
     /*!
      *  \brief Sends a SDO message to activate the specified PDO.
@@ -397,7 +405,7 @@ class Driver {
      *  \param can_id : Node CAN ID of the driver.
      */
     void
-    activate_PDO(PDOFunctionCode fn, bool set = true);
+    activate_PDO(PDOFunctionCode fn, bool sync=true, bool set = true);
 
     void
     T_socket();
@@ -423,6 +431,8 @@ class Driver {
     uint8_t m_node_id;
     uint16_t m_can_baud;
     int32_t m_offset_pos = 0;
+
+    bool m_sync;
 };
 
 } // namespace CANopen
