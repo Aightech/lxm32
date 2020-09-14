@@ -42,6 +42,7 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 ###### Special libraries  ######
+set(EXTRA_LIBS "")
 if(NO)
   set(EXTRA_LIBS "")
 endif()
@@ -79,7 +80,7 @@ if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/lib")
     #get the version
     subproject_version("${subdir}" subdir_version)
     message("-- ${EXEC_NAME}: Added library ${subdir} version: ${subdir_version}")
-    list(APPEND EXTRA_LIBS "${subdir}.${subdir_version}")
+    list(APPEND INTERN_LIBS "${subdir}.${subdir_version}")
   endforeach()
 endif()
 
@@ -89,6 +90,7 @@ endif()
 ###### Create the library ######
 add_library(${LIB_NAME} ${LIB_SRCS})
 target_link_libraries (${LIB_NAME}
+  PUBLIC ${INTERN_LIBS}
   PUBLIC ${EXTRA_LIBS})
 target_include_directories(${LIB_NAME}
   PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include")
@@ -96,6 +98,7 @@ target_include_directories(${LIB_NAME}
 
 
 ###### Create the executable ######
+message("${MAIN_FILE} ${EXEC_NAME} ${LIB_NAME} ${EXTRA_LIBS}")
 add_executable(${EXEC_NAME} ${MAIN_FILE})
 target_link_libraries (${EXEC_NAME}
   PUBLIC ${LIB_NAME}

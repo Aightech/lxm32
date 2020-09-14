@@ -14,7 +14,6 @@
 
 #include "CANopen_lxm32.h"
 
-#include "joystick.h"
 
 
 
