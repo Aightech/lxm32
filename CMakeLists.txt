@@ -31,7 +31,7 @@ cmake_minimum_required(VERSION 3.0)
 
 ###### PROJECT NAME AND VERSION ######
 set(EXEC_NAME lxm32)
-set(PROJECT_VERSION 2.0)
+set(PROJECT_VERSION 1.62)
 project(${EXEC_NAME} VERSION ${PROJECT_VERSION})
 
 ###### LIBRARY NAME ######
